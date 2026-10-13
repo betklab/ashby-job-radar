@@ -1,0 +1,50 @@
+# Ashby job boards to scan — one slug (or full jobs.ashbyhq.com URL) per line.
+# Seed list of companies with Berlin/Munich presence believed to use Ashby.
+# Unverified: boards that 404 are listed at the bottom of each digest — prune them.
+# Add any board you spot: paste the URL, e.g. https://jobs.ashbyhq.com/n8n
+
+# Berlin
+n8n
+langfuse
+langdock
+pitch
+knowunity
+getmoss
+pliant
+upvest
+choco
+superchat
+taxfix
+raisin
+sennder
+forto
+enpal
+1komma5grad
+buena
+candis
+circula
+heyjobs
+billie
+nelly
+zeitgold
+trade-republic
+perplexity
+elevenlabs
+deepl
+parloa
+black-forest-labs
+quantum-systems
+
+# Munich
+scalable-capital
+tacto
+getivy
+synthesia
+helsing
+isar-aerospace
+cognigy
+ottonova
+avimedical
+openai
+proxima-fusion
+make

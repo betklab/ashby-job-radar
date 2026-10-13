@@ -1,0 +1,37 @@
+{
+  "lookback_days": 7,
+  "max_results": 40,
+  "forget_after_days": 60,
+  "email_when_empty": false,
+
+  "cities": [
+    {"label": "Berlin", "aliases": ["berlin"]},
+    {"label": "Munich", "aliases": ["munich", "munchen", "muenchen"]}
+  ],
+  "include_remote_germany": true,
+
+  "title_include": ["growth", "product", "gtm", "go-to-market", "revops", "revenue operations"],
+  "title_exclude": ["engineer", "engineering", "developer", "designer", "scientist",
+                    "intern", "internship", "werkstudent", "working student", "praktikum"],
+
+  "title_boost": {
+    "growth": 8, "product manager": 8, "gtm": 6, "go-to-market": 6,
+    "product marketing": 5, "revops": 5, "revenue operations": 5,
+    "lead": 3, "head": 2, "ai": 3, "senior": 1
+  },
+
+  "seniority_flags": ["vp", "vice president", "director", "chief", "cpo", "cmo"],
+  "german_required_phrases": [
+    "fließend deutsch", "fliessend deutsch", "verhandlungssicheres deutsch",
+    "sehr gute deutschkenntnisse", "fluent german", "fluency in german",
+    "german (c1", "german c1", "german (c2", "native german", "business-fluent german"
+  ],
+
+  "discovery_queries": [
+    "site:jobs.ashbyhq.com growth berlin",
+    "site:jobs.ashbyhq.com product berlin",
+    "site:jobs.ashbyhq.com growth munich",
+    "site:jobs.ashbyhq.com product munich",
+    "site:jobs.ashbyhq.com product münchen"
+  ]
+}
