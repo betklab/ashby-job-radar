@@ -1,6 +1,6 @@
-# Ashby Job Radar — Sat 17 Oct 2026
+# Ashby Job Radar — Sun 18 Oct 2026
 
-0 new matching roles · 21 boards scanned · 1558 postings checked
+0 new matching roles · 21 boards scanned · 1556 postings checked
 
 _Nothing new today._
 ---
