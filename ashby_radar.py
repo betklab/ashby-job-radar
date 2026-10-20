@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Ashby Job Radar — daily digest of recently published Growth / Product roles
-in Berlin & Munich, pulled from Ashby's public job-board API.
+Ashby Job Radar — daily digest of recently published growth, product, marketing,
+operations, GTM and BD roles anywhere in Germany, pulled from Ashby's public job-board API.
 
 Ashby has no global search, so this script:
   1. reads company board slugs from companies.txt (jobs.ashbyhq.com/<slug>)
@@ -59,6 +59,59 @@ def load_slugs(path: Path) -> list[str]:
     return slugs
 
 
+def _notion_text(prop: dict) -> str:
+    t = prop.get("type")
+    if t in ("title", "rich_text"):
+        return "".join(x.get("plain_text", "") for x in prop.get(t, []))
+    if t == "url":
+        return prop.get("url") or ""
+    if t == "select":
+        return (prop.get("select") or {}).get("name", "")
+    if t == "formula":
+        return str((prop.get("formula") or {}).get("string") or "")
+    return ""
+
+
+def load_slugs_notion(cfg: dict) -> list[str] | None:
+    """Read Ashby IDs from a Notion database (NOTION_TOKEN + NOTION_DATABASE_ID).
+    Column name from config 'notion.ashby_id_property' (text, title or URL column).
+    If 'notion.active_property' names a checkbox column, only ticked rows are used."""
+    token, db = os.environ.get("NOTION_TOKEN"), os.environ.get("NOTION_DATABASE_ID")
+    if not (token and db):
+        return None
+    ncfg = cfg.get("notion", {})
+    id_prop = ncfg.get("ashby_id_property", "Ashby ID")
+    active = ncfg.get("active_property")
+    db = re.sub(r"[^0-9a-fA-F]", "", db.split("?")[0])[-32:]   # accept a full Notion URL
+    body: dict = {"page_size": 100}
+    if active:
+        body["filter"] = {"property": active, "checkbox": {"equals": True}}
+    slugs, cursor = [], None
+    while True:
+        if cursor:
+            body["start_cursor"] = cursor
+        req = urllib.request.Request(
+            f"https://api.notion.com/v1/databases/{db}/query",
+            data=json.dumps(body).encode(), method="POST", headers={
+                "Authorization": f"Bearer {token}", "Notion-Version": "2022-06-28",
+                "Content-Type": "application/json", **UA})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            data = json.load(r)
+        for page in data.get("results", []):
+            prop = page.get("properties", {}).get(id_prop)
+            if not prop:
+                continue
+            raw = _notion_text(prop).strip()
+            m = re.search(r"jobs\.ashbyhq\.com/([^/?#\s]+)", raw)
+            slug = urllib.parse.unquote(m.group(1) if m else raw).strip()
+            if slug and slug.lower() not in {s.lower() for s in slugs}:
+                slugs.append(slug)
+        if not data.get("has_more"):
+            break
+        cursor = data.get("next_cursor")
+    return slugs
+
+
 def load_json(path: Path, default):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -67,8 +120,35 @@ def load_json(path: Path, default):
 
 
 # ---------------------------------------------------------------- discovery
+SLUG_RE = re.compile(r"jobs\.ashbyhq\.com/([^/?#\s\"']+)")
+
+
+def discover_tavily(cfg: dict, key: str) -> set[str]:
+    """Tavily Search API — free tier, 1,000 searches/month, no card."""
+    found = set()
+    for q in cfg.get("discovery_queries", []):
+        q = q.replace("site:jobs.ashbyhq.com", "").strip()   # domain filter does this
+        body = json.dumps({"query": q, "include_domains": ["jobs.ashbyhq.com"],
+                           "max_results": 20, "time_range": "week"}).encode()
+        req = urllib.request.Request("https://api.tavily.com/search", data=body, headers={
+            "Content-Type": "application/json", "Authorization": f"Bearer {key}", **UA})
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                data = json.load(r)
+        except Exception as e:
+            print(f"[discover] tavily query failed: {q!r}: {e}", file=sys.stderr)
+            continue
+        for item in data.get("results", []):
+            m = SLUG_RE.search(item.get("url", ""))
+            if m:
+                found.add(urllib.parse.unquote(m.group(1)))
+    return found
+
+
 def discover_slugs(cfg: dict) -> set[str]:
-    """Optional: find new Ashby boards via Brave Search API (BRAVE_API_KEY)."""
+    """Optional: find new Ashby boards via Tavily (TAVILY_API_KEY) or Brave (BRAVE_API_KEY)."""
+    if os.environ.get("TAVILY_API_KEY"):
+        return discover_tavily(cfg, os.environ["TAVILY_API_KEY"])
     key = os.environ.get("BRAVE_API_KEY")
     if not key:
         return set()
@@ -106,7 +186,10 @@ def fetch_board(slug: str) -> tuple[str, list[dict] | None, str | None]:
 
 # ---------------------------------------------------------------- filtering
 def norm(s: str) -> str:
-    return (s or "").lower().replace("ü", "u")
+    s = (s or "").lower()
+    for a, b in (("ü", "u"), ("ö", "o"), ("ä", "a"), ("ß", "ss"), ("’", ""), ("'", ""), ("–", "-")):
+        s = s.replace(a, b)
+    return s
 
 
 def job_locations(job: dict) -> list[str]:
@@ -120,15 +203,39 @@ def job_locations(job: dict) -> list[str]:
 
 
 def match_location(job: dict, cfg: dict) -> str | None:
-    """Return the matched label, or None."""
+    """Return a display label like 'Berlin', 'Berlin / Munich' or 'Germany', or None."""
     blob = norm(" | ".join(job_locations(job)))
+    cities = []
     for city in cfg["cities"]:
-        if any(norm(alias) in blob for alias in city["aliases"]):
-            return city["label"]
-    if cfg.get("include_remote_germany") and job.get("isRemote"):
-        if any(t in blob for t in ("germany", "deutschland", "dach")):
-            return "Remote (DE)"
+        if any(re.search(r"\b" + re.escape(norm(a)) + r"\b", blob) for a in city["aliases"]):
+            cities.append(city["label"])
+    if cities:
+        return " / ".join(cities)
+    country = norm(str(((job.get("address") or {}).get("postalAddress") or {})
+                       .get("addressCountry") or ""))
+    if country in ("de", "deu", "germany", "deutschland") or any(
+            re.search(r"\b" + re.escape(norm(t)) + r"\b", blob) for t in cfg["country_terms"]):
+        return "Germany"
+    if cfg.get("include_remote_europe") and any(
+            re.search(r"\b" + t + r"\b", blob) for t in ("europe", "emea", "eu")):
+        return "Remote Europe"
     return None
+
+
+def work_style(job: dict) -> str:
+    wt = norm(job.get("workplaceType") or "")
+    if wt == "remote":
+        return "Remote"
+    if wt == "hybrid":
+        return "Hybrid"
+    if wt in ("onsite", "on-site", "on site"):
+        return "Office"
+    locs = norm(" ".join(job_locations(job)))
+    if "hybrid" in locs:
+        return "Hybrid"
+    if job.get("isRemote") or "remote" in locs:
+        return "Remote"
+    return "Not stated"
 
 
 def word_hit(text: str, words: list[str]) -> list[str]:
@@ -145,28 +252,26 @@ def parse_date(s: str | None) -> datetime | None:
         return None
 
 
-def score(job: dict, cfg: dict, published: datetime, now: datetime) -> tuple[int, list[str]]:
-    title = job.get("title", "")
-    s, why = 0, []
-    for w, pts in cfg["title_boost"].items():
-        if word_hit(title, [w]):
-            s += pts
-            why.append(w)
-    age_days = (now - published).total_seconds() / 86400
-    s += max(0, 10 - int(age_days * 2))          # fresher = higher
-    if job.get("_loc") in ("Berlin", "Munich"):
-        s += 3
-    return s, why
+GERMAN_STOPWORDS = {"und", "die", "der", "das", "wir", "mit", "fur", "bei", "ist", "sie",
+                    "ein", "eine", "auf", "zu", "von", "den", "dich", "du", "uns", "ihre"}
 
 
-def flags(job: dict, cfg: dict) -> list[str]:
-    out = []
+def german_required(job: dict, cfg: dict) -> str | None:
     desc = norm(job.get("descriptionPlain") or "")
+    if not desc:
+        return None
+    words = re.findall(r"[a-z]+", desc)
+    if words and sum(w in GERMAN_STOPWORDS for w in words) / len(words) > 0.08:
+        return "German required (ad is in German)"
     if any(norm(p) in desc for p in cfg["german_required_phrases"]):
-        out.append("German required")
-    if any(word_hit(job.get("title", ""), [w]) for w in cfg.get("seniority_flags", [])):
-        out.append("very senior")
-    return out
+        return "German required"
+    strong = r"(fluent|fluency|native|c1|c2|business|proficien|required|must|excellent|professional|verhandlungssicher)"
+    soft = r"(plus|nice to have|nice-to-have|bonus|advantage|beneficial|preferred|helpful|not required)"
+    for m in re.finditer(r"\b(german|deutsch)\b", desc):
+        window = desc[max(0, m.start() - 60): m.end() + 60]
+        if re.search(strong, window) and not re.search(soft, window):
+            return "German required"
+    return None
 
 
 def compensation(job: dict) -> str:
@@ -197,13 +302,11 @@ def curate(boards: dict[str, list[dict]], cfg: dict, seen: dict, now: datetime):
             if key in seen:
                 continue
             job["_slug"], job["_loc"], job["_pub"] = slug, loc, pub
-            job["_score"], job["_why"] = score(job, cfg, pub, now)
-            job["_flags"] = flags(job, cfg)
-            if "German required" in job["_flags"]:
-                job["_score"] -= cfg.get("german_required_penalty", 6)
+            job["_style"] = work_style(job)
+            job["_german"] = german_required(job, cfg)
             job["_comp"] = compensation(job)
             picks.append(job)
-    picks.sort(key=lambda j: (-j["_score"], -j["_pub"].timestamp()))
+    picks.sort(key=lambda j: j["_pub"], reverse=True)       # newest release first
     return picks[: cfg["max_results"]]
 
 
@@ -212,22 +315,25 @@ def company_name(slug: str) -> str:
     return re.sub(r"[-_]+", " ", slug).strip().title()
 
 
+def job_meta(j: dict) -> list[str]:
+    return [f"📍 {j['_loc']}", j["_style"], f"💶 {j['_comp'] or 'Salary not listed'}",
+            f"posted {j['_pub']:%d %b}"]
+
+
 def render_md(picks, now, stats) -> str:
     lines = [f"# Ashby Job Radar — {now:%a %d %b %Y}", "",
-             f"{len(picks)} new matching roles · {stats['boards_ok']} boards scanned"
-             f" · {stats['jobs_total']} postings checked", ""]
+             f"{len(picks)} new roles in Germany · newest first · {stats['boards_ok']} "
+             f"companies checked", ""]
     if not picks:
         lines.append("_Nothing new today._")
     for j in picks:
-        meta = [j["_loc"], f"posted {j['_pub']:%d %b}",
-                j.get("workplaceType") or "", j.get("employmentType") or "", j["_comp"]]
         lines.append(f"### [{j['title']}]({j['jobUrl']}) — {company_name(j['_slug'])}")
-        lines.append(" · ".join(m for m in meta if m))
-        if j["_flags"]:
-            lines.append("⚠️ " + ", ".join(j["_flags"]))
+        lines.append(" · ".join(job_meta(j)))
+        if j["_german"]:
+            lines.append(f"🇩🇪 {j['_german']}")
         lines.append("")
     if stats["bad_slugs"]:
-        lines += ["---", "Boards that failed (fix or remove from companies.txt): "
+        lines += ["---", "Boards that failed (fix or remove the Ashby ID): "
                   + ", ".join(f"`{s}` ({e})" for s, e in stats["bad_slugs"])]
     if stats["new_slugs"]:
         lines += ["", "New boards discovered and added: "
@@ -235,29 +341,36 @@ def render_md(picks, now, stats) -> str:
     return "\n".join(lines) + "\n"
 
 
+STYLE_COLOR = {"Remote": "#047857", "Hybrid": "#1d4ed8", "Office": "#6b7280", "Not stated": "#9ca3af"}
+
+
 def render_html(picks, now, stats) -> str:
     e = html.escape
     rows = []
     for j in picks:
-        meta = " · ".join(m for m in [j["_loc"], f"posted {j['_pub']:%d %b}",
-                                      j.get("workplaceType") or "", j["_comp"]] if m)
-        flag = (f'<div style="color:#b45309;font-size:13px">⚠ {e(", ".join(j["_flags"]))}</div>'
-                if j["_flags"] else "")
+        pill = (f'<span style="display:inline-block;padding:1px 8px;border-radius:10px;'
+                f'border:1px solid {STYLE_COLOR[j["_style"]]};color:{STYLE_COLOR[j["_style"]]};'
+                f'font-size:12px">{e(j["_style"])}</span>')
+        german = (f'<div style="color:#b45309;font-size:13px;margin-top:2px">🇩🇪 {e(j["_german"])}</div>'
+                  if j["_german"] else "")
         rows.append(
             f'<tr><td style="padding:12px 0;border-bottom:1px solid #e5e7eb">'
             f'<a href="{e(j["jobUrl"])}" style="font-weight:600;color:#1d4ed8;'
             f'text-decoration:none">{e(j["title"])}</a>'
             f'<div style="color:#111">{e(company_name(j["_slug"]))}</div>'
-            f'<div style="color:#6b7280;font-size:13px">{e(meta)}</div>{flag}</td></tr>')
+            f'<div style="color:#374151;font-size:13px;margin-top:2px">📍 {e(j["_loc"])} &nbsp;{pill}'
+            f' &nbsp;💶 {e(j["_comp"] or "Salary not listed")}</div>'
+            f'<div style="color:#9ca3af;font-size:12px">posted {j["_pub"]:%a %d %b}</div>'
+            f'{german}</td></tr>')
     body = "".join(rows) or '<tr><td style="color:#6b7280">Nothing new today.</td></tr>'
     foot = ""
     if stats["bad_slugs"]:
-        foot = ('<p style="color:#9ca3af;font-size:12px">Failed boards: '
+        foot = ('<p style="color:#9ca3af;font-size:12px">Boards that failed: '
                 + e(", ".join(s for s, _ in stats["bad_slugs"])) + "</p>")
     return (f'<div style="font-family:-apple-system,Segoe UI,sans-serif;max-width:640px">'
             f'<h2 style="margin:0">Ashby Job Radar</h2>'
             f'<p style="color:#6b7280;margin:4px 0 12px">{now:%A %d %B %Y} · '
-            f'{len(picks)} new roles from {stats["boards_ok"]} boards</p>'
+            f'{len(picks)} new roles in Germany, newest first</p>'
             f'<table style="width:100%;border-collapse:collapse">{body}</table>{foot}</div>')
 
 
@@ -292,6 +405,16 @@ def main(argv=None) -> int:
     cfg = load_config(args.config)
     now = datetime.now(timezone.utc)
     slugs = load_slugs(args.companies)
+    if not args.fixtures:
+        try:
+            notion = load_slugs_notion(cfg)
+        except Exception as e:
+            print(f"[notion] could not read database: {e}", file=sys.stderr)
+            notion = None
+        if notion is not None:
+            print(f"[notion] {len(notion)} companies from Notion", file=sys.stderr)
+            known = {s.lower() for s in slugs}
+            slugs += [s for s in notion if s.lower() not in known]
 
     new_slugs = set()
     if not args.fixtures:
@@ -325,8 +448,8 @@ def main(argv=None) -> int:
     (args.out / "digest.html").write_text(page, encoding="utf-8")
     (args.out / "digest.json").write_text(json.dumps(
         [{"title": j["title"], "company": j["_slug"], "location": j["_loc"],
-          "published": j["_pub"].isoformat(), "url": j["jobUrl"], "flags": j["_flags"],
-          "compensation": j["_comp"], "score": j["_score"]} for j in picks],
+          "published": j["_pub"].isoformat(), "url": j["jobUrl"], "work_style": j["_style"],
+          "german_required": j["_german"], "compensation": j["_comp"]} for j in picks],
         indent=2, ensure_ascii=False), encoding="utf-8")
 
     if not args.dry_run:
@@ -338,7 +461,7 @@ def main(argv=None) -> int:
 
     print(md)
     if not args.no_email and (picks or cfg.get("email_when_empty")):
-        subj = f"Ashby radar: {len(picks)} new Berlin/Munich roles ({now:%d %b})"
+        subj = f"Ashby radar: {len(picks)} new roles in Germany ({now:%d %b})"
         if send_email(subj, page, md):
             print("Email sent.")
     return 0
