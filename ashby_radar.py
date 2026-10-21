@@ -171,6 +171,106 @@ def discover_slugs(cfg: dict) -> set[str]:
     return found
 
 
+# ---------------------------------------------------------------- crawl harvest
+CC_INDEX = "https://index.commoncrawl.org"
+NOT_SLUGS = {"api", "embed", "static", "favicon.ico", "robots.txt", "sitemap.xml", ""}
+
+
+def _get(url: str, timeout: int = 120, tries: int = 4) -> bytes | None:
+    import time
+    for i in range(tries):
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=timeout) as r:
+                return r.read()
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                return None
+            err = e
+        except Exception as e:  # timeouts, resets
+            err = e
+        time.sleep(5 * (i + 1))
+    print(f"[harvest] giving up on {url[:90]}: {err}", file=sys.stderr)
+    return None
+
+
+def harvest_common_crawl(n_crawls: int) -> set[str]:
+    """Every company slug Common Crawl has seen under jobs.ashbyhq.com in its latest crawls."""
+    raw = _get(f"{CC_INDEX}/collinfo.json", timeout=60)
+    if not raw:
+        return set()
+    crawls = [c["id"] for c in json.loads(raw)][:n_crawls]
+    slugs: set[str] = set()
+    for cid in crawls:
+        base = f"{CC_INDEX}/{cid}-index?url=jobs.ashbyhq.com/*&output=json&fl=url"
+        info = _get(base + "&showNumPages=true", timeout=60)
+        try:
+            pages = int(json.loads(info)["pages"]) if info else 0
+        except (ValueError, KeyError):
+            pages = 0
+        before = len(slugs)
+        for p in range(pages):
+            body = _get(f"{base}&page={p}")
+            if not body:
+                continue
+            for line in body.decode("utf-8", "replace").splitlines():
+                try:
+                    url = json.loads(line).get("url", "")
+                except ValueError:
+                    continue
+                m = re.match(r"https?://jobs\.ashbyhq\.com/([^/?#]+)", url)
+                if m:
+                    slug = urllib.parse.unquote(m.group(1)).strip()
+                    if slug.lower() not in NOT_SLUGS and "." not in slug:
+                        slugs.add(slug)
+        print(f"[harvest] {cid}: {pages} pages, +{len(slugs) - before} companies", file=sys.stderr)
+    return slugs
+
+
+def update_registry(reg: dict, cfg: dict, now: datetime) -> int:
+    """Refresh the list of all known Ashby companies from Common Crawl once a week."""
+    hcfg = cfg.get("harvest", {})
+    if not hcfg.get("enabled", True):
+        return 0
+    last = reg.get("_meta", {}).get("harvested")
+    if last and (now.date() - datetime.fromisoformat(last).date()).days < hcfg.get("every_days", 7):
+        return 0
+    found = harvest_common_crawl(hcfg.get("crawls", 3))
+    if not found:            # keep the previous date so it retries tomorrow
+        return 0
+    known = {k.lower() for k in reg if k != "_meta"}
+    added = 0
+    for s in found:
+        if s.lower() not in known:
+            reg[s] = {"de": None}
+            known.add(s.lower())
+            added += 1
+    reg.setdefault("_meta", {})["harvested"] = now.date().isoformat()
+    return added
+
+
+def pick_registry_boards(reg: dict, now: datetime, cfg: dict) -> list[str]:
+    """German companies every day; never-checked ones up to a cap; the rest on a 7-day rotation."""
+    import zlib
+    cap = cfg.get("harvest", {}).get("max_new_checks_per_run", 3000)
+    out, new = [], 0
+    for slug, st in reg.items():
+        if slug == "_meta":
+            continue
+        if st.get("de"):
+            out.append(slug)
+        elif st.get("de") is None:
+            if new < cap:
+                out.append(slug)
+                new += 1
+        elif zlib.crc32(slug.lower().encode()) % 7 == now.weekday():
+            out.append(slug)
+    return out
+
+
+def has_germany(jobs: list[dict], cfg: dict) -> bool:
+    return any(match_location(j, cfg) for j in jobs)
+
+
 # ---------------------------------------------------------------- fetching
 def fetch_board(slug: str) -> tuple[str, list[dict] | None, str | None]:
     req = urllib.request.Request(API.format(slug=urllib.parse.quote(slug)), headers=UA)
@@ -299,8 +399,9 @@ def curate(boards: dict[str, list[dict]], cfg: dict, seen: dict, now: datetime):
             if not pub or pub < cutoff:
                 continue
             key = job.get("id") or job.get("jobUrl")
-            if key in seen:
+            if key in seen and cfg.get("digest_mode", "new_only") == "new_only":
                 continue
+            job["_new"] = key not in seen
             job["_slug"], job["_loc"], job["_pub"] = slug, loc, pub
             job["_style"] = work_style(job)
             job["_german"] = german_required(job, cfg)
@@ -322,12 +423,16 @@ def job_meta(j: dict) -> list[str]:
 
 def render_md(picks, now, stats) -> str:
     lines = [f"# Ashby Job Radar — {now:%a %d %b %Y}", "",
-             f"{len(picks)} new roles in Germany · newest first · {stats['boards_ok']} "
-             f"companies checked", ""]
+             (f"{len(picks)} new roles in Germany since the last email · newest first · "
+              if stats["mode"] == "new_only" else
+              f"{len(picks)} roles in Germany posted in the last {stats['days']} days "
+              f"({stats['n_new']} 🆕 since last email) · newest first · ") +
+             f"{stats['boards_ok']} companies checked", ""]
     if not picks:
         lines.append("_Nothing new today._")
     for j in picks:
-        lines.append(f"### [{j['title']}]({j['jobUrl']}) — {company_name(j['_slug'])}")
+        new = "🆕 " if j.get("_new") and stats["mode"] == "week" else ""
+        lines.append(f"### {new}[{j['title']}]({j['jobUrl']}) — {company_name(j['_slug'])}")
         lines.append(" · ".join(job_meta(j)))
         if j["_german"]:
             lines.append(f"🇩🇪 {j['_german']}")
@@ -355,7 +460,10 @@ def render_html(picks, now, stats) -> str:
                   if j["_german"] else "")
         rows.append(
             f'<tr><td style="padding:12px 0;border-bottom:1px solid #e5e7eb">'
-            f'<a href="{e(j["jobUrl"])}" style="font-weight:600;color:#1d4ed8;'
+            + ('<span style="background:#dcfce7;color:#166534;font-size:11px;font-weight:600;'
+               'padding:1px 6px;border-radius:4px;margin-right:6px">NEW</span>'
+               if j.get("_new") and stats["mode"] == "week" else "")
+            + f'<a href="{e(j["jobUrl"])}" style="font-weight:600;color:#1d4ed8;'
             f'text-decoration:none">{e(j["title"])}</a>'
             f'<div style="color:#111">{e(company_name(j["_slug"]))}</div>'
             f'<div style="color:#374151;font-size:13px;margin-top:2px">📍 {e(j["_loc"])} &nbsp;{pill}'
@@ -370,7 +478,11 @@ def render_html(picks, now, stats) -> str:
     return (f'<div style="font-family:-apple-system,Segoe UI,sans-serif;max-width:640px">'
             f'<h2 style="margin:0">Ashby Job Radar</h2>'
             f'<p style="color:#6b7280;margin:4px 0 12px">{now:%A %d %B %Y} · '
-            f'{len(picks)} new roles in Germany, newest first</p>'
+            + (f'{len(picks)} new roles in Germany since the last email'
+               if stats["mode"] == "new_only" else
+               f'{len(picks)} roles in Germany from the last {stats["days"]} days · '
+               f'{stats["n_new"]} new since last email')
+            + f' · {stats["boards_ok"]} companies checked</p>'
             f'<table style="width:100%;border-collapse:collapse">{body}</table>{foot}</div>')
 
 
@@ -396,6 +508,8 @@ def main(argv=None) -> int:
     ap.add_argument("--config", default=ROOT / "config.json", type=Path)
     ap.add_argument("--companies", default=ROOT / "companies.txt", type=Path)
     ap.add_argument("--seen", default=ROOT / "seen.json", type=Path)
+    ap.add_argument("--registry", default=ROOT / "boards.json", type=Path,
+                    help="all Ashby companies found by crawling, with a Germany flag")
     ap.add_argument("--out", default=ROOT / "output", type=Path)
     ap.add_argument("--fixtures", type=Path, help="dir of <slug>.json files (offline test)")
     ap.add_argument("--no-email", action="store_true")
@@ -416,31 +530,51 @@ def main(argv=None) -> int:
             known = {s.lower() for s in slugs}
             slugs += [s for s in notion if s.lower() not in known]
 
+    own = {s.lower() for s in slugs}          # your list: always checked, failures reported
     new_slugs = set()
     if not args.fixtures:
-        known = {s.lower() for s in slugs}
-        new_slugs = {s for s in discover_slugs(cfg) if s.lower() not in known}
+        new_slugs = {s for s in discover_slugs(cfg) if s.lower() not in own}
         if new_slugs:
             with open(args.companies, "a", encoding="utf-8") as f:
                 f.write(f"\n# discovered {now:%Y-%m-%d}\n" + "\n".join(sorted(new_slugs)) + "\n")
             slugs += sorted(new_slugs)
+            own |= {s.lower() for s in new_slugs}
+
+    reg = load_json(args.registry, {})
+    harvested = 0
+    if not args.fixtures:
+        harvested = update_registry(reg, cfg, now)
+        extra = [s for s in pick_registry_boards(reg, now, cfg) if s.lower() not in own]
+        print(f"[registry] {sum(1 for k, v in reg.items() if k != '_meta' and v.get('de'))} "
+              f"German companies known · +{harvested} new from crawl · "
+              f"checking {len(slugs)} listed + {len(extra)} crawled", file=sys.stderr)
+        slugs = slugs + extra
 
     boards, bad = {}, []
     if args.fixtures:
         for p in sorted(args.fixtures.glob("*.json")):
             boards[p.stem] = json.loads(p.read_text())["jobs"]
     else:
-        with ThreadPoolExecutor(max_workers=8) as pool:
+        with ThreadPoolExecutor(max_workers=cfg.get("workers", 16)) as pool:
             for slug, jobs, err in pool.map(fetch_board, slugs):
                 if jobs is None:
-                    bad.append((slug, err))
+                    if slug.lower() in own:
+                        bad.append((slug, err))
+                    elif slug in reg and err and err.startswith("HTTP 4"):
+                        reg[slug] = {"de": False, "checked": now.date().isoformat()}
                 else:
                     boards[slug] = jobs
+                    if slug in reg or slug.lower() not in own:
+                        reg[slug] = {"de": has_germany(jobs, cfg),
+                                     "checked": now.date().isoformat()}
+        args.registry.write_text(json.dumps(reg, indent=0, sort_keys=True), encoding="utf-8")
 
     seen = load_json(args.seen, {})
     picks = curate(boards, cfg, seen, now)
     stats = {"boards_ok": len(boards), "bad_slugs": bad, "new_slugs": new_slugs,
-             "jobs_total": sum(len(j) for j in boards.values())}
+             "jobs_total": sum(len(j) for j in boards.values()),
+             "days": cfg["lookback_days"], "n_new": sum(1 for j in picks if j.get("_new")),
+             "mode": cfg.get("digest_mode", "new_only")}
 
     args.out.mkdir(parents=True, exist_ok=True)
     md, page = render_md(picks, now, stats), render_html(picks, now, stats)
@@ -454,14 +588,14 @@ def main(argv=None) -> int:
 
     if not args.dry_run:
         for j in picks:
-            seen[j.get("id") or j["jobUrl"]] = now.date().isoformat()
+            seen.setdefault(j.get("id") or j["jobUrl"], now.date().isoformat())
         cutoff = (now - timedelta(days=cfg.get("forget_after_days", 60))).date().isoformat()
         seen = {k: v for k, v in seen.items() if v >= cutoff}
         args.seen.write_text(json.dumps(seen, indent=1, sort_keys=True), encoding="utf-8")
 
     print(md)
-    if not args.no_email and (picks or cfg.get("email_when_empty")):
-        subj = f"Ashby radar: {len(picks)} new roles in Germany ({now:%d %b})"
+    if not args.no_email and (stats["n_new"] or cfg.get("email_when_empty")):
+        subj = f"Ashby radar: {stats['n_new']} new roles in Germany ({now:%d %b})"
         if send_email(subj, page, md):
             print("Email sent.")
     return 0
