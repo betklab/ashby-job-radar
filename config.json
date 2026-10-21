@@ -3,74 +3,290 @@
     "ashby_id_property": "Ashby ID",
     "active_property": null
   },
-
+  "harvest": {
+    "enabled": true,
+    "every_days": 7,
+    "crawls": 3,
+    "max_new_checks_per_run": 3000
+  },
   "lookback_days": 7,
   "max_results": 100,
   "forget_after_days": 60,
   "email_when_empty": false,
-
+  "digest_mode": "new_only",
+  "workers": 16,
   "title_include": [
     "growth",
-    "product manager", "product owner", "product lead", "head of product", "product analyst",
-    "product operations", "product ops", "product marketing", "product",
-    "marketing", "brand", "content", "performance marketing", "crm",
-    "operations", "ops", "bizops", "revops", "revenue operations", "sales operations",
-    "strategy", "strategy & operations",
-    "founders associate", "founder associate", "associate to the founder", "associate to the ceo",
+    "product manager",
+    "product owner",
+    "product lead",
+    "head of product",
+    "product analyst",
+    "product operations",
+    "product ops",
+    "product marketing",
+    "product",
+    "marketing",
+    "brand",
+    "content",
+    "performance marketing",
+    "crm",
+    "operations",
+    "ops",
+    "bizops",
+    "revops",
+    "revenue operations",
+    "sales operations",
+    "strategy",
+    "strategy & operations",
+    "founders associate",
+    "founder associate",
+    "associate to the founder",
+    "associate to the ceo",
     "chief of staff",
-    "gtm", "go-to-market", "go to market",
-    "business development", "bizdev", "biz dev", "partnerships",
-    "e-commerce", "ecommerce", "e commerce", "marketplace"
+    "gtm",
+    "go-to-market",
+    "go to market",
+    "business development",
+    "bizdev",
+    "biz dev",
+    "partnerships",
+    "e-commerce",
+    "ecommerce",
+    "e commerce",
+    "marketplace"
   ],
   "title_exclude": [
-    "engineer", "engineering", "developer", "designer", "design", "scientist", "architect",
-    "devops", "secops", "mlops", "security operations", "it operations",
-    "intern", "internship", "werkstudent", "working student", "praktikum", "praktikant",
-    "ausbildung", "apprentice"
+    "engineer",
+    "engineering",
+    "developer",
+    "designer",
+    "design",
+    "scientist",
+    "architect",
+    "devops",
+    "secops",
+    "mlops",
+    "security operations",
+    "it operations",
+    "intern",
+    "internship",
+    "werkstudent",
+    "working student",
+    "praktikum",
+    "praktikant",
+    "ausbildung",
+    "apprentice"
   ],
-
   "cities": [
-    {"label": "Berlin", "aliases": ["berlin"]},
-    {"label": "Munich", "aliases": ["munich", "munchen", "muenchen"]},
-    {"label": "Hamburg", "aliases": ["hamburg"]},
-    {"label": "Frankfurt", "aliases": ["frankfurt"]},
-    {"label": "Cologne", "aliases": ["cologne", "koln", "koeln"]},
-    {"label": "Düsseldorf", "aliases": ["dusseldorf", "duesseldorf"]},
-    {"label": "Stuttgart", "aliases": ["stuttgart"]},
-    {"label": "Leipzig", "aliases": ["leipzig"]},
-    {"label": "Dresden", "aliases": ["dresden"]},
-    {"label": "Hanover", "aliases": ["hannover", "hanover"]},
-    {"label": "Nuremberg", "aliases": ["nuremberg", "nurnberg", "nuernberg"]},
-    {"label": "Bonn", "aliases": ["bonn"]},
-    {"label": "Karlsruhe", "aliases": ["karlsruhe"]},
-    {"label": "Mannheim", "aliases": ["mannheim"]},
-    {"label": "Heidelberg", "aliases": ["heidelberg"]},
-    {"label": "Essen", "aliases": ["essen"]},
-    {"label": "Dortmund", "aliases": ["dortmund"]},
-    {"label": "Bremen", "aliases": ["bremen"]},
-    {"label": "Münster", "aliases": ["munster", "muenster"]},
-    {"label": "Potsdam", "aliases": ["potsdam"]},
-    {"label": "Aachen", "aliases": ["aachen"]},
-    {"label": "Freiburg", "aliases": ["freiburg"]},
-    {"label": "Darmstadt", "aliases": ["darmstadt"]},
-    {"label": "Augsburg", "aliases": ["augsburg"]},
-    {"label": "Ingolstadt", "aliases": ["ingolstadt"]},
-    {"label": "Regensburg", "aliases": ["regensburg"]},
-    {"label": "Wiesbaden", "aliases": ["wiesbaden"]},
-    {"label": "Mainz", "aliases": ["mainz"]}
+    {
+      "label": "Berlin",
+      "aliases": [
+        "berlin"
+      ]
+    },
+    {
+      "label": "Munich",
+      "aliases": [
+        "munich",
+        "munchen",
+        "muenchen"
+      ]
+    },
+    {
+      "label": "Hamburg",
+      "aliases": [
+        "hamburg"
+      ]
+    },
+    {
+      "label": "Frankfurt",
+      "aliases": [
+        "frankfurt"
+      ]
+    },
+    {
+      "label": "Cologne",
+      "aliases": [
+        "cologne",
+        "koln",
+        "koeln"
+      ]
+    },
+    {
+      "label": "Düsseldorf",
+      "aliases": [
+        "dusseldorf",
+        "duesseldorf"
+      ]
+    },
+    {
+      "label": "Stuttgart",
+      "aliases": [
+        "stuttgart"
+      ]
+    },
+    {
+      "label": "Leipzig",
+      "aliases": [
+        "leipzig"
+      ]
+    },
+    {
+      "label": "Dresden",
+      "aliases": [
+        "dresden"
+      ]
+    },
+    {
+      "label": "Hanover",
+      "aliases": [
+        "hannover",
+        "hanover"
+      ]
+    },
+    {
+      "label": "Nuremberg",
+      "aliases": [
+        "nuremberg",
+        "nurnberg",
+        "nuernberg"
+      ]
+    },
+    {
+      "label": "Bonn",
+      "aliases": [
+        "bonn"
+      ]
+    },
+    {
+      "label": "Karlsruhe",
+      "aliases": [
+        "karlsruhe"
+      ]
+    },
+    {
+      "label": "Mannheim",
+      "aliases": [
+        "mannheim"
+      ]
+    },
+    {
+      "label": "Heidelberg",
+      "aliases": [
+        "heidelberg"
+      ]
+    },
+    {
+      "label": "Essen",
+      "aliases": [
+        "essen"
+      ]
+    },
+    {
+      "label": "Dortmund",
+      "aliases": [
+        "dortmund"
+      ]
+    },
+    {
+      "label": "Bremen",
+      "aliases": [
+        "bremen"
+      ]
+    },
+    {
+      "label": "Münster",
+      "aliases": [
+        "munster",
+        "muenster"
+      ]
+    },
+    {
+      "label": "Potsdam",
+      "aliases": [
+        "potsdam"
+      ]
+    },
+    {
+      "label": "Aachen",
+      "aliases": [
+        "aachen"
+      ]
+    },
+    {
+      "label": "Freiburg",
+      "aliases": [
+        "freiburg"
+      ]
+    },
+    {
+      "label": "Darmstadt",
+      "aliases": [
+        "darmstadt"
+      ]
+    },
+    {
+      "label": "Augsburg",
+      "aliases": [
+        "augsburg"
+      ]
+    },
+    {
+      "label": "Ingolstadt",
+      "aliases": [
+        "ingolstadt"
+      ]
+    },
+    {
+      "label": "Regensburg",
+      "aliases": [
+        "regensburg"
+      ]
+    },
+    {
+      "label": "Wiesbaden",
+      "aliases": [
+        "wiesbaden"
+      ]
+    },
+    {
+      "label": "Mainz",
+      "aliases": [
+        "mainz"
+      ]
+    }
   ],
-  "country_terms": ["germany", "deutschland", "dach", "remote - de", "remote de"],
+  "country_terms": [
+    "germany",
+    "deutschland",
+    "dach",
+    "remote - de",
+    "remote de"
+  ],
   "include_remote_europe": false,
-
   "german_required_phrases": [
-    "fliessend deutsch", "fliessende deutschkenntnisse", "verhandlungssicheres deutsch",
-    "verhandlungssichere deutschkenntnisse", "sehr gute deutschkenntnisse",
-    "deutsch auf muttersprachniveau", "deutsch (c1", "deutsch c1",
-    "fluent german", "fluency in german", "fluent in german", "native german",
-    "business-fluent german", "business fluent german", "german (c1", "german c1",
-    "german (c2", "german c2", "german is a must", "german is required"
+    "fliessend deutsch",
+    "fliessende deutschkenntnisse",
+    "verhandlungssicheres deutsch",
+    "verhandlungssichere deutschkenntnisse",
+    "sehr gute deutschkenntnisse",
+    "deutsch auf muttersprachniveau",
+    "deutsch (c1",
+    "deutsch c1",
+    "fluent german",
+    "fluency in german",
+    "fluent in german",
+    "native german",
+    "business-fluent german",
+    "business fluent german",
+    "german (c1",
+    "german c1",
+    "german (c2",
+    "german c2",
+    "german is a must",
+    "german is required"
   ],
-
   "discovery_queries": [
     "site:jobs.ashbyhq.com growth germany",
     "site:jobs.ashbyhq.com product manager germany",
