@@ -1,6 +1,6 @@
 # Ashby Job Radar
 
-Daily email of **newly published Growth / Product / GTM roles in Berlin & Munich** from companies that hire through Ashby (`jobs.ashbyhq.com`).
+I created myself a daily digest of **newly published Growth / Product / GTM roles in Berlin & Munich** from companies that hire through Ashby (`jobs.ashbyhq.com`).
 
 It calls Ashby's public posting API for each board in `companies.txt`, keeps roles whose title matches and whose location is Berlin, Munich (incl. München / secondary locations) or remote-Germany, published in the last 7 days, and never sends the same job twice (`seen.json`). Each role is ranked by title fit and freshness and flagged when the description requires German or the title is VP/Director level.
 
