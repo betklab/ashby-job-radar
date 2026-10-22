@@ -1,32 +1,192 @@
 [
   {
-    "title": "Air Freight Operations Specialist (f/m/d)",
-    "company": "forto",
-    "location": "Hamburg",
-    "published": "2026-10-19T11:22:46.527000+00:00",
-    "url": "https://jobs.ashbyhq.com/forto/ae2ca3c5-3f12-4b27-98be-8bbfe22aa575",
-    "work_style": "Not stated",
-    "german_required": "German required",
-    "compensation": ""
-  },
-  {
-    "title": "Operations Specialist - Inbound",
-    "company": "forto",
-    "location": "Hamburg",
-    "published": "2026-10-19T11:13:50.720000+00:00",
-    "url": "https://jobs.ashbyhq.com/forto/9daa12be-1543-468a-83f7-d3876cb52971",
-    "work_style": "Not stated",
-    "german_required": "German required",
-    "compensation": ""
-  },
-  {
-    "title": "Head of People Operations (m/f/d)",
-    "company": "buena",
+    "title": "(Junior) Growth Associate (m/f/d)",
+    "company": "Ostrom",
     "location": "Berlin",
-    "published": "2026-10-16T07:10:03.191000+00:00",
-    "url": "https://jobs.ashbyhq.com/buena/e823bb7b-ddc3-4ef0-8031-0d1f2628f8d5",
-    "work_style": "Office",
+    "published": "2026-10-22T10:40:09.450000+00:00",
+    "url": "https://jobs.ashbyhq.com/Ostrom/c2073b43-69b3-41d2-b914-d8fbf17dc8eb",
+    "work_style": "Remote",
     "german_required": "German required (ad is in German)",
+    "compensation": ""
+  },
+  {
+    "title": "Marketing Operations Manager",
+    "company": "pleo",
+    "location": "Germany",
+    "published": "2026-10-22T09:54:02.322000+00:00",
+    "url": "https://jobs.ashbyhq.com/pleo/5042ee63-a41a-412b-bbd9-7c423ea41e4c",
+    "work_style": "Remote",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Marketing Operations Manager",
+    "company": "pleo",
+    "location": "Berlin",
+    "published": "2026-10-21T11:28:53.313000+00:00",
+    "url": "https://jobs.ashbyhq.com/pleo/c79cde07-aace-4b77-a704-247e541b721a",
+    "work_style": "Hybrid",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Director Supply Chain & Hardware Operations",
+    "company": "sereact",
+    "location": "Stuttgart",
+    "published": "2026-10-20T16:35:08.548000+00:00",
+    "url": "https://jobs.ashbyhq.com/sereact/27ae9382-f320-4742-878f-66ef1e63b4f8",
+    "work_style": "Hybrid",
+    "german_required": "German required",
+    "compensation": ""
+  },
+  {
+    "title": "Business Development Representative (German speaking)",
+    "company": "wayflyer",
+    "location": "Berlin",
+    "published": "2026-10-20T14:27:52.983000+00:00",
+    "url": "https://jobs.ashbyhq.com/wayflyer/9fdd976c-8263-4f7d-a701-1637745be780",
+    "work_style": "Hybrid",
+    "german_required": "German required",
+    "compensation": ""
+  },
+  {
+    "title": "Senior Go-to-Market Manager (m/w/d)",
+    "company": "pergolux",
+    "location": "Berlin / Frankfurt",
+    "published": "2026-10-20T12:05:53.311000+00:00",
+    "url": "https://jobs.ashbyhq.com/pergolux/3fd1cc3d-ff03-4785-b26b-18ff600cf4dc",
+    "work_style": "Office",
+    "german_required": "German required",
+    "compensation": ""
+  },
+  {
+    "title": "Senior Product Manager - Paper.io 2",
+    "company": "voodoo",
+    "location": "Berlin",
+    "published": "2026-10-20T12:04:36.758000+00:00",
+    "url": "https://jobs.ashbyhq.com/voodoo/c0f28476-2ff1-4206-b344-530c9f36a73a",
+    "work_style": "Remote",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Product Manager - Paper.io 2",
+    "company": "voodoo",
+    "location": "Berlin",
+    "published": "2026-10-20T12:04:33.930000+00:00",
+    "url": "https://jobs.ashbyhq.com/voodoo/c8e8b2a6-4a11-4594-a64b-1963007e3333",
+    "work_style": "Remote",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Senior Product Manager - Platform",
+    "company": "taktile",
+    "location": "Berlin",
+    "published": "2026-10-19T16:00:32.122000+00:00",
+    "url": "https://jobs.ashbyhq.com/taktile/071b2936-1222-47e5-b050-400209ebd406",
+    "work_style": "Hybrid",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Marketing Analyst",
+    "company": "pergolux",
+    "location": "Berlin",
+    "published": "2026-10-19T14:39:12.915000+00:00",
+    "url": "https://jobs.ashbyhq.com/pergolux/82eecfea-670a-43ff-a801-4cd69b594b98",
+    "work_style": "Office",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Senior Events Growth Manager",
+    "company": "platform-engineering",
+    "location": "Berlin",
+    "published": "2026-10-19T12:26:32.297000+00:00",
+    "url": "https://jobs.ashbyhq.com/platform-engineering/503ddbfd-cb99-4e4e-8802-9aebf7f70d9b",
+    "work_style": "Remote",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Head of Marketing & Communications",
+    "company": "se3",
+    "location": "Munich",
+    "published": "2026-10-18T08:52:41.163000+00:00",
+    "url": "https://jobs.ashbyhq.com/se3/69824dfb-aaf6-4d62-9ced-198a8242ae83",
+    "work_style": "Office",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Director - Mission Operations",
+    "company": "se3",
+    "location": "Munich",
+    "published": "2026-10-18T08:52:31.889000+00:00",
+    "url": "https://jobs.ashbyhq.com/se3/4697c980-e47f-4003-bcf5-ad9561a9ca6c",
+    "work_style": "Office",
+    "german_required": "German required",
+    "compensation": ""
+  },
+  {
+    "title": "(Senior) Associate – Energy Markets & Business Development (Railway Power & PPAs)",
+    "company": "trawa",
+    "location": "Berlin",
+    "published": "2026-10-16T12:55:15.273000+00:00",
+    "url": "https://jobs.ashbyhq.com/trawa/ae420c57-f9df-43ef-862d-b449b9b9a327",
+    "work_style": "Office",
+    "german_required": "German required",
+    "compensation": ""
+  },
+  {
+    "title": "Business Development Manager, DACH",
+    "company": "siteminder",
+    "location": "Berlin",
+    "published": "2026-10-16T09:44:05.219000+00:00",
+    "url": "https://jobs.ashbyhq.com/siteminder/f8adb28b-973d-4397-89bf-093e2cf00512",
+    "work_style": "Remote",
+    "german_required": "German required",
+    "compensation": ""
+  },
+  {
+    "title": "Product Marketing Manager",
+    "company": "Peec",
+    "location": "Berlin",
+    "published": "2026-10-15T17:35:05.647000+00:00",
+    "url": "https://jobs.ashbyhq.com/Peec/ba101700-e2d6-4f4e-98c3-48f7104bd66b",
+    "work_style": "Office",
+    "german_required": null,
+    "compensation": "€75K – €90K • Offers Equity"
+  },
+  {
+    "title": "GTM Enablement Specialist",
+    "company": "Peec",
+    "location": "Berlin",
+    "published": "2026-10-15T17:34:37.823000+00:00",
+    "url": "https://jobs.ashbyhq.com/Peec/d8287c3f-4b13-4d0c-84e0-67801857fc54",
+    "work_style": "Office",
+    "german_required": "German required",
+    "compensation": "€70K – €80K • Offers Equity"
+  },
+  {
+    "title": "Brand Experience Manager (m/f/d)",
+    "company": "yepoda",
+    "location": "Berlin",
+    "published": "2026-10-15T15:13:09.334000+00:00",
+    "url": "https://jobs.ashbyhq.com/yepoda/2958aa81-206d-4f08-a3da-b341976f9d9a",
+    "work_style": "Not stated",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Senior Revenue Operations Manager (m/f/d) - Sales Ops & Strategy",
+    "company": "voize",
+    "location": "Berlin",
+    "published": "2026-10-15T14:33:24.065000+00:00",
+    "url": "https://jobs.ashbyhq.com/voize/6514089f-7d71-47ef-86ca-848fac267307",
+    "work_style": "Hybrid",
+    "german_required": null,
     "compensation": ""
   }
 ]
