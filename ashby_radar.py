@@ -380,8 +380,28 @@ def compensation(job: dict) -> str:
             or comp.get("scrapeableCompensationSalarySummary") or "")
 
 
+def in_focus(loc: str, style: str, cfg: dict) -> bool:
+    """Keep only the cities you care about (+ remote roles in Germany)."""
+    focus = cfg.get("focus_cities")
+    if not focus:
+        return True
+    if any(c in focus for c in loc.split(" / ")):
+        return True
+    return bool(cfg.get("include_remote_germany", True)) and loc == "Germany" and style == "Remote"
+
+
+def publish_cutoff(seen: dict, cfg: dict, now: datetime) -> datetime:
+    """new_only: jobs published since the previous run (minus a small buffer).
+    week: jobs published in the last lookback_days."""
+    if cfg.get("digest_mode", "new_only") == "new_only":
+        last = parse_date(seen.get("_last_run"))
+        buffer = timedelta(hours=cfg.get("overlap_hours", 3))
+        return (last - buffer) if last else now - timedelta(hours=24)
+    return now - timedelta(days=cfg["lookback_days"])
+
+
 def curate(boards: dict[str, list[dict]], cfg: dict, seen: dict, now: datetime):
-    cutoff = now - timedelta(days=cfg["lookback_days"])
+    cutoff = publish_cutoff(seen, cfg, now)
     picks = []
     for slug, jobs in boards.items():
         for job in jobs:
@@ -404,6 +424,8 @@ def curate(boards: dict[str, list[dict]], cfg: dict, seen: dict, now: datetime):
             job["_new"] = key not in seen
             job["_slug"], job["_loc"], job["_pub"] = slug, loc, pub
             job["_style"] = work_style(job)
+            if not in_focus(loc, job["_style"], cfg):
+                continue
             job["_german"] = german_required(job, cfg)
             job["_comp"] = compensation(job)
             picks.append(job)
@@ -423,7 +445,7 @@ def job_meta(j: dict) -> list[str]:
 
 def render_md(picks, now, stats) -> str:
     lines = [f"# Ashby Job Radar — {now:%a %d %b %Y}", "",
-             (f"{len(picks)} new roles in Germany since the last email · newest first · "
+             (f"{len(picks)} roles posted since the last email · newest first · "
               if stats["mode"] == "new_only" else
               f"{len(picks)} roles in Germany posted in the last {stats['days']} days "
               f"({stats['n_new']} 🆕 since last email) · newest first · ") +
@@ -478,7 +500,7 @@ def render_html(picks, now, stats) -> str:
     return (f'<div style="font-family:-apple-system,Segoe UI,sans-serif;max-width:640px">'
             f'<h2 style="margin:0">Ashby Job Radar</h2>'
             f'<p style="color:#6b7280;margin:4px 0 12px">{now:%A %d %B %Y} · '
-            + (f'{len(picks)} new roles in Germany since the last email'
+            + (f'{len(picks)} roles posted since the last email'
                if stats["mode"] == "new_only" else
                f'{len(picks)} roles in Germany from the last {stats["days"]} days · '
                f'{stats["n_new"]} new since last email')
@@ -590,12 +612,13 @@ def main(argv=None) -> int:
         for j in picks:
             seen.setdefault(j.get("id") or j["jobUrl"], now.date().isoformat())
         cutoff = (now - timedelta(days=cfg.get("forget_after_days", 60))).date().isoformat()
-        seen = {k: v for k, v in seen.items() if v >= cutoff}
+        seen = {k: v for k, v in seen.items() if k == "_last_run" or v >= cutoff}
+        seen["_last_run"] = now.isoformat()
         args.seen.write_text(json.dumps(seen, indent=1, sort_keys=True), encoding="utf-8")
 
     print(md)
     if not args.no_email and (stats["n_new"] or cfg.get("email_when_empty")):
-        subj = f"Ashby radar: {stats['n_new']} new roles in Germany ({now:%d %b})"
+        subj = f"Ashby radar: {stats['n_new']} new roles ({now:%d %b})"
         if send_email(subj, page, md):
             print("Email sent.")
     return 0
