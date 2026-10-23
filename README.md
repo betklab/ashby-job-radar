@@ -1,28 +1,28 @@
 # 📡 Ashby Job Radar
 
-**Every morning, an email digest with the jobs that just went live in Germany. Only the new ones, and only the roles I actually care about.**
+**Every morning, an email with the jobs that just went live in Germany. Only the new ones, and only the roles you actually care about.**
 
 ## Why this exists
 
-Lots of startups and scale-ups hire through [Ashby](https://www.ashbyhq.com), and their job boards all live at `jobs.ashbyhq.com/<company>`. The catch is that Ashby has no search across companies.
+Lots of startups and scale-ups hire through [Ashby](https://www.ashbyhq.com), and their job boards all live at `jobs.ashbyhq.com/<company>`. The catch is that Ashby has no search across companies. So you either open dozens of career pages every day, or you find out about a great role two weeks late, when it already has 400 applicants.
 
-This radar does the boring part for us. It finds every company in Germany that hires through Ashby, checks all their boards every morning, and emails you only the roles that are fresh and relevant. You open one email and you're up to date.
+This radar does the boring part for you. It finds every company in Germany that hires through Ashby, checks all their boards every morning, and emails you only the roles that are fresh and relevant. You open one email and you're up to date.
 
 ## What lands in your inbox
 
-A short minimal list, newest first, with everything you need to decide in five seconds:
+A short list of roles **posted since yesterday's email**, newest first, with everything you need to decide in five seconds:
 
 - **The role and the company**, with a link straight to the posting
-- **City**, like Berlin, Munich or Hamburg ("Germany" if no city is given)
+- 📍 **City**, like Berlin, Munich or Hamburg ("Germany" if no city is given)
 - **Work style**: Remote, Hybrid or Office
--  *Salary**, when the company shares it
-- **German required**, flagged when the ad asks for fluent or native German, or is written in German
+- 💶 **Salary**, when the company shares it
+- 🇩🇪 **German required**, flagged when the ad asks for fluent or native German, or is written in German
 
-You only ever see a job **once**. If nothing new came out, you get no email.
+You only ever see a job **once**, and never anything older than the previous email. If nothing new came out, you get no email.
 
 ## Which jobs count
 
-Titles with things like **growth, product (manager, analyst, owner, marketing), marketing, operations / BizOps / RevOps, strategy, founder's associate, chief of staff, GTM, business development, partnerships, e-commerce**. Each one has to be posted in the last 7 days and located **anywhere in Germany**.
+Titles with things like **growth, product (manager, analyst, owner, marketing), marketing, operations / BizOps / RevOps, strategy, founder's associate, chief of staff, GTM, business development, partnerships, e-commerce**. Each one has to be **in Berlin or Munich** (or remote within Germany) and **published since the last email**.
 
 Engineering, design, internships and working-student roles are filtered out.
 
@@ -36,7 +36,7 @@ There are three sources, and they all feed the same daily check:
 2. **Your Notion database (optional).** It needs a column called `Ashby ID` with values like `n8n` or `lovable`. Add a row and the company is checked from the next morning.
 3. **`companies.txt` (optional).** The same idea as Notion, as a plain list. Paste an ID or a full Ashby link, one per line.
 
-Jobs always come straight from **Ashby's official public job API**.
+Jobs always come straight from **Ashby's official public job API**. No page scraping.
 
 ## Setup (≈10 min, free)
 
@@ -54,7 +54,7 @@ Jobs always come straight from **Ashby's official public job API**.
    If you use Notion, also open the database → **••• → Connections** and add your connection, so it can read the list.
 3. **Kick it off** from *Actions → Ashby job radar → Run workflow*.
 
-That's it. It runs every morning at around 07:40 Berlin time. By the time I am back from my morning run, list is ready!
+That's it. It runs every morning at around 07:40 Berlin time.
 
 > The first run takes longer (10–30 min) because it's meeting thousands of companies for the first time. It also catches up on this week's roles, so expect a bigger first email.
 
@@ -65,10 +65,10 @@ Everything lives in `config.json`:
 | Want to… | Change |
 |---|---|
 | add or remove role keywords | `title_include` / `title_exclude` |
-| add a city | `cities` |
+| add cities to the email (e.g. Hamburg) | `focus_cities` (empty list = all of Germany) |
+| drop remote-in-Germany roles | `include_remote_germany: false` |
 | include "Remote – Europe" roles | `include_remote_europe: true` |
-| look further back than 7 days | `lookback_days` |
-| get the full 7-day list every day instead of only new ones | `digest_mode: "week"` |
+| get the full 7-day list every day instead of only new ones | `digest_mode: "week"` (range set by `lookback_days`) |
 | only check ticked companies in Notion | add a checkbox column and set `notion.active_property` |
 | turn off the weekly crawl | `harvest.enabled: false` |
 
