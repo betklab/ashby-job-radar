@@ -14,6 +14,9 @@
   "forget_after_days": 60,
   "email_when_empty": false,
   "digest_mode": "new_only",
+  "overlap_hours": 3,
+  "focus_cities": ["Berlin", "Munich"],
+  "include_remote_germany": true,
   "workers": 16,
   "title_include": [
     "growth",
