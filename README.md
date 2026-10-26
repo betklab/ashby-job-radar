@@ -74,7 +74,7 @@ Everything lives in `config.json`:
 
 ## Good to know
 
-- **Companies it can't see:** some companies show their Ashby jobs on their own site (`careers.company.com`) instead of `jobs.ashbyhq.com`. The crawl can't find those, so add them to Notion by hand.
+- **Companies it can't see:** some companies show their Ashby jobs on their own site (`careers.company.com`) instead of `jobs.ashbyhq.com`. The crawl can't find those. [`embedded-boards/`](embedded-boards/README.md) finds many of them with a monthly manual step; add any others to Notion by hand.
 - **The German flag is a best guess:** it reads the job text. "German is a plus" won't trigger it.
 - **Broken company IDs:** IDs from your own list that don't work are listed at the bottom of the email, so you can fix or delete them.
 - **Where things are stored:** `seen.json` remembers what you've already been sent, and `boards.json` is the crawled company list. The workflow saves both back to the repo automatically.

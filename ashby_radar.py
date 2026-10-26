@@ -622,6 +622,8 @@ def main(argv=None) -> int:
     ap.add_argument("--seen", default=ROOT / "seen.json", type=Path)
     ap.add_argument("--registry", default=ROOT / "boards.json", type=Path,
                     help="all Ashby companies found by crawling, with a Germany flag")
+    ap.add_argument("--embedded", default=ROOT / "embedded-boards" / "boards.txt", type=Path,
+                    help="companies showing Ashby on their own careers page")
     ap.add_argument("--out", default=ROOT / "output", type=Path)
     ap.add_argument("--fixtures", type=Path, help="dir of <slug>.json files (offline test)")
     ap.add_argument("--no-email", action="store_true")
@@ -659,6 +661,8 @@ def main(argv=None) -> int:
     harvested = 0
     if not args.fixtures:
         harvested = update_registry(reg, cfg, now)
+        for s in load_slugs(args.embedded):          # companies the crawl can't see
+            reg.setdefault(s.lower(), {"de": None})
         extra = [s for s in pick_registry_boards(reg, now, cfg) if s.lower() not in own]
         print(f"[registry] {sum(1 for k, v in reg.items() if k != '_meta' and v.get('de'))} "
               f"German companies known · +{harvested} new from crawl · "
