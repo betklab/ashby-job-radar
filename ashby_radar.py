@@ -119,6 +119,12 @@ def load_json(path: Path, default):
         return default
 
 
+def write_registry(path: Path, reg: dict):
+    """One company per line, so each day's commit shows just the companies that changed."""
+    rows = [f"{json.dumps(k)}: {json.dumps(v, sort_keys=True)}" for k, v in sorted(reg.items())]
+    path.write_text("{\n" + ",\n".join(rows) + "\n}\n", encoding="utf-8")
+
+
 # ---------------------------------------------------------------- discovery
 SLUG_RE = re.compile(r"jobs\.ashbyhq\.com/([^/?#\s\"']+)")
 
@@ -193,37 +199,50 @@ def _get(url: str, timeout: int = 120, tries: int = 4) -> bytes | None:
     return None
 
 
-def harvest_common_crawl(n_crawls: int) -> set[str]:
-    """Every company slug Common Crawl has seen under jobs.ashbyhq.com in its latest crawls."""
+def harvest_common_crawl(n_crawls: int, done=()) -> tuple[set[str], list[str], set[str]]:
+    """Every company slug Common Crawl has seen under jobs.ashbyhq.com in its latest crawls.
+    Also returns those crawls and the ones read in full. A crawl never changes, so it's read
+    once; one with a failed or cut-off page is read again next run."""
     raw = _get(f"{CC_INDEX}/collinfo.json", timeout=60)
     if not raw:
-        return set()
+        return set(), [], set(done)
     crawls = [c["id"] for c in json.loads(raw)][:n_crawls]
+    finished = {cid for cid in done if cid in crawls}
     slugs: set[str] = set()
     for cid in crawls:
+        if cid in finished:
+            continue
         base = f"{CC_INDEX}/{cid}-index?url=jobs.ashbyhq.com/*&output=json&fl=url"
         info = _get(base + "&showNumPages=true", timeout=60)
+        complete = info is not None
         try:
             pages = int(json.loads(info)["pages"]) if info else 0
         except (ValueError, KeyError):
-            pages = 0
+            pages, complete = 0, False
         before = len(slugs)
         for p in range(pages):
             body = _get(f"{base}&page={p}")
             if not body:
+                complete = False
                 continue
             for line in body.decode("utf-8", "replace").splitlines():
+                if not line.strip():
+                    continue
                 try:
                     url = json.loads(line).get("url", "")
-                except ValueError:
+                except ValueError:          # a page cut off mid-line
+                    complete = False
                     continue
                 m = re.match(r"https?://jobs\.ashbyhq\.com/([^/?#]+)", url)
                 if m:
                     slug = urllib.parse.unquote(m.group(1)).strip()
                     if slug.lower() not in NOT_SLUGS and "." not in slug:
                         slugs.add(slug)
-        print(f"[harvest] {cid}: {pages} pages, +{len(slugs) - before} companies", file=sys.stderr)
-    return slugs
+        if complete:
+            finished.add(cid)
+        print(f"[harvest] {cid}: {pages} pages, +{len(slugs) - before} companies"
+              + ("" if complete else " (incomplete, read again next run)"), file=sys.stderr)
+    return slugs, crawls, finished
 
 
 def update_registry(reg: dict, cfg: dict, now: datetime) -> int:
@@ -234,17 +253,19 @@ def update_registry(reg: dict, cfg: dict, now: datetime) -> int:
     last = reg.get("_meta", {}).get("harvested")
     if last and (now.date() - datetime.fromisoformat(last).date()).days < hcfg.get("every_days", 7):
         return 0
-    found = harvest_common_crawl(hcfg.get("crawls", 3))
-    if not found:            # keep the previous date so it retries tomorrow
-        return 0
+    meta = reg.setdefault("_meta", {})
+    found, crawls, finished = harvest_common_crawl(hcfg.get("crawls", 3),
+                                                   meta.get("completed_crawls", []))
     known = {k.lower() for k in reg if k != "_meta"}
     added = 0
     for s in found:
         if s.lower() not in known:
-            reg[s] = {"de": None}
+            reg[s.lower()] = {"de": None}
             known.add(s.lower())
             added += 1
-    reg.setdefault("_meta", {})["harvested"] = now.date().isoformat()
+    meta["completed_crawls"] = sorted(finished)
+    if crawls and finished >= set(crawls):    # otherwise keep the old date so it retries tomorrow
+        meta["harvested"] = now.date().isoformat()
     return added
 
 
@@ -390,20 +411,24 @@ def in_focus(loc: str, style: str, cfg: dict) -> bool:
     return bool(cfg.get("include_remote_germany", True)) and loc == "Germany" and style == "Remote"
 
 
-def publish_cutoff(seen: dict, cfg: dict, now: datetime) -> datetime:
-    """new_only: jobs published since the previous run (minus a small buffer).
+def publish_cutoff(seen: dict, cfg: dict, now: datetime, checked: str | None = None) -> datetime:
+    """new_only: jobs published since the previous run (minus a small buffer), or since the
+    company was last checked if that's earlier, but never before seen.json's memory.
     week: jobs published in the last lookback_days."""
     if cfg.get("digest_mode", "new_only") == "new_only":
         last = parse_date(seen.get("_last_run"))
         buffer = timedelta(hours=cfg.get("overlap_hours", 3))
-        return (last - buffer) if last else now - timedelta(hours=24)
+        cutoff = (last - buffer) if last else now - timedelta(hours=24)
+        if checked:          # checked weekly, or its board failed for a few days
+            cutoff = min(cutoff, datetime.fromisoformat(checked).replace(tzinfo=timezone.utc) - buffer)
+        return max(cutoff, now - timedelta(days=cfg.get("forget_after_days", 60)))
     return now - timedelta(days=cfg["lookback_days"])
 
 
-def curate(boards: dict[str, list[dict]], cfg: dict, seen: dict, now: datetime):
-    cutoff = publish_cutoff(seen, cfg, now)
+def curate(boards: dict[str, list[dict]], cfg: dict, seen: dict, now: datetime, checked=None):
     picks = []
     for slug, jobs in boards.items():
+        cutoff = publish_cutoff(seen, cfg, now, (checked or {}).get(slug))
         for job in jobs:
             if job.get("isListed") is False:
                 continue
@@ -574,7 +599,7 @@ def main(argv=None) -> int:
             slugs += sorted(new_slugs)
             own |= {s.lower() for s in new_slugs}
 
-    reg = load_json(args.registry, {})
+    reg = {k.lower(): v for k, v in load_json(args.registry, {}).items()}   # one entry per company
     harvested = 0
     if not args.fixtures:
         harvested = update_registry(reg, cfg, now)
@@ -584,7 +609,7 @@ def main(argv=None) -> int:
               f"checking {len(slugs)} listed + {len(extra)} crawled", file=sys.stderr)
         slugs = slugs + extra
 
-    boards, bad = {}, []
+    boards, bad, checked = {}, [], {}
     if args.fixtures:
         for p in sorted(args.fixtures.glob("*.json")):
             boards[p.stem] = json.loads(p.read_text())["jobs"]
@@ -594,17 +619,17 @@ def main(argv=None) -> int:
                 if jobs is None:
                     if slug.lower() in own:
                         bad.append((slug, err))
-                    elif slug in reg and err and err.startswith("HTTP 4"):
-                        reg[slug] = {"de": False, "checked": now.date().isoformat()}
+                    elif slug.lower() in reg and err and err.startswith("HTTP 4"):
+                        reg[slug.lower()]["de"] = False      # "checked" stays the last good check
                 else:
                     boards[slug] = jobs
-                    if slug in reg or slug.lower() not in own:
-                        reg[slug] = {"de": has_germany(jobs, cfg),
-                                     "checked": now.date().isoformat()}
-        args.registry.write_text(json.dumps(reg, indent=0, sort_keys=True), encoding="utf-8")
+                    checked[slug] = reg.get(slug.lower(), {}).get("checked")
+                    reg[slug.lower()] = {"de": has_germany(jobs, cfg),
+                                         "checked": now.date().isoformat()}
+        write_registry(args.registry, reg)
 
     seen = load_json(args.seen, {})
-    picks = curate(boards, cfg, seen, now)
+    picks = curate(boards, cfg, seen, now, checked)
     stats = {"boards_ok": len(boards), "bad_slugs": bad, "new_slugs": new_slugs,
              "jobs_total": sum(len(j) for j in boards.values()),
              "days": cfg["lookback_days"], "n_new": sum(1 for j in picks if j.get("_new")),
