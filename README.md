@@ -20,6 +20,10 @@ A short list of roles **posted since yesterday's email**, newest first, with eve
 
 You only ever see a job **once**, and never anything older than the previous email. If nothing new came out, you get no email.
 
+## The job board
+
+The same roles also go on one web page, with search and filters: every open role that fits, including ones you were already sent. It updates after each morning's email. To turn it on: *Settings → Pages → Source: GitHub Actions*. More in [`job-board/`](job-board/README.md).
+
 ## Which jobs count
 
 Titles with things like **growth, product (manager, analyst, owner, marketing), marketing, operations / BizOps / RevOps, strategy, founder's associate, chief of staff, GTM, business development, partnerships, e-commerce**. Each one has to be **in Berlin or Munich** (or remote within Germany) and **published since the last email**.
@@ -87,6 +91,7 @@ Everything lives in `config.json`:
 python3 ashby_radar.py --no-email    # print today's list, don't send anything
 python3 ashby_radar.py --dry-run     # same, and save nothing (only output/)
 python3 ashby_radar.py --discover-only   # only look for new companies (needs SERPER_API_KEY)
+python3 job-board/build.py --out site    # build the job board page into site/
 ```
 
 Only needs Python 3.9+. No packages to install.

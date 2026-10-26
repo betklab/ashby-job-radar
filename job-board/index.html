@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <meta name="description" content="An independent collection of product, growth, operations and other matching roles in Berlin, Munich and remote across Germany.">
+  <title>bet’s board — Stop the spaghetti search.</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./{{STYLES_CSS}}">
+  <script src="./{{APP_JS}}" defer></script>
+</head>
+<body data-source="./{{DATA_FILE}}">
+  <a class="skip-link" href="#results">Skip to jobs</a>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="bet’s board home"><span class="brand-asterisk" aria-hidden="true">✳</span>bet’s board<span class="brand-dot">.</span></a>
+      <div class="header-note"><span class="status-dot"></span>A small collection. Plenty of possibility.</div>
+      <a class="header-link" href="#about">About this board <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="hero-kicker">Stop the spaghetti search.</p>
+          <h1 id="page-title">One board.<br><em>All of <span class="country-flag" role="img" aria-label="Germany">🇩🇪</span> coolest jobs</em></h1>
+        </div>
+        <p class="intro">Find your next role in product, growth, operations and more.<br class="desktop-break"> Berlin, Munich, or wherever you call home in Germany.</p>
+        <div class="hero-aside" aria-label="Catalog size">
+          <dl class="hero-stats"><div><dt>Open roles</dt><dd id="hero-count">{{ROLE_COUNT}}</dd></div><div><dt>Companies</dt><dd id="hero-companies">{{COMPANY_COUNT}}</dd></div></dl>
+        </div>
+      </section>
+
+      <section class="search-area" aria-label="Search jobs">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
+          <label class="sr-only" for="search">Search roles, companies or skills</label>
+          <input id="search" type="search" autocomplete="off" placeholder="A role, a company, a skill…" disabled>
+          <kbd aria-hidden="true">/</kbd>
+        </div>
+        <div class="search-options">
+          <label class="check-label"><input id="descriptions" type="checkbox" checked> Search job descriptions, too</label>
+          <p class="updated"><span class="status-dot"></span><span id="updated">Loading the latest collection…</span></p>
+        </div>
+      </section>
+
+      <div class="catalog-layout">
+        <aside id="filter-home" class="filter-sidebar" aria-label="Filter jobs">
+          <div id="filter-panel">
+            <div class="filter-heading"><h2>Make it yours</h2><button id="reset" class="text-button" type="button">Reset</button></div>
+            <div id="featured-filter" class="featured-filter" hidden><label class="check-label"><input id="featured" type="checkbox"><span><span class="featured-star" aria-hidden="true">★</span> Featured companies</span></label></div>
+            <fieldset><legend>Location</legend><div id="location-options" class="check-options"></div></fieldset>
+            <fieldset><legend>How you work</legend><div id="style-options" class="check-options"></div></fieldset>
+            <div class="filter-field"><label for="company">Company</label><select id="company"><option value="">All companies</option></select></div>
+            <div class="filter-field"><label for="posted">Published</label><select id="posted"><option value="">Any time</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option></select></div>
+            <div class="salary-filter"><label class="check-label"><input id="salary" type="checkbox"> Salary listed</label></div>
+            <p class="filter-footnote">A little focus goes a long way.</p>
+          </div>
+        </aside>
+
+        <section id="results" class="results" aria-label="Matching jobs" tabindex="-1">
+          <div class="results-toolbar">
+            <div><h2>Explore the collection <span class="tiny-arrow" aria-hidden="true">↘</span></h2><p id="result-count" role="status" aria-live="polite">Finding your possibilities…</p></div>
+            <div class="toolbar-controls">
+              <button id="mobile-filters" class="mobile-filter-button" type="button">Filters <span id="filter-count"></span></button>
+              <div class="view-switch" role="group" aria-label="Group results"><button id="view-company" type="button" aria-pressed="true">Companies</button><button id="view-roles" type="button" aria-pressed="false">Roles</button></div>
+              <label class="sort-label"><span>Sort by</span><select id="sort"><option value="company">Company A–Z</option><option value="featured">Featured first</option><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="most">Most roles</option><option value="title">Role A–Z</option></select></label>
+            </div>
+          </div>
+          <div id="active-filters" class="active-filters" aria-label="Active filters"></div>
+          <div id="job-list" aria-busy="true"><div class="loading-card">Putting the collection together<span class="loading-dots">…</span></div></div>
+          <div id="empty" class="empty-state" hidden><span aria-hidden="true">↗</span><h3>Room for a different direction.</h3><p>No roles match those filters. Try a broader search.</p><button id="clear-empty" type="button" class="primary-button">Clear filters</button></div>
+          <div class="load-more-wrap"><button id="load-more" class="load-more" type="button" hidden>Show more companies <span aria-hidden="true">↓</span></button><p id="shown-count"></p></div>
+        </section>
+      </div>
+      <noscript><p class="noscript">Enable JavaScript to search and browse this job collection.</p></noscript>
+    </main>
+
+    <footer id="about"><div class="footer-bottom"><a class="brand" href="./">bet’s board.</a><p>An independent collection of matching Ashby roles.<br>Refreshed daily. Availability and details live with each company.</p><a href="https://github.com/{{REPO}}" target="_blank" rel="noopener noreferrer">Made to explore <span aria-hidden="true">↗</span></a></div></footer>
+  </div>
+
+  <dialog id="filter-dialog" class="filter-dialog" aria-labelledby="filter-dialog-title"><div class="mobile-dialog-header"><h2 id="filter-dialog-title">Refine your search</h2><button id="close-filters" class="close-button" type="button" aria-label="Close filters">×</button></div><div id="mobile-filter-content"></div><button id="apply-filters" type="button" class="primary-button">Show results</button></dialog>
+  <dialog id="job-dialog" class="job-dialog" aria-labelledby="detail-title"><div class="detail-top"><span class="eyebrow">A NEW POSSIBILITY</span><button id="close-job" class="close-button" type="button" aria-label="Close job details">×</button></div><div id="job-detail"></div></dialog>
+</body>
+</html>
