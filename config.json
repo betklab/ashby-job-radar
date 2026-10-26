@@ -295,6 +295,11 @@
     "site:jobs.ashbyhq.com product manager germany",
     "site:jobs.ashbyhq.com operations berlin",
     "site:jobs.ashbyhq.com marketing munich",
-    "site:jobs.ashbyhq.com founders associate germany"
+    "site:jobs.ashbyhq.com founders associate germany",
+    "site:jobs.ashbyhq.com (\"product manager\" OR \"GTM\" OR \"founder associate\" OR \"operations\" OR \"automation\" OR \"marketing\") \"Berlin\"",
+    "site:jobs.ashbyhq.com \"Berlin\"",
+    "site:jobs.ashbyhq.com (\"product manager\" OR \"GTM\" OR \"founder associate\" OR \"operations\" OR \"automation\" OR \"marketing\") \"Munich\"",
+    "site:jobs.ashbyhq.com \"Munich\"",
+    "site:jobs.ashbyhq.com \"Germany\" \"Remote\""
   ]
 }

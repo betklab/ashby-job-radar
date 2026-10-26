@@ -50,6 +50,7 @@ Jobs always come straight from **Ashby's official public job API**. No page scra
    | `EMAIL_TO` | where the email should go (comma-separate several) |
    | `NOTION_TOKEN` | *optional*: your Notion connection's secret (API type, read-only) |
    | `NOTION_DATABASE_ID` | *optional*: the link to your Notion database |
+   | `SERPER_API_KEY` | *optional*: a [Serper](https://serper.dev) key, for *Find new companies* (see Good to know) |
 
    If you use Notion, also open the database → **••• → Connections** and add your connection, so it can read the list.
 3. **Kick it off** from *Actions → Ashby job radar → Run workflow*.
@@ -75,6 +76,7 @@ Everything lives in `config.json`:
 ## Good to know
 
 - **Companies it can't see:** some companies show their Ashby jobs on their own site (`careers.company.com`) instead of `jobs.ashbyhq.com`. The crawl can't find those. [`embedded-boards/`](embedded-boards/README.md) finds many of them with a monthly manual step; add any others to Notion by hand.
+- **Finding new companies with Google:** *Actions → Find new companies → Run workflow* searches Google (through Serper) with `discovery_queries` from `config.json` and adds the live companies it finds to `companies.txt`. It only runs when you click, using up to 20 Serper credits each time.
 - **The German flag is a best guess:** it reads the job text. "German is a plus" won't trigger it.
 - **Broken company IDs:** IDs from your own list that don't work are listed at the bottom of the email, so you can fix or delete them.
 - **Where things are stored:** `seen.json` remembers what you've already been sent, and `boards.json` is the crawled company list. The workflow saves both back to the repo automatically.
@@ -84,6 +86,7 @@ Everything lives in `config.json`:
 ```bash
 python3 ashby_radar.py --no-email    # print today's list, don't send anything
 python3 ashby_radar.py --dry-run     # same, and save nothing (only output/)
+python3 ashby_radar.py --discover-only   # only look for new companies (needs SERPER_API_KEY)
 ```
 
 Only needs Python 3.9+. No packages to install.

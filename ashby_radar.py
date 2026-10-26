@@ -165,8 +165,48 @@ def discover_tavily(cfg: dict, key: str) -> set[str]:
     return found
 
 
+class SearchFailed(Exception):
+    """Some searches failed; .found has what the others found."""
+    def __init__(self, found: set[str], error: Exception):
+        super().__init__(f"search failed: {error}")
+        self.found = found
+
+
+def discover_serper(cfg: dict, key: str) -> set[str]:
+    """Serper (Google results): free credits to start, then paid, so it's run on demand.
+    One credit per page, two pages per query."""
+    found, error = set(), None
+    for q in cfg.get("discovery_queries", []):
+        for page in (1, 2):
+            body = json.dumps({"q": q, "gl": "de", "hl": "en", "page": page}).encode()
+            req = urllib.request.Request("https://google.serper.dev/search", data=body, headers={
+                "Content-Type": "application/json", "X-API-KEY": key, **UA})
+            try:
+                with urllib.request.urlopen(req, timeout=30) as r:
+                    data = json.load(r)
+            except Exception as e:
+                print(f"[discover] serper query failed: {q!r}: {e}", file=sys.stderr)
+                if getattr(e, "code", None) in (401, 402, 403, 429):   # bad key, no credits, limited
+                    raise SearchFailed(found, e)
+                error = e
+                break
+            results = data.get("organic", [])
+            for item in results:
+                m = SLUG_RE.search(item.get("link", ""))
+                if m:
+                    found.add(urllib.parse.unquote(m.group(1)))
+            if not results:                # Google can return a short page 1 and still have a page 2
+                break
+    if error:
+        raise SearchFailed(found, error)
+    return found
+
+
 def discover_slugs(cfg: dict) -> set[str]:
-    """Optional: find new Ashby boards via Tavily (TAVILY_API_KEY) or Brave (BRAVE_API_KEY)."""
+    """Optional: find new Ashby boards via Serper (SERPER_API_KEY), Tavily (TAVILY_API_KEY)
+    or Brave (BRAVE_API_KEY)."""
+    if os.environ.get("SERPER_API_KEY"):
+        return discover_serper(cfg, os.environ["SERPER_API_KEY"])
     if os.environ.get("TAVILY_API_KEY"):
         return discover_tavily(cfg, os.environ["TAVILY_API_KEY"])
     key = os.environ.get("BRAVE_API_KEY")
@@ -629,6 +669,8 @@ def main(argv=None) -> int:
     ap.add_argument("--no-email", action="store_true")
     ap.add_argument("--dry-run", action="store_true",
                     help="only write output/: no email, nothing else saved")
+    ap.add_argument("--discover-only", action="store_true",
+                    help="only search for new companies and add them to companies.txt")
     args = ap.parse_args(argv)
     args.no_email = args.no_email or args.dry_run
 
@@ -649,13 +691,28 @@ def main(argv=None) -> int:
     own = {s.lower() for s in slugs}          # your list: always checked, failures reported
     new_slugs = set()
     if not args.fixtures:
-        new_slugs = {s for s in discover_slugs(cfg) if s.lower() not in own}
+        if args.discover_only and not any(os.environ.get(k) for k in
+                                          ("SERPER_API_KEY", "TAVILY_API_KEY", "BRAVE_API_KEY")):
+            sys.exit("--discover-only needs SERPER_API_KEY, TAVILY_API_KEY or BRAVE_API_KEY")
+        known = own | {k.lower() for k in load_json(args.registry, {})} | {
+            s.lower() for s in load_slugs(args.embedded)}         # only companies the radar doesn't know
+        try:
+            found, failed = discover_slugs(cfg), None
+        except SearchFailed as e:          # keep what the other searches found
+            found, failed = e.found, e
+            print(f"[discover] {e}", file=sys.stderr)
+        new_slugs = {s.lower() for s in found if s.lower() not in known}
+        new_slugs = {s for s in new_slugs if fetch_board(s)[1] is not None}    # live boards only
         if new_slugs:
             if not args.dry_run:
                 with open(args.companies, "a", encoding="utf-8") as f:
                     f.write(f"\n# discovered {now:%Y-%m-%d}\n" + "\n".join(sorted(new_slugs)) + "\n")
             slugs += sorted(new_slugs)
             own |= {s.lower() for s in new_slugs}
+        if args.discover_only:
+            print(f"[discover] {len(new_slugs)} new companies: {', '.join(sorted(new_slugs)) or '-'}",
+                  file=sys.stderr)
+            return 1 if failed else 0       # a red run when the search didn't fully work
 
     reg = {k.lower(): v for k, v in load_json(args.registry, {}).items()}   # one entry per company
     harvested = 0
