@@ -16,15 +16,19 @@ Standard library only. Python 3.9+.
 from __future__ import annotations
 
 import argparse
+import gzip
 import html
+import http.client
 import json
 import os
 import re
 import smtplib
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import zlib
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from email.mime.multipart import MIMEMultipart
@@ -115,14 +119,23 @@ def load_slugs_notion(cfg: dict) -> list[str] | None:
 def load_json(path: Path, default):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
-    except (FileNotFoundError, json.JSONDecodeError):
+    except FileNotFoundError:
         return default
+    except json.JSONDecodeError as e:     # stop rather than start over and resend everything
+        sys.exit(f"{path.name} is damaged ({e}): restore it from the repo's history or delete it")
+
+
+def write_file(path: Path, text: str):
+    """Write to a temporary file first, so a crash can't leave a half-written file."""
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(text, encoding="utf-8")
+    os.replace(tmp, path)
 
 
 def write_registry(path: Path, reg: dict):
     """One company per line, so each day's commit shows just the companies that changed."""
     rows = [f"{json.dumps(k)}: {json.dumps(v, sort_keys=True)}" for k, v in sorted(reg.items())]
-    path.write_text("{\n" + ",\n".join(rows) + "\n}\n", encoding="utf-8")
+    write_file(path, "{\n" + ",\n".join(rows) + "\n}\n")
 
 
 # ---------------------------------------------------------------- discovery
@@ -182,20 +195,33 @@ CC_INDEX = "https://index.commoncrawl.org"
 NOT_SLUGS = {"api", "embed", "static", "favicon.ico", "robots.txt", "sitemap.xml", ""}
 
 
-def _get(url: str, timeout: int = 120, tries: int = 4) -> bytes | None:
-    import time
+def download(url: str, timeout: int, tries: int) -> bytes:
+    """GET, compressed (about 10x smaller). Retries time-outs, cut-off downloads, rate limits
+    (429) and server errors (5xx); anything else, like a 404, is raised straight away."""
     for i in range(tries):
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=timeout) as r:
-                return r.read()
+            req = urllib.request.Request(url, headers={**UA, "Accept-Encoding": "gzip"})
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                body = r.read()
+                return gzip.decompress(body) if r.headers.get("Content-Encoding") == "gzip" else body
         except urllib.error.HTTPError as e:
-            if e.code == 404:
-                return None
-            err = e
-        except Exception as e:  # timeouts, resets
-            err = e
+            if (e.code != 429 and e.code < 500) or i == tries - 1:
+                raise
+        except (OSError, EOFError, zlib.error, http.client.HTTPException):
+            if i == tries - 1:
+                raise
         time.sleep(5 * (i + 1))
-    print(f"[harvest] giving up on {url[:90]}: {err}", file=sys.stderr)
+    raise RuntimeError("unreachable")
+
+
+def _get(url: str, timeout: int = 120, tries: int = 4) -> bytes | None:
+    try:
+        return download(url, timeout, tries)
+    except urllib.error.HTTPError as e:
+        if e.code != 404:
+            print(f"[harvest] giving up on {url[:90]}: {e}", file=sys.stderr)
+    except Exception as e:
+        print(f"[harvest] giving up on {url[:90]}: {e}", file=sys.stderr)
     return None
 
 
@@ -296,10 +322,8 @@ def has_germany(jobs: list[dict], cfg: dict) -> bool:
 
 # ---------------------------------------------------------------- fetching
 def fetch_board(slug: str) -> tuple[str, list[dict] | None, str | None]:
-    req = urllib.request.Request(API.format(slug=urllib.parse.quote(slug)), headers=UA)
     try:
-        with urllib.request.urlopen(req, timeout=30) as r:
-            data = json.load(r)
+        data = json.loads(download(API.format(slug=urllib.parse.quote(slug)), timeout=30, tries=2))
         return slug, data.get("jobs", []), None
     except urllib.error.HTTPError as e:
         return slug, None, f"HTTP {e.code}"
@@ -316,12 +340,12 @@ def norm(s: str) -> str:
 
 
 def job_locations(job: dict) -> list[str]:
-    locs = [job.get("location") or ""]
-    for sl in job.get("secondaryLocations") or []:
-        locs.append(sl.get("location") or "")
-    addr = (job.get("address") or {}).get("postalAddress") or {}
-    locs.append(" ".join(str(addr.get(k) or "") for k in
-                         ("addressLocality", "addressRegion", "addressCountry")))
+    locs = []
+    for location in [job] + (job.get("secondaryLocations") or []):
+        locs.append(location.get("location") or "")
+        addr = (location.get("address") or {}).get("postalAddress") or {}
+        locs.append(" ".join(str(addr.get(k) or "") for k in
+                             ("addressLocality", "addressRegion", "addressCountry")))
     return [l for l in locs if l.strip()]
 
 
@@ -334,9 +358,10 @@ def match_location(job: dict, cfg: dict) -> str | None:
             cities.append(city["label"])
     if cities:
         return " / ".join(cities)
-    country = norm(str(((job.get("address") or {}).get("postalAddress") or {})
-                       .get("addressCountry") or ""))
-    if country in ("de", "deu", "germany", "deutschland") or any(
+    countries = {norm(str(((location.get("address") or {}).get("postalAddress") or {})
+                         .get("addressCountry") or ""))
+                 for location in [job] + (job.get("secondaryLocations") or [])}
+    if countries & {"de", "deu", "germany", "deutschland"} or any(
             re.search(r"\b" + re.escape(norm(t)) + r"\b", blob) for t in cfg["country_terms"]):
         return "Germany"
     if cfg.get("include_remote_europe") and any(
@@ -575,8 +600,10 @@ def main(argv=None) -> int:
     ap.add_argument("--out", default=ROOT / "output", type=Path)
     ap.add_argument("--fixtures", type=Path, help="dir of <slug>.json files (offline test)")
     ap.add_argument("--no-email", action="store_true")
-    ap.add_argument("--dry-run", action="store_true", help="don't update seen.json")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="only write output/: no email, nothing else saved")
     args = ap.parse_args(argv)
+    args.no_email = args.no_email or args.dry_run
 
     cfg = load_config(args.config)
     now = datetime.now(timezone.utc)
@@ -597,8 +624,9 @@ def main(argv=None) -> int:
     if not args.fixtures:
         new_slugs = {s for s in discover_slugs(cfg) if s.lower() not in own}
         if new_slugs:
-            with open(args.companies, "a", encoding="utf-8") as f:
-                f.write(f"\n# discovered {now:%Y-%m-%d}\n" + "\n".join(sorted(new_slugs)) + "\n")
+            if not args.dry_run:
+                with open(args.companies, "a", encoding="utf-8") as f:
+                    f.write(f"\n# discovered {now:%Y-%m-%d}\n" + "\n".join(sorted(new_slugs)) + "\n")
             slugs += sorted(new_slugs)
             own |= {s.lower() for s in new_slugs}
 
@@ -612,7 +640,7 @@ def main(argv=None) -> int:
               f"checking {len(slugs)} listed + {len(extra)} crawled", file=sys.stderr)
         slugs = slugs + extra
 
-    boards, bad, checked = {}, [], {}
+    boards, bad, checked, errors = {}, [], {}, {}
     if args.fixtures:
         for p in sorted(args.fixtures.glob("*.json")):
             boards[p.stem] = json.loads(p.read_text())["jobs"]
@@ -620,15 +648,23 @@ def main(argv=None) -> int:
         with ThreadPoolExecutor(max_workers=cfg.get("workers", 16)) as pool:
             for slug, jobs, err in pool.map(fetch_board, slugs):
                 if jobs is None:
+                    errors[err] = errors.get(err, 0) + 1
                     if slug.lower() in own:
                         bad.append((slug, err))
-                    elif slug.lower() in reg and err and err.startswith("HTTP 4"):
+                    elif slug.lower() in reg and err == "HTTP 404":   # gone; a 429 or time-out isn't
                         reg[slug.lower()]["de"] = False      # keeps its "checked" date
                 else:
                     boards[slug] = jobs
                     checked[slug] = reg.get(slug.lower(), {}).get("checked")
                     reg[slug.lower()] = {**reg.get(slug.lower(), {}), "de": has_germany(jobs, cfg)}
-        write_registry(args.registry, reg)   # flags and new companies; "checked" moves once sent
+        print(f"[fetch] {len(boards)} of {len(slugs)} companies checked"
+              + "".join(f" · {n} {e}" for e, n in sorted(errors.items(), key=lambda x: -x[1])),
+              file=sys.stderr)
+        if not args.dry_run:      # flags and new companies; "checked" moves once sent
+            write_registry(args.registry, reg)
+    if not boards:          # a red run in Actions, and nothing is marked as seen
+        print("[fetch] no company could be checked", file=sys.stderr)
+        return 1
 
     seen = load_json(args.seen, {})
     picks = curate(boards, cfg, seen, now, checked)
@@ -661,7 +697,7 @@ def main(argv=None) -> int:
         cutoff = (now - timedelta(days=cfg.get("forget_after_days", 60))).date().isoformat()
         seen = {k: v for k, v in seen.items() if k == "_last_run" or v >= cutoff}
         seen["_last_run"] = now.isoformat()
-        args.seen.write_text(json.dumps(seen, indent=1, sort_keys=True), encoding="utf-8")
+        write_file(args.seen, json.dumps(seen, indent=1, sort_keys=True))
         if not args.fixtures:       # these companies' roles are now sent up to today
             for slug in boards:
                 reg[slug.lower()]["checked"] = now.date().isoformat()
