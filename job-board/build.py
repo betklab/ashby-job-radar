@@ -79,15 +79,28 @@ def web_link(value) -> str:
 
 
 # ---------------------------------------------------------------- roles
-def open_roles(boards: dict[str, list[dict]], cfg: dict, now: datetime) -> list[dict]:
-    """The email's own filters, without its date cutoff, so every open role counts."""
-    picks = radar.curate(boards, {**cfg, "digest_mode": "week", "lookback_days": 36500}, {}, now)
+def open_roles(boards: dict[str, list[dict]], cfg: dict) -> list[dict]:
+    """The email's filters for title, place and work style. No date cutoff, so every
+    open role counts, even one without a publish date."""
     roles, keys = [], set()
-    for job in picks:
-        key = job.get("id") or job.get("jobUrl")
-        if key not in keys and web_link(job.get("jobUrl")):   # a company can have two board names
+    for slug, jobs in boards.items():
+        for job in jobs:
+            title = job.get("title") or ""
+            if job.get("isListed") is False or not radar.word_hit(title, cfg["title_include"]):
+                continue
+            if radar.word_hit(title, cfg["title_exclude"]):
+                continue
+            loc, style = radar.match_location(job, cfg), radar.work_style(job)
+            if not loc or not radar.in_focus(loc, style, cfg) or not web_link(job.get("jobUrl")):
+                continue
+            key = job.get("id") or job["jobUrl"]
+            if key in keys:                 # a company can have two board names
+                continue
             keys.add(key)
-            roles.append(job)
+            pub = job.get("publishedAt")
+            roles.append({**job, "_slug": slug, "_loc": loc, "_style": style,
+                          "_comp": radar.compensation(job),
+                          "_pub": radar.parse_date(pub) if isinstance(pub, str) else None})
     return roles
 
 
@@ -105,7 +118,7 @@ def card(job: dict) -> dict:
         "style": job["_style"], "salary": job["_comp"],
         "employment": job.get("employmentType") or "",
         "department": job.get("department") or "", "team": job.get("team") or "",
-        "published": job["_pub"].isoformat(),
+        "published": job["_pub"].isoformat() if job["_pub"] else None,
         "description": (job.get("descriptionPlain") or "").strip() or plain_text(job.get("descriptionHtml")),
         "url": job["jobUrl"], "applyUrl": web_link(job.get("applyUrl")) or job["jobUrl"],
     }
@@ -123,8 +136,10 @@ def fetch_profile(slug: str) -> dict:
     if data.get("errors"):
         raise RuntimeError(f"Ashby's page API changed: {data['errors']}")
     org = (data.get("data") or {}).get("organizationFromHostedJobsPageName") or {}
+    if not str(org.get("name") or "").strip():      # keep the last good profile, try again tomorrow
+        raise ValueError("Ashby returned no company")
     theme = org.get("theme") or {}
-    return {"name": (org.get("name") or "").strip(), "website": web_link(org.get("publicWebsite")),
+    return {"name": org["name"].strip(), "website": web_link(org.get("publicWebsite")),
             "logo": web_link(theme.get("logoSquareImageUrl") or theme.get("logoWordmarkImageUrl")),
             "intro": plain_text(theme.get("jobBoardTopDescriptionHtml"))}
 
@@ -134,7 +149,7 @@ def update_profiles(slugs: list[str], profiles: dict, today: date, max_age: int 
     Stops early if Ashby asks us to slow down or answers oddly; the rest wait for the next run."""
     def fresh(p):
         try:
-            return date.fromisoformat(p["fetched"]) > today - timedelta(days=max_age)
+            return bool(p["name"]) and date.fromisoformat(p["fetched"]) > today - timedelta(days=max_age)
         except (KeyError, TypeError, ValueError):
             return False
 
@@ -166,7 +181,7 @@ def write_site(out: Path, roles: list[dict], profiles: dict, featured: set[str],
         if slug not in companies:
             p = profiles.get(slug, {})
             companies[slug] = {"name": p.get("name") or radar.company_name(slug),
-                               "website": p.get("website", ""), "logoUrl": p.get("logo", ""),
+                               "website": web_link(p.get("website")), "logoUrl": web_link(p.get("logo")),
                                "introduction": p.get("intro", ""), "featured": slug in featured,
                                "roles": 0}
         companies[slug]["roles"] += 1
@@ -233,7 +248,7 @@ def main(argv=None) -> int:
               + (f" ({', '.join(sorted(failed)[:20])}{', …' if len(failed) > 20 else ''})" if failed else "")]
     ok = bool(boards) and len(failed) <= len(slugs) // 20     # a few hiccups are fine; an outage isn't
     if ok:
-        roles = open_roles(boards, cfg, now)
+        roles = open_roles(boards, cfg)
         on_board = sorted({j["_slug"] for j in roles})
         profiles = radar.load_json(args.profiles, {}) if args.profiles else {}
         if args.profiles:
