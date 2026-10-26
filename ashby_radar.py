@@ -430,7 +430,7 @@ def curate(boards: dict[str, list[dict]], cfg: dict, seen: dict, now: datetime):
             job["_comp"] = compensation(job)
             picks.append(job)
     picks.sort(key=lambda j: j["_pub"], reverse=True)       # newest release first
-    return picks[: cfg["max_results"]]
+    return picks
 
 
 # ---------------------------------------------------------------- output
@@ -452,12 +452,17 @@ def render_md(picks, now, stats) -> str:
              f"{stats['boards_ok']} companies checked", ""]
     if not picks:
         lines.append("_Nothing new today._")
-    for j in picks:
+    for j in picks[: stats["max"]]:
         new = "🆕 " if j.get("_new") and stats["mode"] == "week" else ""
         lines.append(f"### {new}[{j['title']}]({j['jobUrl']}) — {company_name(j['_slug'])}")
         lines.append(" · ".join(job_meta(j)))
         if j["_german"]:
             lines.append(f"🇩🇪 {j['_german']}")
+        lines.append("")
+    more = picks[stats["max"]:]          # over max_results: listed short instead of dropped
+    if more:
+        lines += [f"**{len(more)} more** (over the limit of {stats['max']}):", ""]
+        lines += [f"- [{j['title']}]({j['jobUrl']}) — {company_name(j['_slug'])}" for j in more]
         lines.append("")
     if stats["bad_slugs"]:
         lines += ["---", "Boards that failed (fix or remove the Ashby ID): "
@@ -474,8 +479,8 @@ STYLE_COLOR = {"Remote": "#047857", "Hybrid": "#1d4ed8", "Office": "#6b7280", "N
 def render_html(picks, now, stats) -> str:
     e = html.escape
     rows = []
-    for j in picks:
-        pill = (f'<span style="display:inline-block;padding:1px 8px;border-radius:10px;'
+    for j in picks[: stats["max"]]:
+        pill =(f'<span style="display:inline-block;padding:1px 8px;border-radius:10px;'
                 f'border:1px solid {STYLE_COLOR[j["_style"]]};color:{STYLE_COLOR[j["_style"]]};'
                 f'font-size:12px">{e(j["_style"])}</span>')
         german = (f'<div style="color:#b45309;font-size:13px;margin-top:2px">🇩🇪 {e(j["_german"])}</div>'
@@ -493,6 +498,13 @@ def render_html(picks, now, stats) -> str:
             f'<div style="color:#9ca3af;font-size:12px">posted {j["_pub"]:%a %d %b}</div>'
             f'{german}</td></tr>')
     body = "".join(rows) or '<tr><td style="color:#6b7280">Nothing new today.</td></tr>'
+    more = picks[stats["max"]:]
+    if more:
+        body += (f'<tr><td style="padding:12px 0"><b>{len(more)} more</b> (over the limit of '
+                 f'{stats["max"]}):<ul style="margin:4px 0;padding-left:18px">'
+                 + "".join(f'<li><a href="{e(j["jobUrl"])}" style="color:#1d4ed8;text-decoration:none">'
+                           f'{e(j["title"])}</a> — {e(company_name(j["_slug"]))}</li>' for j in more)
+                 + "</ul></td></tr>")
     foot = ""
     if stats["bad_slugs"]:
         foot = ('<p style="color:#9ca3af;font-size:12px">Boards that failed: '
@@ -596,7 +608,7 @@ def main(argv=None) -> int:
     stats = {"boards_ok": len(boards), "bad_slugs": bad, "new_slugs": new_slugs,
              "jobs_total": sum(len(j) for j in boards.values()),
              "days": cfg["lookback_days"], "n_new": sum(1 for j in picks if j.get("_new")),
-             "mode": cfg.get("digest_mode", "new_only")}
+             "mode": cfg.get("digest_mode", "new_only"), "max": cfg["max_results"]}
 
     args.out.mkdir(parents=True, exist_ok=True)
     md, page = render_md(picks, now, stats), render_html(picks, now, stats)
@@ -608,20 +620,22 @@ def main(argv=None) -> int:
           "german_required": j["_german"], "compensation": j["_comp"]} for j in picks],
         indent=2, ensure_ascii=False), encoding="utf-8")
 
-    if not args.dry_run:
+    print(md)
+    sent = True          # nothing to send counts as sent
+    if not args.no_email and (stats["n_new"] or cfg.get("email_when_empty")):
+        subj = f"Ashby radar: {stats['n_new']} new roles ({now:%d %b})"
+        sent = send_email(subj, page, md)
+        print("Email sent." if sent else "Email not sent (SMTP settings missing): these roles stay new.")
+
+    # Only now mark roles as seen, so an email that fails doesn't lose them
+    if sent and not args.dry_run:
         for j in picks:
             seen.setdefault(j.get("id") or j["jobUrl"], now.date().isoformat())
         cutoff = (now - timedelta(days=cfg.get("forget_after_days", 60))).date().isoformat()
         seen = {k: v for k, v in seen.items() if k == "_last_run" or v >= cutoff}
         seen["_last_run"] = now.isoformat()
         args.seen.write_text(json.dumps(seen, indent=1, sort_keys=True), encoding="utf-8")
-
-    print(md)
-    if not args.no_email and (stats["n_new"] or cfg.get("email_when_empty")):
-        subj = f"Ashby radar: {stats['n_new']} new roles ({now:%d %b})"
-        if send_email(subj, page, md):
-            print("Email sent.")
-    return 0
+    return 0 if sent else 1
 
 
 if __name__ == "__main__":
