@@ -83,7 +83,7 @@ Everything lives in `config.json`:
 
 ```bash
 python3 ashby_radar.py --no-email    # print today's list, don't send anything
-python3 ashby_radar.py --dry-run     # same, and don't mark jobs as seen
+python3 ashby_radar.py --dry-run     # same, and save nothing (only output/)
 ```
 
 Only needs Python 3.9+. No packages to install.
