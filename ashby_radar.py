@@ -33,6 +33,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -195,10 +196,25 @@ CC_INDEX = "https://index.commoncrawl.org"
 NOT_SLUGS = {"api", "embed", "static", "favicon.ico", "robots.txt", "sitemap.xml", ""}
 
 
+def retry_after(value: str | None) -> float | None:
+    """Seconds a server asks us to wait: Retry-After is a number or an HTTP date."""
+    if not value:
+        return None
+    try:
+        return max(0.0, float(value))
+    except ValueError:
+        try:
+            return max(0.0, (parsedate_to_datetime(value) - datetime.now(timezone.utc)).total_seconds())
+        except (TypeError, ValueError):
+            return None
+
+
 def download(url: str, timeout: int, tries: int) -> bytes:
     """GET, compressed (about 10x smaller). Retries time-outs, cut-off downloads, rate limits
-    (429) and server errors (5xx); anything else, like a 404, is raised straight away."""
+    (429) and server errors (5xx), waiting as long as the server asks (up to a minute);
+    anything else, like a 404, is raised straight away."""
     for i in range(tries):
+        wait = 5 * (i + 1)
         try:
             req = urllib.request.Request(url, headers={**UA, "Accept-Encoding": "gzip"})
             with urllib.request.urlopen(req, timeout=timeout) as r:
@@ -207,10 +223,14 @@ def download(url: str, timeout: int, tries: int) -> bytes:
         except urllib.error.HTTPError as e:
             if (e.code != 429 and e.code < 500) or i == tries - 1:
                 raise
+            asked = retry_after((e.headers or {}).get("Retry-After"))
+            if asked is not None and asked > 60:      # a long pause: leave it for the next run
+                raise
+            wait = max(wait, asked or 0)
         except (OSError, EOFError, zlib.error, http.client.HTTPException):
             if i == tries - 1:
                 raise
-        time.sleep(5 * (i + 1))
+        time.sleep(wait)
     raise RuntimeError("unreachable")
 
 
@@ -339,11 +359,17 @@ def norm(s: str) -> str:
     return s
 
 
+def postal(location: dict) -> dict:
+    """A location's address, under "postalAddress" or flat (both appear in Ashby's docs)."""
+    addr = location.get("address") or {}
+    return addr.get("postalAddress") or addr
+
+
 def job_locations(job: dict) -> list[str]:
     locs = []
     for location in [job] + (job.get("secondaryLocations") or []):
         locs.append(location.get("location") or "")
-        addr = (location.get("address") or {}).get("postalAddress") or {}
+        addr = postal(location)
         locs.append(" ".join(str(addr.get(k) or "") for k in
                              ("addressLocality", "addressRegion", "addressCountry")))
     return [l for l in locs if l.strip()]
@@ -358,8 +384,7 @@ def match_location(job: dict, cfg: dict) -> str | None:
             cities.append(city["label"])
     if cities:
         return " / ".join(cities)
-    countries = {norm(str(((location.get("address") or {}).get("postalAddress") or {})
-                         .get("addressCountry") or ""))
+    countries = {norm(str(postal(location).get("addressCountry") or ""))
                  for location in [job] + (job.get("secondaryLocations") or [])}
     if countries & {"de", "deu", "germany", "deutschland"} or any(
             re.search(r"\b" + re.escape(norm(t)) + r"\b", blob) for t in cfg["country_terms"]):
