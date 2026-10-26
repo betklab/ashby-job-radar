@@ -214,23 +214,23 @@ def harvest_common_crawl(n_crawls: int, done=()) -> tuple[set[str], list[str], s
             continue
         base = f"{CC_INDEX}/{cid}-index?url=jobs.ashbyhq.com/*&output=json&fl=url"
         info = _get(base + "&showNumPages=true", timeout=60)
-        complete = info is not None
         try:
-            pages = int(json.loads(info)["pages"]) if info else 0
-        except (ValueError, KeyError):
+            meta = json.loads(info or b"")
+            pages = int(meta["pages"])
+            complete = pages > 0 or meta.get("blocks") == 0     # zero pages only for an empty index
+        except (TypeError, ValueError, KeyError):                # no answer, empty or not JSON
             pages, complete = 0, False
         before = len(slugs)
         for p in range(pages):
-            body = _get(f"{base}&page={p}")
-            if not body:
-                complete = False
-                continue
+            body = _get(f"{base}&page={p}") or b""
+            records = 0
             for line in body.decode("utf-8", "replace").splitlines():
                 if not line.strip():
                     continue
                 try:
-                    url = json.loads(line).get("url", "")
-                except ValueError:          # a page cut off mid-line
+                    url = str(json.loads(line)["url"])
+                    records += 1
+                except (TypeError, ValueError, KeyError):   # a line cut off, or not a record
                     complete = False
                     continue
                 m = re.match(r"https?://jobs\.ashbyhq\.com/([^/?#]+)", url)
@@ -238,6 +238,8 @@ def harvest_common_crawl(n_crawls: int, done=()) -> tuple[set[str], list[str], s
                     slug = urllib.parse.unquote(m.group(1)).strip()
                     if slug.lower() not in NOT_SLUGS and "." not in slug:
                         slugs.add(slug)
+            if not records:                 # a missing, empty or unreadable page
+                complete = False
         if complete:
             finished.add(cid)
         print(f"[harvest] {cid}: {pages} pages, +{len(slugs) - before} companies"
@@ -413,7 +415,8 @@ def in_focus(loc: str, style: str, cfg: dict) -> bool:
 
 def publish_cutoff(seen: dict, cfg: dict, now: datetime, checked: str | None = None) -> datetime:
     """new_only: jobs published since the previous run (minus a small buffer), or since the
-    company was last checked if that's earlier, but never before seen.json's memory.
+    company's roles were last sent ("checked") if that's earlier, but never before seen.json's
+    memory.
     week: jobs published in the last lookback_days."""
     if cfg.get("digest_mode", "new_only") == "new_only":
         last = parse_date(seen.get("_last_run"))
@@ -620,13 +623,12 @@ def main(argv=None) -> int:
                     if slug.lower() in own:
                         bad.append((slug, err))
                     elif slug.lower() in reg and err and err.startswith("HTTP 4"):
-                        reg[slug.lower()]["de"] = False      # "checked" stays the last good check
+                        reg[slug.lower()]["de"] = False      # keeps its "checked" date
                 else:
                     boards[slug] = jobs
                     checked[slug] = reg.get(slug.lower(), {}).get("checked")
-                    reg[slug.lower()] = {"de": has_germany(jobs, cfg),
-                                         "checked": now.date().isoformat()}
-        write_registry(args.registry, reg)
+                    reg[slug.lower()] = {**reg.get(slug.lower(), {}), "de": has_germany(jobs, cfg)}
+        write_registry(args.registry, reg)   # flags and new companies; "checked" moves once sent
 
     seen = load_json(args.seen, {})
     picks = curate(boards, cfg, seen, now, checked)
@@ -660,6 +662,10 @@ def main(argv=None) -> int:
         seen = {k: v for k, v in seen.items() if k == "_last_run" or v >= cutoff}
         seen["_last_run"] = now.isoformat()
         args.seen.write_text(json.dumps(seen, indent=1, sort_keys=True), encoding="utf-8")
+        if not args.fixtures:       # these companies' roles are now sent up to today
+            for slug in boards:
+                reg[slug.lower()]["checked"] = now.date().isoformat()
+            write_registry(args.registry, reg)
     return 0 if sent else 1
 
 
