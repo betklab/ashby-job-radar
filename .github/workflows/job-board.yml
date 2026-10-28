@@ -1,0 +1,86 @@
+name: Publish job board
+
+on:
+  # after each morning email and each search for new companies
+  workflow_run:
+    workflows: ["Ashby job radar", "Find new companies"]
+    types: [completed]
+  # when you edit the settings, the company lists or the page
+  push:
+    branches: [main]
+    paths:
+      - "config.json"
+      - "companies.txt"
+      - "embedded-boards/boards.txt"
+      - "job-board/**"
+      - ".github/workflows/job-board.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: read
+
+concurrency:
+  group: job-board
+  queue: max
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    cache-mode: write     # lets runs started by workflow_run save the logo cache
+    outputs:
+      pages: ${{ steps.pages.outputs.on }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Check GitHub Pages is on
+        id: pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$(gh api repos/${{ github.repository }}/pages --jq .build_type 2>/dev/null)" = workflow ]; then
+            echo on=true >> "$GITHUB_OUTPUT"
+          else
+            echo '::notice::To publish the job board, go to Settings → Pages and set Source to GitHub Actions.'
+          fi
+      - name: Restore company logos from earlier runs
+        if: ${{ steps.pages.outputs.on == 'true' }}
+        uses: actions/cache/restore@v6
+        with:
+          path: profiles.json
+          key: profiles-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: profiles-
+      - name: Build the board
+        if: ${{ steps.pages.outputs.on == 'true' }}
+        run: python job-board/build.py --profiles profiles.json --out site
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+      - name: Remember company logos
+        if: ${{ !cancelled() && steps.pages.outputs.on == 'true' && hashFiles('profiles.json') != '' }}
+        uses: actions/cache/save@v6
+        with:
+          path: profiles.json
+          key: profiles-${{ github.run_id }}-${{ github.run_attempt }}
+      - if: ${{ steps.pages.outputs.on == 'true' }}
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    if: ${{ needs.build.outputs.pages == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

@@ -1,0 +1,48 @@
+# Companies shown with a ★ on the job board, one per line (like companies.txt).
+# It starts as your original companies.txt list. Edit it any time.
+
+# Berlin
+n8n
+langfuse
+langdock
+pitch
+knowunity
+getmoss
+pliant
+upvest
+choco
+superchat
+taxfix
+raisin
+sennder
+forto
+enpal
+1komma5grad
+buena
+candis
+circula
+heyjobs
+billie
+nelly
+zeitgold
+trade-republic
+perplexity
+elevenlabs
+deepl
+parloa
+black-forest-labs
+quantum-systems
+
+# Munich
+scalable-capital
+tacto
+getivy
+synthesia
+helsing
+isar-aerospace
+cognigy
+ottonova
+avimedical
+openai
+proxima-fusion
+make
