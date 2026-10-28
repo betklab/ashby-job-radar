@@ -107,6 +107,7 @@ bjakcareer
 cello
 clera
 dandy
+dash0
 doinstruct
 everai
 fonio
