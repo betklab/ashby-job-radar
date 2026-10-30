@@ -1,311 +1,111 @@
 [
   {
-    "title": "Product Lead - AI Finance App",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T11:18:55.466000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/f2c00420-5baf-46a3-95f8-b3a2e8758b5d",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Manager - AI Stockbroking App",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T11:16:50.997000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/ff3d0a0d-4684-4653-b0f4-150673a3e2dc",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Manager - AI Neobank App",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T11:14:18.319000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/48e8d249-259b-4582-89b7-66edc424fb67",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Manager - AI Investing",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T11:09:43.255000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/3b7dfd76-6ea8-4d8e-8f28-43bd485a72c4",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Manager - AI Finance",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T11:06:28.954000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/73801d1b-24a6-40be-9b84-654cb61ebb70",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Owner, Technical - AI Stockbroking",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T11:03:17.102000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/bd49b6ca-5fe7-4b78-a064-473fee0d3057",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Technical Product Lead - AI Stockbroking App",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T10:59:54.666000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/532ca6b9-e5b1-4dc8-a8c0-2d9a5790d34e",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Business Development Associate",
-    "company": "proxima-fusion",
-    "location": "Munich",
-    "published": "2026-10-29T09:14:35.045000+00:00",
-    "url": "https://jobs.ashbyhq.com/proxima-fusion/a73ada21-5744-454b-aaf6-45c032668abb",
-    "work_style": "Office",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Lead - AI Neobank App",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T08:28:45.011000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/81b361ba-6c1f-4f84-9081-64abd38ee3ce",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Manager - AI Finance",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T08:21:38.339000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/6a94dde1-5996-45da-b35a-1e92a4f937b2",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Manager - AI Investing",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T08:17:35.830000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/0c1af5df-4e89-4685-a761-eef7e2e48d99",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Manager - AI Neobank App",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T08:11:15.233000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/426a3d8d-2f6e-451a-9488-e3e755ea9fca",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Manager - AI Stockbroking",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T08:05:13.406000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/a314426a-2f25-4453-888d-bd6b44ecf116",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Manager - AI Stockbroking",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T08:04:59.929000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/57267d48-90e3-4670-a21c-848384496c7d",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Lead - AI Finance",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T08:02:52.456000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/1136aa87-30f6-41a9-b87d-b309338b966b",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Lead - AI Investing",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T07:58:19.544000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/a6af8f90-ef96-434f-ae04-9cb30e0cf20e",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Lead - AI Stockbroking",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T07:49:22.182000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/6a3f67c4-b658-4682-98a2-01fe37b3c5a7",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Owner, Technical - AI Neobank",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T07:17:52.687000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/95031d44-6ef2-412b-be01-6e0b3fba6e96",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Owner, Technical - AI Finance",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T06:59:57.101000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/7bd5122f-cf3c-49a7-a824-d23bf620c3fb",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Owner, Technical - AI Investing",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T06:55:25.501000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/685dc95b-6b67-4efd-a773-177e687dac5e",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Product Owner, Technical - AI Stockbroking",
-    "company": "bjakcareer",
-    "location": "Germany",
-    "published": "2026-10-29T06:50:47.381000+00:00",
-    "url": "https://jobs.ashbyhq.com/bjakcareer/b2f9c928-c392-416d-bb4e-f27bb3cf73ed",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Compliance Operations Analyst (m/f/d)",
-    "company": "pliant",
-    "location": "Berlin",
-    "published": "2026-10-28T19:34:22.918000+00:00",
-    "url": "https://jobs.ashbyhq.com/pliant/c944d7e9-3422-4cfb-a908-00ee9aa27fb4",
-    "work_style": "Hybrid",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Strategy & Operations, Product Growth",
-    "company": "clera",
-    "location": "Munich",
-    "published": "2026-10-28T17:30:03.831000+00:00",
-    "url": "https://jobs.ashbyhq.com/clera/4e62dcfe-b0db-4c4b-b0f2-776b2e71be0a",
-    "work_style": "Office",
-    "german_required": "German required",
-    "compensation": ""
-  },
-  {
-    "title": "Senior Product Manager AI -  — Studio Builder",
+    "title": "Paid Marketing Manager (m/w/d) - Germany ",
     "company": "pennylane",
-    "location": "Germany",
-    "published": "2026-10-28T16:49:29.098000+00:00",
-    "url": "https://jobs.ashbyhq.com/pennylane/c76653dc-805a-4406-9022-bb589bf3972c",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Growth Marketing Manager",
-    "company": "zeit-ai",
-    "location": "Munich",
-    "published": "2026-10-28T16:30:35.426000+00:00",
-    "url": "https://jobs.ashbyhq.com/zeit-ai/9bc7c5e3-35a0-40f7-8fce-2f378cc0614b",
-    "work_style": "Office",
-    "german_required": "German required",
-    "compensation": ""
-  },
-  {
-    "title": "Head of Operations (GPU Fleet)",
-    "company": "lyceum",
     "location": "Berlin",
-    "published": "2026-10-28T15:35:42.312000+00:00",
-    "url": "https://jobs.ashbyhq.com/lyceum/20c5eb59-8c66-4b48-ad59-a06037f2068d",
-    "work_style": "Office",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Senior Partner Marketing Manager - Agency",
-    "company": "n8n",
-    "location": "Berlin",
-    "published": "2026-10-28T15:17:19.125000+00:00",
-    "url": "https://jobs.ashbyhq.com/n8n/343e9c53-f22c-496b-a26e-46f9f6bb418d",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Organic Growth Manager (SEO & AI Search)",
-    "company": "cosuno",
-    "location": "Berlin",
-    "published": "2026-10-28T13:43:05.122000+00:00",
-    "url": "https://jobs.ashbyhq.com/cosuno/30db9144-8853-4751-9346-92803c17c3e4",
-    "work_style": "Remote",
-    "german_required": "German required",
-    "compensation": "€60K – €70K"
-  },
-  {
-    "title": "Junior Partner Operations Specialist (w/m/d)",
-    "company": "enpal",
-    "location": "Berlin",
-    "published": "2026-10-28T13:30:00.674000+00:00",
-    "url": "https://jobs.ashbyhq.com/enpal/0101cb99-239c-4714-967d-900c246bbdd9",
+    "published": "2026-10-30T09:56:24.814000+00:00",
+    "url": "https://jobs.ashbyhq.com/pennylane/2be00cf2-e309-466f-b755-6766f5f83b98",
     "work_style": "Hybrid",
     "german_required": "German required (ad is in German)",
     "compensation": ""
   },
   {
-    "title": "Junior Operations Specialist (w/m/d)",
+    "title": "SEA & Performance Marketing Manager:in (w/m/d)",
     "company": "enpal",
     "location": "Berlin",
-    "published": "2026-10-28T13:29:51.434000+00:00",
-    "url": "https://jobs.ashbyhq.com/enpal/376045d8-d08c-400a-a3ed-c942035eeda5",
+    "published": "2026-10-30T08:46:08.928000+00:00",
+    "url": "https://jobs.ashbyhq.com/enpal/25036f67-59ea-45cd-ba15-db7eed3c9df1",
     "work_style": "Not stated",
     "german_required": "German required (ad is in German)",
     "compensation": ""
   },
   {
-    "title": "Website Product Manager (m/f/d) ",
-    "company": "pliant",
+    "title": "Senior/Lead Lifecycle Marketing Manager (Full Remote - Germany)",
+    "company": "everai",
+    "location": "Germany",
+    "published": "2026-10-29T22:19:59.562000+00:00",
+    "url": "https://jobs.ashbyhq.com/everai/e0a891eb-63d9-4f3b-8584-8d3e790b3e4c",
+    "work_style": "Remote",
+    "german_required": null,
+    "compensation": "€85K – €105K • Offers Bonus"
+  },
+  {
+    "title": "Junior Operations Manager",
+    "company": "clera",
     "location": "Berlin",
-    "published": "2026-10-28T13:23:34.104000+00:00",
-    "url": "https://jobs.ashbyhq.com/pliant/c1bd7960-0471-4a47-9dc8-18200a445490",
+    "published": "2026-10-29T17:30:18.483000+00:00",
+    "url": "https://jobs.ashbyhq.com/clera/963fd77d-1362-4be0-a9cd-a4ca67e5dfb8",
+    "work_style": "Office",
+    "german_required": "German required",
+    "compensation": ""
+  },
+  {
+    "title": "Head of Growth",
+    "company": "clera",
+    "location": "Munich",
+    "published": "2026-10-29T17:24:10.099000+00:00",
+    "url": "https://jobs.ashbyhq.com/clera/0930ca21-332b-43c5-a603-9b8989af2fd1",
+    "work_style": "Office",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Senior Product Manager - Ad Traffic Quality (all genders)",
+    "company": "justplay-gmbh",
+    "location": "Berlin",
+    "published": "2026-10-29T17:10:23.059000+00:00",
+    "url": "https://jobs.ashbyhq.com/justplay-gmbh/04dd4991-68fb-46c3-97e1-9b372bef4074",
     "work_style": "Hybrid",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Senior Platform Product Manager (m/f/d)",
+    "company": "statista",
+    "location": "Berlin / Hamburg",
+    "published": "2026-10-29T16:31:14.096000+00:00",
+    "url": "https://jobs.ashbyhq.com/statista/32e08b4e-9ad0-442b-a2c4-919942985b63",
+    "work_style": "Hybrid",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Junior Influencer Marketing (m/f/d) | US Market",
+    "company": "yepoda",
+    "location": "Berlin",
+    "published": "2026-10-29T15:51:51.562000+00:00",
+    "url": "https://jobs.ashbyhq.com/yepoda/6b87b6f2-28fc-4cac-888b-c671ee372c86",
+    "work_style": "Not stated",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Go-to-Market (Business Development)",
+    "company": "kombo",
+    "location": "Berlin",
+    "published": "2026-10-29T15:40:15.180000+00:00",
+    "url": "https://jobs.ashbyhq.com/kombo/c50a05fe-5871-4b6e-9d7f-ed773d5f8afc",
+    "work_style": "Office",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Go-to-Market Manager – Commercial Energy Solutions (m/f/x)",
+    "company": "enpal",
+    "location": "Berlin",
+    "published": "2026-10-29T13:28:52.497000+00:00",
+    "url": "https://jobs.ashbyhq.com/enpal/17d79dfa-552e-4e0b-9843-184c540073e0",
+    "work_style": "Not stated",
+    "german_required": "German required (ad is in German)",
+    "compensation": ""
+  },
+  {
+    "title": "Founding Recruiter, GTM & Marketing",
+    "company": "clera",
+    "location": "Munich",
+    "published": "2026-10-29T12:41:22.043000+00:00",
+    "url": "https://jobs.ashbyhq.com/clera/bfbb11e9-fa31-46f3-a446-29fbe5569e3a",
+    "work_style": "Office",
     "german_required": null,
     "compensation": ""
   }
