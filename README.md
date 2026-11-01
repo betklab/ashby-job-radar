@@ -22,7 +22,7 @@ You only ever see a job **once**, and never anything older than the previous ema
 
 ## The job board
 
-The same roles also go on one web page, with search and filters: every open role that fits, including ones you were already sent. It updates after each morning's email. To turn it on: *Settings → Pages → Source: GitHub Actions*. More in [`job-board/`](job-board/README.md).
+The same roles also go on one web page, with search and filters: every open role that fits, including ones you were already sent. It updates after each morning's email. The page also lists matching roles from companies that use **Greenhouse** instead of Ashby; the email stays Ashby-only unless you change `sources` (see Tweaking it). To turn it on: *Settings → Pages → Source: GitHub Actions*. More in [`job-board/`](job-board/README.md).
 
 ## Which jobs count
 
@@ -38,9 +38,11 @@ There are three sources, and they all feed the same daily check:
 
 1. **The crawl (automatic).** Once a week the radar pulls every `jobs.ashbyhq.com/...` page from [Common Crawl](https://commoncrawl.org)'s free public index. That's thousands of companies, no API key needed. Each company gets checked once. The ones with jobs in Germany are saved in `boards.json` and checked **every day**. The rest are re-checked weekly in case they open a German role.
 2. **Your Notion database (optional).** It needs a column called `Ashby ID` with values like `n8n` or `lovable`. Add a row and the company is checked from the next morning.
-3. **`companies.txt` (optional).** The same idea as Notion, as a plain list. Paste an ID or a full Ashby link, one per line.
+3. **`companies.txt` (optional).** The same idea as Notion, as a plain list. Paste an ID or a full Ashby link, one per line. A Greenhouse link (`job-boards.greenhouse.io/acme`) or `greenhouse:acme` works too.
 
-Jobs always come straight from **Ashby's official public job API**. No page scraping.
+`boards.json` also holds about 4,600 companies with a **Greenhouse** job board (written `greenhouse:<name>`), found in Common Crawl's public index. They're for the job board, and for the email only if you turn Greenhouse on there.
+
+Jobs always come straight from **Ashby's and Greenhouse's official public job APIs**. No page scraping.
 
 ## Setup (≈10 min, free)
 
@@ -76,6 +78,8 @@ Everything lives in `config.json`:
 | get the full 7-day list every day instead of only new ones | `digest_mode: "week"` (range set by `lookback_days`) |
 | only check ticked companies in Notion | add a checkbox column and set `notion.active_property` |
 | turn off the weekly crawl | `harvest.enabled: false` |
+| show only Ashby roles on the job board | `board_sources: ["ashby"]` |
+| get Greenhouse roles in the email too | add `"sources": ["ashby", "greenhouse"]` |
 
 ## Good to know
 
@@ -92,6 +96,7 @@ python3 ashby_radar.py --no-email    # print today's list, don't send anything
 python3 ashby_radar.py --dry-run     # same, and save nothing (only output/)
 python3 ashby_radar.py --discover-only   # only look for new companies (needs SERPER_API_KEY)
 python3 job-board/build.py --out site    # build the job board page into site/
+python3 -m unittest discover -s tests    # check the Greenhouse and board-name handling
 ```
 
 Only needs Python 3.9+. No packages to install.

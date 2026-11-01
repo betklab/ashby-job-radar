@@ -1,7 +1,8 @@
 /* A static catalog: one data file, no accounts, dependencies or tracking. */
 "use strict";
 const $ = id => document.getElementById(id);
-const state = { jobs: [], companies: {}, filtered: [], visible: 10, view: "company", query: "", locations: new Set(), styles: new Set(), company: "", days: "", salary: false, featured: false, descriptions: true, sort: "company" };
+const state = { jobs: [], companies: {}, filtered: [], visible: 10, view: "company", query: "", locations: new Set(), styles: new Set(), sources: new Set(), company: "", days: "", salary: false, featured: false, descriptions: true, sort: "company" };
+const atsNames = { ashby: "Ashby", greenhouse: "Greenhouse" };
 const el = (tag, className, text) => {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -53,6 +54,7 @@ function restoreState() {
   state.query = params.get("q") || "";
   state.locations = new Set(params.getAll("location"));
   state.styles = new Set(params.getAll("style"));
+  state.sources = new Set(params.getAll("source").filter(source => atsNames[source]));
   state.company = params.get("company") || "";
   state.days = ["7", "30", "90"].includes(params.get("days")) ? params.get("days") : "";
   state.salary = params.get("salary") === "1";
@@ -81,6 +83,7 @@ function saveUrl() {
   if (state.query.trim()) params.set("q", state.query.trim());
   [...state.locations].sort().forEach(value => params.append("location", value));
   [...state.styles].sort().forEach(value => params.append("style", value));
+  [...state.sources].sort().forEach(value => params.append("source", value));
   if (state.company) params.set("company", state.company);
   if (state.days) params.set("days", state.days);
   if (state.salary) params.set("salary", "1");
@@ -105,7 +108,7 @@ function addFacet(container, values, facet) {
       state[facet][input.checked ? "add" : "delete"](value);
       update();
     });
-    text.append(input, document.createTextNode(value));
+    text.append(input, document.createTextNode(facet === "sources" ? atsNames[value] : value));
     label.append(text, el("small", "", count.toLocaleString()));
     container.append(label);
   }
@@ -113,14 +116,18 @@ function addFacet(container, values, facet) {
 
 function setUpFilters() {
   $("featured-filter").hidden = !state.jobs.some(isFeatured);
-  const locations = new Map(), styles = new Map(), companies = new Map();
+  const locations = new Map(), styles = new Map(), companies = new Map(), sources = new Map();
   state.jobs.forEach(job => {
     job._locations.forEach(location => locations.set(location, (locations.get(location) || 0) + 1));
     styles.set(job.style, (styles.get(job.style) || 0) + 1);
+    sources.set(job.source, (sources.get(job.source) || 0) + 1);
     companies.set(job.company, job.companyName);
   });
   addFacet($("location-options"), [...locations].sort(([a], [b]) => a.localeCompare(b)), "locations");
   addFacet($("style-options"), ["Remote", "Hybrid", "Office", "Not stated"].filter(style => styles.has(style)).map(style => [style, styles.get(style)]), "styles");
+  // only worth a filter when the board has roles from more than one job board provider
+  $("source-filter").hidden = sources.size < 2;
+  if (sources.size > 1) addFacet($("source-options"), Object.keys(atsNames).filter(source => sources.has(source)).map(source => [source, sources.get(source)]), "sources");
   [...companies].sort(([, a], [, b]) => a.localeCompare(b)).forEach(([slug, name]) => {
     const option = el("option", "", name);
     option.value = slug;
@@ -131,6 +138,7 @@ function setUpFilters() {
 function matches(job, tokens, cutoff) {
   if (state.locations.size && !job._locations.some(location => state.locations.has(location))) return false;
   if (state.styles.size && !state.styles.has(job.style)) return false;
+  if (state.sources.size && !state.sources.has(job.source)) return false;
   if (state.company && job.company !== state.company) return false;
   if (state.salary && !job.salary) return false;
   if (state.featured && !isFeatured(job)) return false;
@@ -184,6 +192,7 @@ function renderChips() {
   if (state.query.trim()) add('“' + state.query.trim() + '”', () => { state.query = ""; });
   state.locations.forEach(value => add(value, () => state.locations.delete(value)));
   state.styles.forEach(value => add(value, () => state.styles.delete(value)));
+  state.sources.forEach(value => add("Listed on " + atsNames[value], () => state.sources.delete(value)));
   if (state.company) add(state.jobs.find(job => job.company === state.company)?.companyName || state.company, () => { state.company = ""; });
   if (state.days) add("Last " + state.days + " days", () => { state.days = ""; });
   if (state.salary) add("Salary listed", () => { state.salary = false; });
@@ -283,7 +292,7 @@ function update(reset = true) {
 }
 
 function resetFilters() {
-  Object.assign(state, { query: "", locations: new Set(), styles: new Set(), company: "", days: "", salary: false, featured: false });
+  Object.assign(state, { query: "", locations: new Set(), styles: new Set(), sources: new Set(), company: "", days: "", salary: false, featured: false });
   syncControls();
   update();
 }
@@ -296,7 +305,7 @@ function openJob(job) {
   const title = el("h2", "", job.title);
   title.id = "detail-title";
   const tags = el("div", "detail-tags");
-  [job.location, job.style, employmentNames[job.employment] || job.employment, job.department].filter(Boolean).forEach(text => tags.append(el("span", "detail-tag", text)));
+  [job.location, job.style, employmentNames[job.employment] || job.employment, job.department, "Listed on " + (atsNames[job.source] || job.source)].filter(Boolean).forEach(text => tags.append(el("span", "detail-tag", text)));
   const actions = el("div", "detail-actions");
   for (const [label, url, className] of [["View & apply ↗", job.applyUrl, "primary-button"], ["Original job posting ↗", job.url, ""]]) {
     const link = el("a", className, label);
@@ -359,7 +368,7 @@ async function init() {
     if (!response.ok) throw new Error("Could not load the collection");
     const data = await response.json();
     state.companies = data.companies || {};
-    state.jobs = data.jobs.map((job, index) => ({ ...job, _index: index,
+    state.jobs = data.jobs.map((job, index) => ({ ...job, source: job.source || "ashby", _index: index,
       _date: job.published ? Date.parse(job.published) || null : null,
       _locations: job.location.split(" / "),
       _search: normalize([job.title, job.companyName, job.company, job.location, ...job.locations, job.department, job.team, companyInfo(job).website].join(" ")),
