@@ -51,6 +51,7 @@
             <div id="featured-filter" class="featured-filter" hidden><label class="check-label"><input id="featured" type="checkbox"><span><span class="featured-star" aria-hidden="true">★</span> Featured companies</span></label></div>
             <fieldset><legend>Location</legend><div id="location-options" class="check-options"></div></fieldset>
             <fieldset><legend>How you work</legend><div id="style-options" class="check-options"></div></fieldset>
+            <fieldset id="source-filter" hidden><legend>Listed on</legend><div id="source-options" class="check-options"></div></fieldset>
             <div class="filter-field"><label for="company">Company</label><select id="company"><option value="">All companies</option></select></div>
             <div class="filter-field"><label for="posted">Published</label><select id="posted"><option value="">Any time</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option></select></div>
             <div class="salary-filter"><label class="check-label"><input id="salary" type="checkbox"> Salary listed</label></div>
@@ -95,7 +96,7 @@
     </section>
     <!--/newsletter-->
 
-    <footer id="about"><div class="footer-bottom"><a class="brand" href="./">bet’s board.</a><p>An independent collection of matching Ashby roles.<br>Refreshed daily. Availability and details live with each company.</p><a href="https://github.com/{{REPO}}" target="_blank" rel="noopener noreferrer">Made to explore <span aria-hidden="true">↗</span></a></div></footer>
+    <footer id="about"><div class="footer-bottom"><a class="brand" href="./">bet’s board.</a><p>An independent collection of matching roles from company job boards.<br>Refreshed daily. Availability and details live with each company.</p><a href="https://github.com/{{REPO}}" target="_blank" rel="noopener noreferrer">Made to explore <span aria-hidden="true">↗</span></a></div></footer>
   </div>
 
   <dialog id="filter-dialog" class="filter-dialog" aria-labelledby="filter-dialog-title"><div class="mobile-dialog-header"><h2 id="filter-dialog-title">Refine your search</h2><button id="close-filters" class="close-button" type="button" aria-label="Close filters">×</button></div><div id="mobile-filter-content"></div><button id="apply-filters" type="button" class="primary-button">Show results</button></dialog>

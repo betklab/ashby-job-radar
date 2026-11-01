@@ -17,6 +17,7 @@
   "overlap_hours": 3,
   "focus_cities": ["Berlin", "Munich"],
   "include_remote_germany": true,
+  "board_sources": ["ashby", "greenhouse"],
   "workers": 16,
   "title_include": [
     "growth",

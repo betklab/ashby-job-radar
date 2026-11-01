@@ -36,6 +36,8 @@ from email.mime.text import MIMEText
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
+import sources
+
 ROOT = Path(__file__).resolve().parent
 API = "https://api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true"
 UA = {"User-Agent": "ashby-job-radar/1.0 (personal job digest)"}
@@ -48,17 +50,20 @@ def load_config(path: Path) -> dict:
 
 
 def load_slugs(path: Path) -> list[str]:
-    """Accepts bare slugs or full jobs.ashbyhq.com URLs, one per line; # comments."""
+    """Accepts bare slugs, full jobs.ashbyhq.com URLs, Greenhouse board URLs or
+    greenhouse:<name>, one per line; # comments."""
     slugs = []
     if not path.exists():
         return slugs
-    for line in path.read_text(encoding="utf-8").splitlines():
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         line = line.split("#", 1)[0].strip()
         if not line:
             continue
-        m = re.search(r"jobs\.ashbyhq\.com/([^/?#\s]+)", line)
-        slug = m.group(1) if m else line
-        slug = urllib.parse.unquote(slug).strip()
+        try:
+            slug = sources.board_key(line)
+        except ValueError as e:
+            print(f"[companies] {path.name} line {number} skipped: {e}", file=sys.stderr)
+            continue
         if slug and slug.lower() not in {s.lower() for s in slugs}:
             slugs.append(slug)
     return slugs
@@ -249,7 +254,7 @@ def retry_after(value: str | None) -> float | None:
             return None
 
 
-def download(url: str, timeout: int, tries: int) -> bytes:
+def download(url: str, timeout: int, tries: int, opener=None) -> bytes:
     """GET, compressed (about 10x smaller). Retries time-outs, cut-off downloads, rate limits
     (429) and server errors (5xx), waiting as long as the server asks (up to a minute);
     anything else, like a 404, is raised straight away."""
@@ -257,7 +262,7 @@ def download(url: str, timeout: int, tries: int) -> bytes:
         wait = 5 * (i + 1)
         try:
             req = urllib.request.Request(url, headers={**UA, "Accept-Encoding": "gzip"})
-            with urllib.request.urlopen(req, timeout=timeout) as r:
+            with (opener or urllib.request.urlopen)(req, timeout=timeout) as r:
                 body = r.read()
                 return gzip.decompress(body) if r.headers.get("Content-Encoding") == "gzip" else body
         except urllib.error.HTTPError as e:
@@ -272,6 +277,11 @@ def download(url: str, timeout: int, tries: int) -> bytes:
                 raise
         time.sleep(wait)
     raise RuntimeError("unreachable")
+
+
+def request(url: str, *, timeout: int = 30, tries: int = 2, parse=json.loads, opener=None):
+    """download(), then parse the answer (JSON unless told otherwise)."""
+    return parse(download(url, timeout, tries, opener))
 
 
 def _get(url: str, timeout: int = 120, tries: int = 4) -> bytes | None:
@@ -381,8 +391,16 @@ def has_germany(jobs: list[dict], cfg: dict) -> bool:
 
 
 # ---------------------------------------------------------------- fetching
-def fetch_board(slug: str) -> tuple[str, list[dict] | None, str | None]:
+def fetch_board(slug: str, cfg: dict | None = None) -> tuple[str, list[dict] | None, str | None]:
+    """One company's open jobs, from Ashby or Greenhouse. With cfg, a Greenhouse board's
+    descriptions are only downloaded when one of its jobs could match."""
+    def candidate(job):
+        title = job["title"]
+        return not title_rejection(title, cfg) and bool(match_location(job, cfg))
+
     try:
+        if sources.provider(slug) == "greenhouse":
+            return slug, sources.fetch_greenhouse(slug, request, candidate if cfg else None), None
         data = json.loads(download(API.format(slug=urllib.parse.quote(slug)), timeout=30, tries=2))
         return slug, data.get("jobs", []), None
     except urllib.error.HTTPError as e:
@@ -490,7 +508,8 @@ GERMAN_STOPWORDS = {"und", "die", "der", "das", "wir", "mit", "fur", "bei", "ist
 
 
 def german_required(job: dict, cfg: dict) -> str | None:
-    desc = norm(job.get("descriptionPlain") or "")
+    desc = norm(job.get("descriptionPlain")
+                or html.unescape(re.sub(r"<[^>]+>", " ", job.get("descriptionHtml") or "")))
     if not desc:
         return None
     words = re.findall(r"[a-z]+", desc)
@@ -574,6 +593,8 @@ def curate(boards: dict[str, list[dict]], cfg: dict, seen: dict, now: datetime, 
 
 # ---------------------------------------------------------------- output
 def company_name(slug: str) -> str:
+    if sources.provider(slug) != "ashby":
+        slug = slug.split(":", 1)[1]
     return re.sub(r"[-_]+", " ", slug).strip().title()
 
 
@@ -696,6 +717,7 @@ def main(argv=None) -> int:
     args.no_email = args.no_email or args.dry_run
 
     cfg = load_config(args.config)
+    email_sources = sources.enabled(cfg)          # Ashby unless config.json "sources" says more
     now = datetime.now(timezone.utc)
     slugs = load_slugs(args.companies)
     if not args.fixtures:
@@ -708,6 +730,7 @@ def main(argv=None) -> int:
             print(f"[notion] {len(notion)} companies from Notion", file=sys.stderr)
             known = {s.lower() for s in slugs}
             slugs += [s for s in notion if s.lower() not in known]
+    slugs = sources.select(slugs, email_sources)  # other providers' boards are for the job board
 
     own = {s.lower() for s in slugs}          # your list: always checked, failures reported
     new_slugs = set()
@@ -741,8 +764,9 @@ def main(argv=None) -> int:
         harvested = update_registry(reg, cfg, now)
         for s in load_slugs(args.embedded):          # companies the crawl can't see
             reg.setdefault(s.lower(), {"de": None})
-        extra = [s for s in pick_registry_boards(reg, now, cfg) if s.lower() not in own]
-        print(f"[registry] {sum(1 for k, v in reg.items() if k != '_meta' and v.get('de'))} "
+        mine = {k: v for k, v in reg.items() if sources.provider(k) in email_sources}
+        extra = [s for s in pick_registry_boards(mine, now, cfg) if s.lower() not in own]
+        print(f"[registry] {sum(1 for k, v in mine.items() if k != '_meta' and v.get('de'))} "
               f"German companies known · +{harvested} new from crawl · "
               f"checking {len(slugs)} listed + {len(extra)} crawled", file=sys.stderr)
         slugs = slugs + extra
@@ -753,7 +777,7 @@ def main(argv=None) -> int:
             boards[p.stem] = json.loads(p.read_text())["jobs"]
     else:
         with ThreadPoolExecutor(max_workers=cfg.get("workers", 16)) as pool:
-            for slug, jobs, err in pool.map(fetch_board, slugs):
+            for slug, jobs, err in pool.map(lambda s: fetch_board(s, cfg), slugs):
                 if jobs is None:
                     errors[err] = errors.get(err, 0) + 1
                     if slug.lower() in own:

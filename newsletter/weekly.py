@@ -99,7 +99,7 @@ def compose(jobs: list[dict], now: datetime, days: int, board_url: str, max_role
         lines += [f"…and {n - len(shown)} more on [the board]({board_url}).", ""]
     lines += ["---", "",
               "You’re getting this because you subscribed on bet’s board. "
-              "Roles and details come from each company’s Ashby job page; always check the posting before applying."]
+              "Roles and details come from each company’s own job page; always check the posting before applying."]
     return subject, "\n".join(lines)
 
 

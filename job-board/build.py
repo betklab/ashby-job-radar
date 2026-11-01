@@ -3,8 +3,9 @@
 Job board — one web page with every open role that fits config.json, for GitHub Pages.
 
 Same companies and filters as the daily email, but every open role, not only new ones:
-no date cutoff, no max_results, and seen.json is never read or changed. Company names,
-logos and intros come from each company's Ashby page and are kept for 30 days (--profiles).
+no date cutoff, no max_results, and seen.json is never read or changed. The providers come
+from config.json "board_sources" (Ashby and Greenhouse boards). Company names, logos and
+intros come from each company's Ashby or Greenhouse page and are kept for 30 days (--profiles).
 
 Standard library only. Python 3.9+.
 """
@@ -29,6 +30,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(ROOT))
 import ashby_radar as radar  # noqa: E402
+import sources  # noqa: E402
 
 GRAPHQL = "https://jobs.ashbyhq.com/api/non-user-graphql"
 PROFILE = """query CompanyProfile($slug: String!) {
@@ -144,12 +146,18 @@ def card(job: dict) -> dict:
         "published": job["_pub"].isoformat() if job["_pub"] else None,
         "description": normalize_text(job.get("descriptionPlain") or "") or plain_text(job.get("descriptionHtml")),
         "url": job["jobUrl"], "applyUrl": web_link(job.get("applyUrl")) or job["jobUrl"],
+        "source": sources.provider(job["_slug"]),
     }
 
 
 # ---------------------------------------------------------------- company profiles
 def fetch_profile(slug: str) -> dict:
-    """Name, website, logo and intro, from the API behind the company's Ashby page."""
+    """Name, website, logo and intro, from the API behind the company's Ashby page
+    (or from Greenhouse's, which has no website)."""
+    if sources.provider(slug) == "greenhouse":
+        p = sources.fetch_greenhouse_profile(slug, radar.request)
+        return {"name": p["name"], "website": "", "logo": web_link(p["logo"]),
+                "intro": plain_text(p["intro_html"])}
     body = json.dumps({"operationName": "CompanyProfile", "query": PROFILE,
                        "variables": {"slug": slug}}).encode()
     req = urllib.request.Request(GRAPHQL, data=body,
@@ -169,7 +177,8 @@ def fetch_profile(slug: str) -> dict:
 
 def update_profiles(slugs: list[str], profiles: dict, today: date, max_age: int = 30) -> tuple[int, int]:
     """Fetch the profiles that are missing or older than max_age days, one a second.
-    Stops early if Ashby asks us to slow down or answers oddly; the rest wait for the next run."""
+    Stops early with a provider that asks us to slow down or answers oddly; the rest wait
+    for the next run."""
     def fresh(p):
         try:
             return bool(p["name"]) and date.fromisoformat(p["fetched"]) > today - timedelta(days=max_age)
@@ -178,7 +187,10 @@ def update_profiles(slugs: list[str], profiles: dict, today: date, max_age: int 
 
     due = [s for s in slugs if not fresh(profiles.get(s))]
     fetched = failed = 0
+    stopped = set()
     for i, slug in enumerate(due):
+        if sources.provider(slug) in stopped:
+            continue
         if i:
             time.sleep(1)
         try:
@@ -189,8 +201,10 @@ def update_profiles(slugs: list[str], profiles: dict, today: date, max_age: int 
             print(f"[profiles] {slug}: {e}", file=sys.stderr)
             if isinstance(e, RuntimeError) or (isinstance(e, urllib.error.HTTPError)
                                                and (e.code == 429 or e.code >= 500)):
-                print(f"[profiles] stopping; {len(due) - i - 1} left for the next run", file=sys.stderr)
-                break
+                stopped.add(sources.provider(slug))
+                left = sum(sources.provider(s) == sources.provider(slug) for s in due[i + 1:])
+                print(f"[profiles] stopping {sources.provider(slug)}; {left} left for the next run",
+                      file=sys.stderr)
     return fetched, failed
 
 
@@ -203,7 +217,7 @@ def write_site(out: Path, roles: list[dict], profiles: dict, featured: set[str],
         slug = job["_slug"]
         if slug not in companies:
             p = profiles.get(slug, {})
-            companies[slug] = {"name": p.get("name") or radar.company_name(slug),
+            companies[slug] = {"name": p.get("name") or job.get("companyName") or radar.company_name(slug),
                                "website": web_link(p.get("website")), "logoUrl": web_link(p.get("logo")),
                                "introduction": p.get("intro", ""), "featured": slug in featured,
                                "roles": 0}
@@ -249,6 +263,7 @@ def main(argv=None) -> int:
 
     cfg = radar.load_config(args.config)
     now = datetime.now(timezone.utc)
+    providers = sources.enabled(cfg, "board_sources")
     boards, failed, gone = {}, {}, 0
     if args.fixtures:
         for p in sorted(args.fixtures.glob("*.json")):
@@ -262,20 +277,23 @@ def main(argv=None) -> int:
             slugs |= {s.lower() for s in radar.load_slugs_notion(cfg) or []}
         except Exception as e:
             print(f"[notion] could not read database: {e}", file=sys.stderr)
-        slugs = sorted(slugs)
+        slugs = sources.select(sorted(slugs), providers)
         with ThreadPoolExecutor(max_workers=cfg.get("workers", 16)) as pool:
-            for slug, jobs, err in pool.map(radar.fetch_board, slugs):
+            for slug, jobs, err in pool.map(lambda s: radar.fetch_board(s, cfg), slugs):
                 if jobs is not None:
                     boards[slug] = jobs
-                elif err == "HTTP 404":           # no longer on Ashby
+                elif err == "HTTP 404":           # the board is gone
                     gone += 1
                 else:
                     failed[slug] = err
 
     report = [f"Job board: {len(boards)} of {len(slugs)} companies checked, "
-              f"{gone} no longer on Ashby, {len(failed)} failed"
+              f"{gone} boards gone, {len(failed)} failed"
               + (f" ({', '.join(sorted(failed)[:20])}{', …' if len(failed) > 20 else ''})" if failed else "")]
-    ok = bool(boards) and len(failed) <= len(slugs) // 20     # a few hiccups are fine; an outage isn't
+    # a few hiccups are fine; an outage at Ashby or Greenhouse isn't
+    ok = bool(boards) and all(
+        sum(sources.provider(s) == p for s in failed) <= sum(sources.provider(s) == p for s in slugs) // 20
+        for p in providers)
     if ok:
         roles = open_roles(boards, cfg)
         on_board = sorted({j["_slug"] for j in roles})
