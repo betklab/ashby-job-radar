@@ -61,4 +61,4 @@ Each provider runs in parallel using one snapshot of your settings and company l
 If a provider fails, healthy providers still update; its old results stay for at most 48 hours when the filters haven't changed, with the original collection time shown. Without compatible older results it is labelled unavailable. If all fail, the published page stays up.
 The final Actions artifact includes a catch-up preview grouped by company (HTML, Markdown, CSV and JSON): fresh matching jobs absent from `seen.json`, without a date cutoff or result cap. Saved history has finite retention, so some older roles may have been sent before.
 This preview sends nothing and never changes sent history. Daily email and the weekly newsletter keep their own workflows; company enrichment keeps the existing Actions cache.
-Add `"workable"` to `board_sources` to include its Germany search. Run the offline pipeline checks with `python -B -m unittest discover -s job-board -p 'test_*.py'`.
+Workable's Germany search is on (`"workable"` in `board_sources`); remove it there to turn it off. Run the offline pipeline checks with `python -B -m unittest discover -s job-board -p 'test_*.py'`.

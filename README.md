@@ -22,7 +22,7 @@ You only ever see a job **once**, and never anything older than the previous ema
 
 ## The job board
 
-The same roles also go on one web page, with search and filters: every open role that fits, including ones you were already sent. It updates after each morning's email. The page also lists matching roles from companies that use **Greenhouse** instead of Ashby; the email stays Ashby-only unless you change `sources` (see Tweaking it). To turn it on: *Settings → Pages → Source: GitHub Actions*. More in [`job-board/`](job-board/README.md).
+The same roles also go on one web page, with search and filters: every open role that fits, including ones you were already sent. It updates after each morning's email. The page also lists matching roles from companies that use **Greenhouse** or **Workable** instead of Ashby; the email stays Ashby-only unless you change `sources` (see Tweaking it). To turn it on: *Settings → Pages → Source: GitHub Actions*. More in [`job-board/`](job-board/README.md).
 
 ## Which jobs count
 
@@ -42,7 +42,7 @@ There are three sources, and they all feed the same daily check:
 
 `boards.json` also holds about 4,600 companies with a **Greenhouse** job board (written `greenhouse:<name>`), found in Common Crawl's public index. They're for the job board, and for the email only if you turn Greenhouse on there.
 
-Jobs always come straight from **Ashby's and Greenhouse's official public job APIs**. No page scraping.
+Ashby and Greenhouse jobs come straight from their **official public job APIs**; Workable roles come from Workable's public job search, which isn't an official API. No page scraping.
 
 ## Setup (≈10 min, free)
 
@@ -81,6 +81,7 @@ Everything lives in `config.json`:
 | only check ticked companies in Notion | add a checkbox column and set `notion.active_property` |
 | turn off the weekly crawl | `harvest.enabled: false` |
 | show only Ashby roles on the job board | `board_sources: ["ashby"]` |
+| hide Workable roles on the job board | remove `"workable"` from `board_sources` |
 | get Greenhouse roles in the email too | add `"sources": ["ashby", "greenhouse"]` |
 
 ## Good to know
@@ -91,10 +92,10 @@ Everything lives in `config.json`:
 - **Broken company IDs:** IDs from your own list that don't work are listed at the bottom of the email, so you can fix or delete them.
 - **Where things are stored:** `seen.json` remembers what you've already been sent, and `boards.json` is the crawled company list. The workflow saves both back to the repo automatically.
 
-### Workable (optional catalog source)
+### Workable (on the job board)
 
-Add `"workable"` to `board_sources` in `config.json` to include Workable's
-Germany search. No API key or company seeding is needed. The
+The job board includes Workable's Germany search (`"workable"` in `board_sources`
+in `config.json`; remove it to turn Workable off). No API key or company seeding is needed. The
 273 company IDs and names found in our verified scan are included in
 `boards.json` and `discovery/workable-companies.json`; this dated reference
 inventory is for lookup, and every build still fetches current jobs.
@@ -110,8 +111,7 @@ feed supplies company names, websites and logos. Salary is not exposed here.
 
 Workable is currently catalog-only: leave it out of email `sources`.
 The existing daily SMTP delivery and sent-history logic stay as they are.
-The weekly newsletter reads the board and will include Workable roles once
-you enable it there. Run offline checks with
+The weekly newsletter reads the board, so it includes Workable roles too. Run offline checks with
 `python -B -m unittest discover -s tests`.
 
 ## Run it on your laptop
