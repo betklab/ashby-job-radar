@@ -104,9 +104,7 @@ def open_roles(boards: dict[str, list[dict]], cfg: dict) -> list[dict]:
     for slug, jobs in boards.items():
         for job in jobs:
             title = job.get("title") or ""
-            if job.get("isListed") is False or not radar.word_hit(title, cfg["title_include"]):
-                continue
-            if radar.word_hit(title, cfg["title_exclude"]):
+            if job.get("isListed") is False or radar.title_rejection(title, cfg):
                 continue
             loc, style = radar.match_location(job, cfg), radar.work_style(job)
             if not loc or not radar.in_focus(loc, style, cfg) or not web_link(job.get("jobUrl")):
@@ -130,9 +128,16 @@ def card(job: dict) -> dict:
             str(addr[k]) for k in ("addressLocality", "addressRegion", "addressCountry") if addr.get(k)))
         if label and label not in locations:
             locations.append(label)
+        country = addr.get("addressCountry")
+        if job["_loc"] in ("Remote Europe", "Remote Worldwide") and country and str(country) not in locations:
+            locations.append(str(country))
     return {
         "id": str(job.get("id") or job["jobUrl"]), "title": job["title"].strip(),
         "company": job["_slug"], "location": job["_loc"], "locations": locations,
+        "locationNote": ("Source lists Europe/EMEA; check the posting's permitted countries and timezones."
+                         if job["_loc"] == "Remote Europe" else
+                         "Source lists worldwide remote; check the posting's permitted countries and timezones."
+                         if job["_loc"] == "Remote Worldwide" else ""),
         "style": job["_style"], "salary": job["_comp"],
         "employment": job.get("employmentType") or "",
         "department": job.get("department") or "", "team": job.get("team") or "",

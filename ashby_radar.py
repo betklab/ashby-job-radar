@@ -426,12 +426,21 @@ def match_location(job: dict, cfg: dict) -> str | None:
         return " / ".join(cities)
     countries = {norm(str(postal(location).get("addressCountry") or ""))
                  for location in [job] + (job.get("secondaryLocations") or [])}
-    if countries & {"de", "deu", "germany", "deutschland"} or any(
+    if countries.intersection({"de", "deu", "germany", "deutschland"}) or any(
             re.search(r"\b" + re.escape(norm(t)) + r"\b", blob) for t in cfg["country_terms"]):
         return "Germany"
-    if cfg.get("include_remote_europe") and any(
-            re.search(r"\b" + t + r"\b", blob) for t in ("europe", "emea", "eu")):
-        return "Remote Europe"
+    if work_style(job) == "Remote":
+        if cfg.get("include_remote_europe") and re.search(r"\b(europe|emea|eu|european union)\b", blob):
+            return "Remote Europe"
+        if cfg.get("include_remote_global"):
+            # Match a scope label, not 'Bonifacio Global City' or 'Global (APAC)'.
+            worldwide = (r"(?:fully\s+)?(?:remote[\s,()|/-]*)?"
+                         r"(?:global(?:\s+anywhere)?|world[- ]?wide|anywhere in the world)"
+                         r"(?:[\s,()|/-]*remote(?:\s+work)?)?[\s,()|/-]*")
+            primary = norm(job.get("location") or "").strip()
+            if (re.fullmatch(worldwide, primary) or primary in ("remote", "fully remote")
+                    and any(re.fullmatch(worldwide, country) for country in countries)):
+                return "Remote Worldwide"
     return None
 
 
@@ -454,6 +463,17 @@ def work_style(job: dict) -> str:
 def word_hit(text: str, words: list[str]) -> list[str]:
     t = norm(text)
     return [w for w in words if re.search(r"\b" + re.escape(norm(w)) + r"\b", t)]
+
+
+def title_rejection(title: str, cfg: dict) -> str | None:
+    """Match the role, optionally ignoring parenthetical former-role background."""
+    if cfg.get("ignore_background_qualifiers"):
+        title = re.sub(r"\(\s*(?:ex[- ]|former\b)[^)]*\)", "", title, flags=re.I)
+    if not word_hit(title, cfg["title_include"]):
+        return "title_not_included"
+    if word_hit(title, cfg["title_exclude"]):
+        return "title_excluded"
+    return None
 
 
 def parse_date(s: str | None) -> datetime | None:
@@ -500,6 +520,9 @@ def in_focus(loc: str, style: str, cfg: dict) -> bool:
         return True
     if any(c in focus for c in loc.split(" / ")):
         return True
+    if style == "Remote" and ((loc == "Remote Europe" and cfg.get("include_remote_europe"))
+                              or (loc == "Remote Worldwide" and cfg.get("include_remote_global"))):
+        return True
     return bool(cfg.get("include_remote_germany", True)) and loc == "Germany" and style == "Remote"
 
 
@@ -526,9 +549,7 @@ def curate(boards: dict[str, list[dict]], cfg: dict, seen: dict, now: datetime, 
             if job.get("isListed") is False:
                 continue
             title = job.get("title", "")
-            if not word_hit(title, cfg["title_include"]):
-                continue
-            if word_hit(title, cfg["title_exclude"]):
+            if title_rejection(title, cfg):
                 continue
             loc = match_location(job, cfg)
             if not loc:

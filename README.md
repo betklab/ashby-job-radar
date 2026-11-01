@@ -72,7 +72,9 @@ Everything lives in `config.json`:
 | add or remove role keywords | `title_include` / `title_exclude` |
 | add cities to the email (e.g. Hamburg) | `focus_cities` (empty list = all of Germany) |
 | drop remote-in-Germany roles | `include_remote_germany: false` |
-| include "Remote – Europe" roles | `include_remote_europe: true` |
+| include remote Europe/EMEA roles, also with city filters | `include_remote_europe: true` |
+| include explicitly worldwide remote roles | `include_remote_global: true` |
+| ignore former-role background in titles like “Product Manager (ex-engineer)” | `ignore_background_qualifiers: true` |
 | get the full 7-day list every day instead of only new ones | `digest_mode: "week"` (range set by `lookback_days`) |
 | only check ticked companies in Notion | add a checkbox column and set `notion.active_property` |
 | turn off the weekly crawl | `harvest.enabled: false` |
@@ -95,3 +97,17 @@ python3 job-board/build.py --out site    # build the job board page into site/
 ```
 
 Only needs Python 3.9+. No packages to install.
+
+### Optional wider remote coverage
+
+`include_remote_europe` and `include_remote_global` include explicitly remote
+Europe/EMEA or worldwide roles even with city filters. Both default to false.
+They use location/address labels, not description guesses; a broad region is not
+a guarantee that a company employs in Germany. The board shows the original
+locations and a reminder to check the permitted countries and timezones.
+
+`ignore_background_qualifiers` (default false) lets “Product Manager (ex-product
+engineer)” match as Product Manager. Actual engineer roles and internship
+qualifiers remain excluded. These switches affect both board and daily email.
+
+Run the offline matching checks with `python -B -m unittest discover -s tests`.
