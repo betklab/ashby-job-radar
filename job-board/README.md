@@ -34,3 +34,23 @@ On your laptop:
 python3 job-board/build.py --out site
 python3 -m http.server --directory site    # then open http://localhost:8000
 ```
+
+## Included Greenhouse companies
+
+`boards.json` already includes 4,639 verified Greenhouse board names. You do not
+need Athena, API keys or an import step. The normal build fetches their current
+jobs, and daily email still checks Ashby unless you change `sources`. Greenhouse
+roles on the board also reach the weekly newsletter, which reads the board JSON.
+
+The list combines Google discovery and three Common Crawl indexes validated
+on 1 November 2026. It is additive: no existing Ashby entries, crawl metadata,
+company choices or delivery history are replaced. Known mirror boards were
+omitted to avoid reposts (Doctolib, think-cell, Artefact LinkedIn, HelloFresh
+alumni and Sony Music DE); this can omit a few roles unique to the mirrors.
+The validation and runtime evidence is available in
+[the fork's discovery reports](https://github.com/p1va/ashby-job-radar/tree/06daa56/discovery/results).
+
+Greenhouse rarely states remote/hybrid explicitly and has no standard work-style
+field here. “Not stated” is expected; we infer a style only from an explicit
+location label. We keep first-published dates when supplied, without treating
+a refresh date as a new posting.
