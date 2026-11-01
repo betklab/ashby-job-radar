@@ -41,7 +41,6 @@ PROFILE = """query CompanyProfile($slug: String!) {
 # ---------------------------------------------------------------- text and links
 class PlainText(HTMLParser):
     """Keeps paragraph breaks; the company's HTML itself never goes on the page."""
-
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.parts, self.hidden = [], 0
@@ -49,24 +48,43 @@ class PlainText(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag in ("script", "style"):
             self.hidden += 1
-        elif not self.hidden and tag in ("p", "div", "br", "li", "h1", "h2", "h3", "h4"):
-            self.parts.append("\n" if tag == "br" else "\n\n")
+        elif not self.hidden and tag == "li":
+            self.parts.append("\n• ")
+        elif not self.hidden and tag == "br":
+            self.parts.append("\n")
+        elif not self.hidden and tag in ("p", "div", "h1", "h2", "h3", "h4") and not self.at_bullet():
+            self.parts.append("\n\n")
 
     def handle_endtag(self, tag):
         if tag in ("script", "style"):
             self.hidden = max(0, self.hidden - 1)
-        elif not self.hidden and tag in ("p", "div", "li", "h1", "h2", "h3", "h4"):
+        elif not self.hidden and tag == "li":
+            if self.at_bullet():
+                self.parts.pop()
+            while self.parts and not self.parts[-1].strip():
+                self.parts.pop()
+        elif not self.hidden and tag in ("p", "div", "ul", "ol", "h1", "h2", "h3", "h4") and not self.at_bullet():
             self.parts.append("\n\n")
 
     def handle_data(self, data):
-        if not self.hidden:
+        if not self.hidden and not (self.at_bullet() and not data.strip()):
             self.parts.append(data)
 
+    def at_bullet(self):
+        return bool(self.parts and self.parts[-1] == "\n• ")
 
-def plain_text(html_text: str | None) -> str:
+
+def normalize_text(value: str) -> str:
+    """Remove spacer lines while preserving paragraphs, bullets and indentation."""
+    text = "\n".join(line.rstrip() for line in value.replace("\xa0", " ").splitlines())
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    return re.sub(r"(?m)^([ \t]*•[^\n]*)\n\n(?=[ \t]*•)", r"\1\n", text)
+
+
+def plain_text(value: str | None) -> str:
     parser = PlainText()
-    parser.feed(html_text or "")
-    return re.sub(r"\n[ \t]*\n(?:[ \t]*\n)+", "\n\n", "".join(parser.parts)).strip()
+    parser.feed(value or "")
+    return normalize_text("".join(parser.parts))
 
 
 def web_link(value) -> str:
@@ -119,7 +137,7 @@ def card(job: dict) -> dict:
         "employment": job.get("employmentType") or "",
         "department": job.get("department") or "", "team": job.get("team") or "",
         "published": job["_pub"].isoformat() if job["_pub"] else None,
-        "description": (job.get("descriptionPlain") or "").strip() or plain_text(job.get("descriptionHtml")),
+        "description": normalize_text(job.get("descriptionPlain") or "") or plain_text(job.get("descriptionHtml")),
         "url": job["jobUrl"], "applyUrl": web_link(job.get("applyUrl")) or job["jobUrl"],
     }
 
