@@ -1,0 +1,1373 @@
+{
+  "observed_at": "2026-11-01T16:04:08.087047+00:00",
+  "source": "https://jobs.workable.com/api/v1/jobs?location=Germany",
+  "complete_scan": true,
+  "jobs_observed": 2893,
+  "companies": {
+    "workable:00913606-ddb9-4635-b990-def5e3626ef9": {
+      "name": "7thSENSE GmbH",
+      "website": "http://www.7thsense.de",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/594071/logo"
+    },
+    "workable:00f9ac5a-c9af-4acb-b1c9-8656212a1e42": {
+      "name": "Decentralized Masters",
+      "website": "https://www.decentralizedmasters.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/605380/logo"
+    },
+    "workable:010f1ff2-d006-4cb8-9e6d-0d2e7e1366f8": {
+      "name": "Recruitment By Ierotheos",
+      "website": "http://www.mercierconsultancygroup.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/678222/logo"
+    },
+    "workable:01f327ed-a237-41ce-9eef-7af4dc031d9a": {
+      "name": "Control Risks",
+      "website": "https://www.controlrisks.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/482301/logo"
+    },
+    "workable:02c1a6e9-428b-4198-8016-6ef543fd7a29": {
+      "name": "PriceLabs",
+      "website": "http://pricelabs.co",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/736900/logo"
+    },
+    "workable:02c27e64-0057-4499-8608-0d33d30516c7": {
+      "name": "Kooku Recruiting GmbH",
+      "website": "http://www.kooku.de",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/294314/logo"
+    },
+    "workable:071d270e-7d0d-4d5e-8d48-1187c51ab6f6": {
+      "name": "IMTF",
+      "website": "https://imtf.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/657968/logo"
+    },
+    "workable:09a57794-11c9-4e2d-a216-a2f5448b11ed": {
+      "name": "RealAdvisor S.A.",
+      "website": "https://realadvisor.ch/en",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/724616/logo"
+    },
+    "workable:09da0083-533a-483b-8a97-153141206882": {
+      "name": "Identiv",
+      "website": "https://www.identiv.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/671612/logo"
+    },
+    "workable:0bac984b-e8f7-46cc-938b-eb565b827c62": {
+      "name": "Unit8 SA",
+      "website": "http://unit8.co",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/363118/logo"
+    },
+    "workable:0d9577e4-a179-49b4-b71d-6eddb2e793f8": {
+      "name": "Trade Nation",
+      "website": "https://tradenation.com/en-gb/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/669480/logo"
+    },
+    "workable:0eb2da8a-3e39-45b2-9791-64cb0017864e": {
+      "name": "Seez",
+      "website": "https://seez.co/en/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/715542/logo"
+    },
+    "workable:10caf7ee-436a-417b-adaa-0a43dddb3e5c": {
+      "name": "MSR-FSR",
+      "website": "http://www.msr-fsr.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/650911/logo"
+    },
+    "workable:120150b6-74aa-4d5d-b993-0089446e387e": {
+      "name": "Degura GmbH",
+      "website": "https://www.degura.de/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/468170/logo"
+    },
+    "workable:12273f15-d0f0-44a7-8022-b80da3e697cb": {
+      "name": "Shiftmove",
+      "website": "http://shiftmove.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/670249/logo"
+    },
+    "workable:136c7c7c-0120-4496-a7cd-f97e3309261d": {
+      "name": "Stableton Financial AG",
+      "website": "http://www.stableton.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/451917/logo"
+    },
+    "workable:13d3ad7e-84c0-4ec8-b297-0a18c27ba057": {
+      "name": "Versa Networks",
+      "website": "https://versa-networks.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/738910/logo"
+    },
+    "workable:1548693a-80ea-417d-8226-85451c66071c": {
+      "name": "Titanom Solutions GmbH",
+      "website": "https://titanom.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/634779/logo"
+    },
+    "workable:15ae6f9a-d956-43ca-b4a2-50184ef9f5f7": {
+      "name": "AirHelp",
+      "website": "http://airhelp.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/196563/logo"
+    },
+    "workable:16fe7a79-c6cd-42af-843b-3fc57023c030": {
+      "name": "Cadillac Formula 1® Team",
+      "website": "https://www.cadillacf1team.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/606361/logo"
+    },
+    "workable:1749eaf0-57f2-402e-9c59-0de751faf49e": {
+      "name": "Moreton Capital Partners",
+      "website": "http://moretoncp.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/711243/logo"
+    },
+    "workable:1943d17f-3bea-4b1c-973a-4e53fdced0f9": {
+      "name": "Goodtime International Entertainment",
+      "website": "https://www.good-time.eu/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/711083/logo"
+    },
+    "workable:198a83b4-3d5c-4828-8a57-b5a458771156": {
+      "name": "Mobile Locker NV",
+      "website": "http://mobilelocker.eu",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/661366/logo"
+    },
+    "workable:1a76b52c-a440-4659-a88c-d2e9aa9b0fcf": {
+      "name": "Keywords Studios",
+      "website": "http://www.keywordsstudios.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/239938/logo"
+    },
+    "workable:1d52fdd6-a60f-4b7f-9b0d-aa3dcd1d91cf": {
+      "name": "Sidetrade",
+      "website": "https://www.sidetrade.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/202902/logo"
+    },
+    "workable:1d9e9fd5-4283-4269-8b4b-c365849c4628": {
+      "name": "Open",
+      "website": "https://open.cx",
+      "logo": ""
+    },
+    "workable:1e311f8c-8736-4b9b-9ead-3b1b665b2e5f": {
+      "name": "Alexander Dennis",
+      "website": "https://www.alexander-dennis.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/366889/logo"
+    },
+    "workable:22e46b54-c0b9-4f85-afab-3f845cdbf1b1": {
+      "name": "atmio",
+      "website": "http://atmio.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/676485/logo"
+    },
+    "workable:23c5f50c-1be3-4812-ab0b-74701a49edc2": {
+      "name": "Genki",
+      "website": "https://genki.world/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/532152/logo"
+    },
+    "workable:2452e39a-82ab-45ff-9210-b42578588532": {
+      "name": "Valis",
+      "website": "http://valis.so",
+      "logo": ""
+    },
+    "workable:25096566-9c67-43c6-aa21-d283dc054257": {
+      "name": "Mercier Consultancy Group",
+      "website": "http://www.mercierconsultancygroup.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/710021/logo"
+    },
+    "workable:25a92913-3935-4e4e-9f88-f347f2b4240c": {
+      "name": "Usercentrics",
+      "website": "https://usercentrics.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/717152/logo"
+    },
+    "workable:25d9e470-dfcc-4434-b46d-c59f49a39bbd": {
+      "name": "gamigo group",
+      "website": "https://corporate.gamigo.com/en/welcome/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/583361/logo"
+    },
+    "workable:25fd54b3-c7dc-403c-b99d-3be6ec45fa81": {
+      "name": "AURORA",
+      "website": "http://joinaurora.co",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/667349/logo"
+    },
+    "workable:26c0819e-cb4a-4ae2-b68b-71c8b3d5aa72": {
+      "name": "We Are Social",
+      "website": "https://wearesocial.com/uk/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/485682/logo"
+    },
+    "workable:2ac208fb-280b-42c7-8a06-c244e62d6fa3": {
+      "name": "Belmont Lavan Ltd",
+      "website": "http://www.belmontlavan.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/511068/logo"
+    },
+    "workable:2b82734b-9597-42f6-ba5e-c6f341f3e971": {
+      "name": "ICM America",
+      "website": "https://icmamerica.com/",
+      "logo": ""
+    },
+    "workable:2ca8d8b9-46b7-4c5c-9324-7331c24948bd": {
+      "name": "Learnlight",
+      "website": "https://www.learnlight.com/en/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/206785/logo"
+    },
+    "workable:32126146-62b9-4ef4-a2ad-679789a7e99c": {
+      "name": "Winthrop Technologies",
+      "website": "https://winthrop.ie/careers/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/495749/logo"
+    },
+    "workable:3279a559-9830-4817-bcf3-ad0e7a1d029a": {
+      "name": "Walaris",
+      "website": "https://walaris.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/523915/logo"
+    },
+    "workable:32bdb32c-b79c-4008-89c2-9f40946f73ab": {
+      "name": "SAP Fioneer",
+      "website": "http://www.fioneer.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/562664/logo"
+    },
+    "workable:33d116ae-f0c0-4383-84e5-85924f001383": {
+      "name": "Elesta",
+      "website": "https://www.linkedin.com/company/uhnw-family-office/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/538156/logo"
+    },
+    "workable:343f7ba7-16bc-4b5f-991c-2a7873c890b9": {
+      "name": "Sama",
+      "website": "http://sama.io",
+      "logo": ""
+    },
+    "workable:3517351e-fbfb-4177-810e-e27a093c5839": {
+      "name": "TetraScience",
+      "website": "http://tetrascience.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/168086/logo"
+    },
+    "workable:35d446e1-db62-4651-baee-5aad860b6e53": {
+      "name": "Alchemy Cloud Inc.",
+      "website": "http://alchemy.cloud",
+      "logo": ""
+    },
+    "workable:37027bec-d5ca-4a29-acd8-cc540a59cb0a": {
+      "name": "Ackerherz",
+      "website": "http://www.ackerherz.de",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/574715/logo"
+    },
+    "workable:37f1d696-d483-4daa-a127-6e227fc0cd15": {
+      "name": "Backbone (BKBN)",
+      "website": "https://bkbn.com/en",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/524226/logo"
+    },
+    "workable:38e77798-9776-4e41-9fc0-f4c94eb2b306": {
+      "name": "Abakus Center",
+      "website": "http://abakus-center.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/651644/logo"
+    },
+    "workable:3a86f076-19fa-4e69-88a3-7cc4a5816061": {
+      "name": "Marabu Airlines",
+      "website": "https://flymarabu.com/en/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/628331/logo"
+    },
+    "workable:3e447479-3077-4b0b-98c9-5508e41d9efd": {
+      "name": "dltHub",
+      "website": "https://dlthub.com/docs",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/587703/logo"
+    },
+    "workable:3e79c4a6-cad0-40e4-98b1-62ff429d9593": {
+      "name": "Thorlabs",
+      "website": "https://www.thorlabs.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/327786/logo"
+    },
+    "workable:3e89c73c-f017-4a2c-8696-290753014cf6": {
+      "name": "Visium SA",
+      "website": "https://www.visium.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/470214/logo"
+    },
+    "workable:4002b0ce-59f5-4587-bf6a-47d2a716f9d9": {
+      "name": "INEOS Automotive",
+      "website": "https://ineosgrenadier.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/253500/logo"
+    },
+    "workable:40ebe7b6-863e-44eb-a660-ad75e4e3989c": {
+      "name": "G MASS",
+      "website": "https://gmassconsulting.com/",
+      "logo": ""
+    },
+    "workable:411b4b9b-6268-42f4-b021-0b88f4283b8b": {
+      "name": "Iro&Partners",
+      "website": "http://www.iro.co.at",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/602443/logo"
+    },
+    "workable:438c486f-f244-4422-af96-13a701213973": {
+      "name": "AVK",
+      "website": "http://www.avk-seg.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/642300/logo"
+    },
+    "workable:459c9403-d0f9-403d-b98f-f1441daed4e7": {
+      "name": "Wrisk",
+      "website": "https://www.wrisk.co/",
+      "logo": ""
+    },
+    "workable:463c7349-ff9f-4963-9252-5e7d0d8ea8af": {
+      "name": "TORQCOMMODITIES",
+      "website": "https://torqcommodities.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/712811/logo"
+    },
+    "workable:469bdbcf-1f10-48e9-b731-0fd015e6a99b": {
+      "name": "ifeel",
+      "website": "https://ifeelonline.com/en/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/652328/logo"
+    },
+    "workable:46c3eab8-5769-481d-a12c-9f65d4485297": {
+      "name": "Cara Care",
+      "website": "https://cara.care",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/391761/logo"
+    },
+    "workable:475412d3-cef7-4f86-9732-2660e831fd4c": {
+      "name": "Infosys Consulting - Europe",
+      "website": "https://www.infosys.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/487657/logo"
+    },
+    "workable:4933cf80-11e1-47dd-9042-55ce8ba8bc99": {
+      "name": "Skeleton Technologies",
+      "website": "http://skeletontech.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/128656/logo"
+    },
+    "workable:4a3c3856-43f2-475e-a392-de763dc15e80": {
+      "name": "Two Circles",
+      "website": "http://www.twocircles.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/584058/logo"
+    },
+    "workable:4af1a901-ea62-4dd8-b32b-2e0431828546": {
+      "name": "BHG Hospitality GmbH",
+      "website": "https://www.berlin-hospitality.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/650172/logo"
+    },
+    "workable:4cf5837f-449c-4b22-b5a6-97e2218ac804": {
+      "name": "Ella Hotels and Resorts",
+      "website": "http://ellaresorts.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/584602/logo"
+    },
+    "workable:4d015e1b-6c7b-4b9c-812f-d7297133825e": {
+      "name": "Digital Vikings",
+      "website": "http://www.digitalvikings.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/77193/logo"
+    },
+    "workable:4d185c91-13ff-4f5d-9c60-ca77e9df6c3d": {
+      "name": "D-ploy",
+      "website": "https://d-ploy.ch/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/490728/logo"
+    },
+    "workable:4d63a8d3-4e95-4a28-bdc3-283d942932e5": {
+      "name": "TELEKOM HELLENIC BUSINESS SOLUTIONS SA",
+      "website": "https://www.telekom-hbs.com/",
+      "logo": ""
+    },
+    "workable:4e70be5e-726f-4b53-8272-2b63879e2822": {
+      "name": "Stranger Soccer",
+      "website": "http://www.strangersoccer.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/652241/logo"
+    },
+    "workable:509c11ac-966f-4b08-84ce-f0645ef456b6": {
+      "name": "MLabs",
+      "website": "https://mlabs.city",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/490522/logo"
+    },
+    "workable:51b3fbfd-5111-4071-9def-0ab4aa9ade00": {
+      "name": "SPD Technology",
+      "website": "https://spd.tech/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/725140/logo"
+    },
+    "workable:5302d4f7-7de4-40bf-9fbe-0ff3c0cd4dc5": {
+      "name": "Beam AI",
+      "website": "http://beam.ai",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/586521/logo"
+    },
+    "workable:53ade430-773e-4e6a-b059-9b2669c12b3d": {
+      "name": "Joom",
+      "website": "https://about.joom.com/en",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/718301/logo"
+    },
+    "workable:53ce5030-23e2-4216-b414-8875eacbcdb6": {
+      "name": "MotorK",
+      "website": "https://www.motork.io/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/70946/logo"
+    },
+    "workable:5409d59c-be64-4f77-ad6a-cef603da34f8": {
+      "name": "PEOPLECERT",
+      "website": "http://www.peoplecert.org",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/166150/logo"
+    },
+    "workable:54d363b0-1faf-4eeb-b0d2-58f039de5e10": {
+      "name": "Hospitable",
+      "website": "https://hospitable.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/550146/logo"
+    },
+    "workable:554e2525-b66f-4102-984a-8f8b07cba4ae": {
+      "name": "MSL Engineering",
+      "website": "https://www.mslengineering.ie/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/680779/logo"
+    },
+    "workable:55c96070-dc05-4efb-baf3-3a71fbc4e6ee": {
+      "name": "Seeq",
+      "website": "http://seeq.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/629826/logo"
+    },
+    "workable:55f0768e-a494-4998-a623-0b8e2771b8d4": {
+      "name": "AIRS Medical Inc",
+      "website": "http://www.airsmed.com",
+      "logo": ""
+    },
+    "workable:563b6c6c-cce6-4b66-9675-53c40470c441": {
+      "name": "Adapt1Solution",
+      "website": "http://www.adapt1solution.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/467265/logo"
+    },
+    "workable:580af5e9-1511-42a1-9527-fe36a9e36f61": {
+      "name": "DeepSource Technologies",
+      "website": "http://www.deepsource.ai",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/626923/logo"
+    },
+    "workable:58771a1a-1301-45b3-b9f9-010d98a62317": {
+      "name": "Skyven Technologies",
+      "website": "http://www.skyven.co",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/554771/logo"
+    },
+    "workable:58ea9652-e1ef-4a83-aa4b-48f4378856dd": {
+      "name": "Haiilo",
+      "website": "http://www.haiilo.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/700773/logo"
+    },
+    "workable:59733afd-7d91-46aa-8625-ab5322b27842": {
+      "name": "IBMC",
+      "website": "http://ibmc.id",
+      "logo": ""
+    },
+    "workable:5b0fdb08-e9ca-404b-b845-3d1622e7b07e": {
+      "name": "Exotec",
+      "website": "http://exotec.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/508939/logo"
+    },
+    "workable:5b13c284-ee64-42b4-99f5-f8c251615396": {
+      "name": "Nuvei",
+      "website": "https://nuvei.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/378737/logo"
+    },
+    "workable:5c1d785e-d85c-4404-9e70-0152684ba636": {
+      "name": "Zhejiang Dingli Machinery Co.,ltd",
+      "website": "https://en.cndingli.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/620340/logo"
+    },
+    "workable:5e092b51-a0eb-431b-b62e-8ec7979b8535": {
+      "name": "Mercier Consultancy",
+      "website": "http://www.mercierconsultancy.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/690596/logo"
+    },
+    "workable:5f9a516b-4ed6-469b-bb5a-ec448a673aa9": {
+      "name": "SHIELD",
+      "website": "https://shield.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/508188/logo"
+    },
+    "workable:608c4ad7-a978-4f0d-87f6-883d5999cbe6": {
+      "name": "Eva Pharma",
+      "website": "https://www.evapharma.com/en",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/702008/logo"
+    },
+    "workable:6104d64c-5317-4ca4-9dbf-e946be58afe2": {
+      "name": "Roundtrip",
+      "website": "https://roundtrip.travel",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/702475/logo"
+    },
+    "workable:6161f3fb-8a35-4027-9332-7b238e8458c0": {
+      "name": "Sapsol Technologies Inc",
+      "website": "http://www.sapsol.com",
+      "logo": ""
+    },
+    "workable:631915ee-5e49-48c8-aebb-ca0ee26d7016": {
+      "name": "Unison Group",
+      "website": "https://unisongroup.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/599747/logo"
+    },
+    "workable:639a1b79-63d2-430d-ba05-4f3945bd99c3": {
+      "name": "Soda Data",
+      "website": "https://www.soda.io/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/705076/logo"
+    },
+    "workable:64ded550-64bf-4f1a-9f55-8b50f64d57ff": {
+      "name": "Sentec",
+      "website": "https://www.sentec.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/657503/logo"
+    },
+    "workable:64e7a25c0617bbec0efa2f21": {
+      "name": "PIMCO",
+      "website": "https://community.lgbtgreatcareers.com/careers-partners/lgbt-great-careers-partner-pimco/",
+      "logo": "https://lgbtgreat-members.glueup.com/resources/public/images/logo/200x100/771a566d-9aba-4738-9935-1de9a05b132b.png"
+    },
+    "workable:65580330-47de-48d4-ac59-08c397297efc": {
+      "name": "ARCHIMED",
+      "website": "https://www.archimed.group/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/570872/logo"
+    },
+    "workable:658a0888-4299-4e56-bb7b-c13956e4c6a3": {
+      "name": "Hack The Box",
+      "website": "https://www.hackthebox.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/417523/logo"
+    },
+    "workable:6663ef43-f7e5-437a-8921-1f714665959a": {
+      "name": "Leadfeeder",
+      "website": "https://www.leadfeeder.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/165630/logo"
+    },
+    "workable:66689e40-3d4d-4bb0-9582-44eea6174cc1": {
+      "name": "Third Wave Systems",
+      "website": "http://www.thirdwavesys.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/29055/logo"
+    },
+    "workable:669ca49a-dbbc-40d1-9239-491fc65d43a1": {
+      "name": "OPENLANE Europe",
+      "website": "https://www.openlane.eu/en/home",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/331074/logo"
+    },
+    "workable:678e5a49-7993-4a86-b656-06652c4de5dd": {
+      "name": "Freedom24",
+      "website": "https://freedom24.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/723869/logo"
+    },
+    "workable:67daa1e2b3785a06e9de5d53": {
+      "name": "Station",
+      "website": "https://www.linkedin.com/company/station-group-international/about/",
+      "logo": "https://production-job-board-public.s3.amazonaws.com/logos/b7766d23-a5ff-48fa-a4e8-f650f0be81e9"
+    },
+    "workable:68d5f22b-e3e3-490c-99c7-1ab2350641a2": {
+      "name": "Digital Technology Institute for Development (DTID)",
+      "website": "http://www.dtid.ngo",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/502977/logo"
+    },
+    "workable:69d3c456-77a2-44bd-803b-40ab63329b7d": {
+      "name": "Hire Resolve.com",
+      "website": "https://www.hireresolve.com/",
+      "logo": ""
+    },
+    "workable:6a4b2d41-7347-4131-b71c-55486eed00ef": {
+      "name": "Impact Clients",
+      "website": "https://go.impactclients.co/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/679568/logo"
+    },
+    "workable:6b9d313f-01a6-4baf-aa15-7c3fef9e7611": {
+      "name": "CXG",
+      "website": "https://www.customerexperiencegroup.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/329026/logo"
+    },
+    "workable:6e040290-316f-435c-8596-470e154f859d": {
+      "name": "Critical Manufacturing",
+      "website": "https://www.criticalmanufacturing.com/",
+      "logo": ""
+    },
+    "workable:6f39ed3f-c2e8-4eb3-8ab8-dc0f4dfa4387": {
+      "name": "Channel Factory",
+      "website": "https://channelfactory.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/475961/logo"
+    },
+    "workable:71039c8c-f2ff-4969-8dfe-e35fb2a53ee6": {
+      "name": "Nippon Express Europe GmbH",
+      "website": "http://www.nipponexpress.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/627944/logo"
+    },
+    "workable:725a8d78-d369-4416-9ea5-7005097035f6": {
+      "name": "Guess Europe Sagl",
+      "website": "http://www.guess.eu",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/452934/logo"
+    },
+    "workable:72d3750d-ab24-4c6f-b2d3-0da55bd309ec": {
+      "name": "TMGM",
+      "website": "https://www.tmgm.com/au",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/609026/logo"
+    },
+    "workable:73a1a420-7d9f-433f-8c7c-d746ca78c304": {
+      "name": "HeavenHR",
+      "website": "http://www.heavenhr.de",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/33423/logo"
+    },
+    "workable:75f77be5-187a-45a6-ab30-5df45d082ea9": {
+      "name": "Capitex",
+      "website": "https://capitex-global.com/",
+      "logo": ""
+    },
+    "workable:76e58831-6e72-4e3d-ad4b-add53e53051f": {
+      "name": "Euromonitor",
+      "website": "http://www.euromonitor.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/359562/logo"
+    },
+    "workable:77ef7ab8-7725-479f-a912-4dcbad9878fd": {
+      "name": "Street Child",
+      "website": "https://street-child.org/careers/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/598585/logo"
+    },
+    "workable:793ae860-5da2-4433-b3f8-334a74bf9d4d": {
+      "name": "OBRELA",
+      "website": "http://www.obrela.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/69503/logo"
+    },
+    "workable:79451658-fdb6-4ece-8ae2-488c473935a0": {
+      "name": "Hirsch",
+      "website": "https://www.hirschsecure.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/399621/logo"
+    },
+    "workable:79e93ce6-dd77-4d08-9a1d-13399e5f30e4": {
+      "name": "JoVE",
+      "website": "https://www.jove.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/736049/logo"
+    },
+    "workable:7a8bc53e-30b0-4370-93fb-67e895bbc9e0": {
+      "name": "RHONDOS Inc",
+      "website": "http://www.rhondos.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/742017/logo"
+    },
+    "workable:7b424e59-594d-4273-978e-fc8e81d8629e": {
+      "name": "Searoutes",
+      "website": "https://searoutes.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/335117/logo"
+    },
+    "workable:7c43f5e8-1e34-41a9-9e70-7313ca6ce47f": {
+      "name": "Müller`s Solutions",
+      "website": "http://www.mullerssolutions.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/643920/logo"
+    },
+    "workable:7d35155d-b855-492b-9a45-3eb93d31f8a8": {
+      "name": "GoTymeX",
+      "website": "https://www.gotyme.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/546852/logo"
+    },
+    "workable:7da35663-7fbc-4a5d-8bd0-3ba1a0ca04eb": {
+      "name": "Crown Global",
+      "website": "https://crown.global/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/722304/logo"
+    },
+    "workable:7db41bdf-8522-4b3c-a494-54662ea68701": {
+      "name": "Valutico",
+      "website": "https://valutico.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/678875/logo"
+    },
+    "workable:7dc44126-6fb6-4c58-86e9-06edde318c39": {
+      "name": "Visit.org",
+      "website": "https://www.visit.org/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/696384/logo"
+    },
+    "workable:7e263790-2d1f-48b8-858c-aa5ec81627af": {
+      "name": "Solance",
+      "website": "http://www.solance.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/694069/logo"
+    },
+    "workable:7e3163b7-6595-472a-8fb6-7424218ed72b": {
+      "name": "Allucent",
+      "website": "https://www.allucent.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/524815/logo"
+    },
+    "workable:7e77c0a0-f293-47e9-830a-269ddc38ddcc": {
+      "name": "INAUTALENT",
+      "website": "https://inautalent.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/639363/logo"
+    },
+    "workable:7eb61613-c08d-41d3-9664-0f875e833fb5": {
+      "name": "Intetics",
+      "website": "http://intetics.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/554738/logo"
+    },
+    "workable:812df7eb-665c-40ce-a292-b08be02dc7b3": {
+      "name": "Charlotte Tilbury",
+      "website": "http://www.charlottetilbury.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/183411/logo"
+    },
+    "workable:823ad8b2-fddd-4cd1-9fed-49730810f1bc": {
+      "name": "Soar With Us",
+      "website": "http://soarwithus.co",
+      "logo": ""
+    },
+    "workable:8482c5e8-9ff2-43cf-b5a2-43b39e39a131": {
+      "name": "EngageTech",
+      "website": "https://engagetech.co.uk/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/578400/logo"
+    },
+    "workable:86518392-2b98-4cda-ae78-8229f41aca52": {
+      "name": "Yugo",
+      "website": "https://yugo.com/en-gb/home",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/736260/logo"
+    },
+    "workable:87bfb869-26dc-46e7-8bdc-81b3e3224271": {
+      "name": "Talent Trader Group",
+      "website": "https://talenttradersgroup.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/644460/logo"
+    },
+    "workable:888dd2ff-c1f3-4b65-9f70-1a600cd7e98b": {
+      "name": "UMAEZ LLC",
+      "website": "http://umaez.co",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/738066/logo"
+    },
+    "workable:893bddfe-c852-4f43-a330-7ebc8d932399": {
+      "name": "Portless",
+      "website": "http://www.portless.com",
+      "logo": ""
+    },
+    "workable:8a884b24-c7ce-4a64-82cb-040ee3bc0563": {
+      "name": "Valsoft Corporation",
+      "website": "http://aspiresoftware.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/640274/logo"
+    },
+    "workable:8bf17f6c-7dba-4901-9c27-575378d97941": {
+      "name": "Clinigen",
+      "website": "https://www.clinigengroup.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/615566/logo"
+    },
+    "workable:8c66edce-7618-4945-b705-709745c9e856": {
+      "name": "Roundtable on Sustainable Biomaterials",
+      "website": "https://rsb.org/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/631149/logo"
+    },
+    "workable:8cf66c2e-3463-44a5-8738-2f01f4594043": {
+      "name": "P3 Logistic Parks",
+      "website": "https://www.p3parks.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/584454/logo"
+    },
+    "workable:8d37dc93-a181-4d9f-b1fa-7e78df50d0d2": {
+      "name": "Omilia",
+      "website": "http://omilia.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/427937/logo"
+    },
+    "workable:8d6132f6-6448-4771-b6a4-3d0d11cde045": {
+      "name": "Forgotten Empires",
+      "website": "https://www.forgottenempires.net/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/588841/logo"
+    },
+    "workable:8d7f8831-3330-4604-9045-bddb7db31736": {
+      "name": "Avomind",
+      "website": "https://www.avomind.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/690909/logo"
+    },
+    "workable:8e034e5b-4808-4160-b0e3-721d12acc085": {
+      "name": "Intuition Machines, Inc.",
+      "website": "http://www.intuitionmachines.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/510488/logo"
+    },
+    "workable:8e237fe6-3c10-4f09-806c-d1bb73a5255a": {
+      "name": "MM Coaching Limited",
+      "website": "https://marriagereset.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/681696/logo"
+    },
+    "workable:8e7ddb63-3d43-477a-8aa6-921ae54dd002": {
+      "name": "Blackline Safety",
+      "website": "https://www.blacklinesafety.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/577758/logo"
+    },
+    "workable:8ffc864d-3caa-4336-b59e-21cf98766acb": {
+      "name": "Modash",
+      "website": "https://www.modash.io",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/655686/logo"
+    },
+    "workable:92a15014-0636-4bb3-9914-facca560500f": {
+      "name": "Rokt",
+      "website": "http://rokt.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/157387/logo"
+    },
+    "workable:966dacfe-80dc-43e5-b542-474888a93ca9": {
+      "name": "WorkMotion",
+      "website": "https://www.workmotion.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/493988/logo"
+    },
+    "workable:967d7f09-c78f-48f7-90c5-00470d8be576": {
+      "name": "Action1",
+      "website": "https://www.action1.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/696873/logo"
+    },
+    "workable:96acc3d4-2c13-411a-8046-da6d7d40b36c": {
+      "name": "The Focusrite Group",
+      "website": "http://www.focusrite.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/281131/logo"
+    },
+    "workable:97e8511f-b141-4158-8ce1-f5469d64bc4e": {
+      "name": "Future Advocacy",
+      "website": "https://futureadvocacy.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/645675/logo"
+    },
+    "workable:98450c86-ba08-4898-8f64-12dd1695902f": {
+      "name": "Cowboy",
+      "website": "http://www.cowboy.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/251963/logo"
+    },
+    "workable:9905e7bf-6a63-434f-bcd0-f85e3dbafaf2": {
+      "name": "Oikonomakis Law Firm",
+      "website": "https://oikonomakislaw.com/el/",
+      "logo": ""
+    },
+    "workable:9aec844a-1647-4c4f-8311-940af353e47c": {
+      "name": "Careers with WM Partners' Portfolio Companies",
+      "website": "https://wmplp.com/",
+      "logo": ""
+    },
+    "workable:9c29ec20-328f-4b44-bb1e-a352e737c4c8": {
+      "name": "Xenon7",
+      "website": "http://xenon7.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/636915/logo"
+    },
+    "workable:9c486c0e-5572-4f08-803f-ec8cbb7f25fe": {
+      "name": "Q ENERGY",
+      "website": "http://www.qenergy.eu",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/654732/logo"
+    },
+    "workable:9d8e487d-58bf-46e6-9465-0f4d58b83562": {
+      "name": "Cross Border Talents",
+      "website": "http://cbtalents.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/234126/logo"
+    },
+    "workable:9e1db71a-d085-4f51-bc2e-7fdef4e6ff91": {
+      "name": "Broadpin",
+      "website": "http://www.quistor.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/578659/logo"
+    },
+    "workable:9eb9de0d-efd9-4fa4-8c4e-8d3e66b7c2ee": {
+      "name": "Gramian Consulting Group",
+      "website": "http://gramianconsulting.com",
+      "logo": ""
+    },
+    "workable:9f5c7961-9319-4b22-800f-f0aafdc44878": {
+      "name": "VirtuHire",
+      "website": "http://virtuhire.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/681447/logo"
+    },
+    "workable:a10415bc-44bf-4b0f-9dba-0b836ef20093": {
+      "name": "Genetec",
+      "website": "https://www.genetec.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/442102/logo"
+    },
+    "workable:a15da5da-4131-4e68-ae8a-84937273ac11": {
+      "name": "Fabulous",
+      "website": "http://thefabulous.co",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/518492/logo"
+    },
+    "workable:a172592d-3d88-4fbd-9e4d-13c79c9c9a0a": {
+      "name": "SORACOM",
+      "website": "https://www.soracom.io/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/455690/logo"
+    },
+    "workable:a261e2d7-1ac6-41f4-b6e0-02314b61caaf": {
+      "name": "Karo Healthcare",
+      "website": "https://www.karohealthcare.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/578177/logo"
+    },
+    "workable:a3338b9c-dd99-4be4-acaa-dc731ef195db": {
+      "name": "Topoteretes UG (haftungsbeschränkt)",
+      "website": "http://www.topoteretes.com",
+      "logo": ""
+    },
+    "workable:a3b0d602-6074-45da-b053-26b9099507c0": {
+      "name": "Excelerate360",
+      "website": "https://excelerate360.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/536773/logo"
+    },
+    "workable:a5043108-edf3-4600-a893-98a7ec58858e": {
+      "name": "Solplanet",
+      "website": "http://solplanet.net",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/599313/logo"
+    },
+    "workable:a516432d-6f2d-4231-8b08-8a1c6e8bb35a": {
+      "name": "Betterhomes",
+      "website": "https://www.bhomes.com/en",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/706466/logo"
+    },
+    "workable:a57ce0d0-64f1-4545-914f-a2dc75e3756f": {
+      "name": "Teltonika",
+      "website": "https://teltonika-iot-group.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/712833/logo"
+    },
+    "workable:a58d7c33-0bb2-4ba0-a5ee-72797d9a0fbc": {
+      "name": "Hilo By Aktiia",
+      "website": "https://www.hilo.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/548089/logo"
+    },
+    "workable:a5ff1892-9ccf-4749-ac70-25c62b6dcca2": {
+      "name": "Adzuna",
+      "website": "http://www.adzuna.co.uk",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/28881/adzuna_stacked_logo.png"
+    },
+    "workable:a65c57ca-cae7-4105-afe5-6a788bf6e22b": {
+      "name": "MaxAccelerate",
+      "website": "https://maxaccelerate.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/687859/logo"
+    },
+    "workable:a67e9f70-48c9-405d-bb22-6989b7b4f50c": {
+      "name": "Fuse Energy",
+      "website": "https://www.fuseenergy.com/",
+      "logo": ""
+    },
+    "workable:a7a50fcd-a715-4d8b-b62e-acf6f9a844b4": {
+      "name": "PIX4D",
+      "website": "https://pix4d.com/jobs",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/59309/logo"
+    },
+    "workable:a84ae9b4-2eb9-4038-8467-d1d96844bf56": {
+      "name": "Intertek",
+      "website": "https://www.intertek.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/662457/logo"
+    },
+    "workable:a9a47fef-3805-4987-ad07-f2a8637dacfb": {
+      "name": "BB&E",
+      "website": "https://bbande.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/699997/logo"
+    },
+    "workable:a9e73489-4890-4acf-b785-3167aa5e1c01": {
+      "name": "1000heads",
+      "website": "https://1000heads.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/410749/logo"
+    },
+    "workable:ac5b3ed2-5881-4f3c-9b29-5f8eb0a7be13": {
+      "name": "Rydoo",
+      "website": "http://rydoo.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/558565/logo"
+    },
+    "workable:ad95aa00-1a32-45ca-bb3c-b3b67b0fe1dc": {
+      "name": "Deep Science Ventures",
+      "website": "http://deepscienceventures.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/211574/logo"
+    },
+    "workable:aedd9a10-e58b-47ea-a64b-e7735d35f7dd": {
+      "name": "Runware",
+      "website": "https://runware.ai/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/655051/logo"
+    },
+    "workable:af04b2d6-0ffb-4682-875f-76e795a72fdf": {
+      "name": "Gridlines",
+      "website": "https://www.gridlines.com/",
+      "logo": ""
+    },
+    "workable:b0e41ed0-88e5-4d71-9cf7-b10c10daea77": {
+      "name": "1GLOBAL",
+      "website": "https://www.1global.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/409431/logo"
+    },
+    "workable:b0f229a3-77bb-40a4-b7c7-aafd719bc828": {
+      "name": "Envalior",
+      "website": "https://envalior.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/616896/logo"
+    },
+    "workable:b1acb20e-4977-4f13-98ca-ccfba9e58dc2": {
+      "name": "Euronet – Payments Infrastructure Segment",
+      "website": "https://www.euronet.com/segments/electronic-funds-transfer/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/547331/logo"
+    },
+    "workable:b1ee9213-d6f0-4bfb-9212-cf8e46ea9534": {
+      "name": "GoGlobal",
+      "website": "https://goglobal.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/575555/logo"
+    },
+    "workable:b3931373-68b8-4dc6-a941-d059f9279464": {
+      "name": "CloudFactory",
+      "website": "https://www.cloudfactory.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/389623/logo"
+    },
+    "workable:b418ade1-e252-4ffe-86ae-98d9b232ed0f": {
+      "name": "Propeller",
+      "website": "http://propelleraero.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/36135/logo"
+    },
+    "workable:b4b53b14-2fb3-48e1-b925-7ea587480d45": {
+      "name": "A2MAC1",
+      "website": "https://www.a2mac1.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/583924/logo"
+    },
+    "workable:b51e3de4-e036-48b8-b135-c5865e0bd1a1": {
+      "name": "Vivaldi Group",
+      "website": "http://vivaldigroup.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/563149/logo"
+    },
+    "workable:b535e655-6045-4a72-b789-e0740bdcd891": {
+      "name": "Liberty Music PR",
+      "website": "http://libertymusicpr.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/690725/logo"
+    },
+    "workable:b5d045a1-82e1-4ee2-bf26-6aee88d3d625": {
+      "name": "Alex Staff Agency",
+      "website": "http://alexstaff.agency",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/699570/logo"
+    },
+    "workable:b7444c26-04a4-4341-9449-ee7534366428": {
+      "name": "RevStar",
+      "website": "https://revstarconsulting.com/",
+      "logo": ""
+    },
+    "workable:b8537e42-44e3-4610-8929-851e16a0c5d6": {
+      "name": "Pavago",
+      "website": "https://www.pavago.co",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/622549/logo"
+    },
+    "workable:b919b6b4-c390-4c18-885e-2193b26e7714": {
+      "name": "Optiplay",
+      "website": "https://optiplay.io/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/729575/logo"
+    },
+    "workable:b96d2892-eef5-42c0-9d80-9d3fc76cbada": {
+      "name": "CoverGo",
+      "website": "https://covergo.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/454850/logo"
+    },
+    "workable:bbaef895-6c11-43d3-8e95-77bd560950c5": {
+      "name": "Treatwell",
+      "website": "https://jobs.treatwell.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/332729/logo"
+    },
+    "workable:bde966c0-ed0b-43f8-8ae6-a7f142d6fe56": {
+      "name": "FE fundinfo",
+      "website": "https://www.fefundinfo.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/596065/logo"
+    },
+    "workable:bdee7829-5651-422a-a3c3-813f115c7453": {
+      "name": "Speexx",
+      "website": "http://www.speexx.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/301674/logo"
+    },
+    "workable:beaefc93-8979-49ba-940e-07a3b0a608ee": {
+      "name": "Weekday AI",
+      "website": "https://www.weekday.works",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/691818/logo"
+    },
+    "workable:c0232f25-434c-4a3d-a73f-3a0f75011e10": {
+      "name": "G+D Netcetera",
+      "website": "https://www.netcetera.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/493160/logo"
+    },
+    "workable:c12efba5-0c41-4a4c-a631-ae72c720499e": {
+      "name": "Digital Wave Finance AG",
+      "website": "https://dw.finance/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/725891/logo"
+    },
+    "workable:c3780b61-cfb4-42bd-b7ab-643dd99ed282": {
+      "name": "Huzzle",
+      "website": "https://www.huzzle.com/talents",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/670808/logo"
+    },
+    "workable:c3a9ce03-215f-45d5-81e5-21ac00870768": {
+      "name": "Huble",
+      "website": "http://www.hubledigital.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/578847/logo"
+    },
+    "workable:c4a9f17f-5a9c-4a17-bc0a-da86519b809b": {
+      "name": "John Paul",
+      "website": "http://www.johnpaul.ie",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/597874/logo"
+    },
+    "workable:c4d33864-0773-49fa-ba2f-6ee8eb9229b6": {
+      "name": "Cache Ventures",
+      "website": "http://cacheventures.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/37593/logo"
+    },
+    "workable:c6e77c32-4c04-460e-a391-170881816cf3": {
+      "name": "Viva.com",
+      "website": "http://www.vivawallet.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/3676/logo"
+    },
+    "workable:c6f9fcc6-a3ef-451e-b172-055e8bc700da": {
+      "name": "Atlean World",
+      "website": "http://atleanworld.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/584466/logo"
+    },
+    "workable:c780cff6-57ff-4624-90e6-161e1c129d4c": {
+      "name": "Continuity Global Solutions",
+      "website": "https://www.continuitygs.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/565582/logo"
+    },
+    "workable:c8067cfa-d128-4301-8c15-ae1ca9a02f55": {
+      "name": "Christie",
+      "website": "http://www.christielites.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/730252/logo"
+    },
+    "workable:cb0d5875-4d70-4dd7-96e4-44e785ea105d": {
+      "name": "getolo GmbH",
+      "website": "https://www.getolo.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/567203/logo"
+    },
+    "workable:cb578f2b-636b-4c59-9b9c-7b53a861febe": {
+      "name": "Mindrift",
+      "website": "https://mindrift.ai/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/642577/logo"
+    },
+    "workable:cb5a50c5-c94f-4578-b0f5-c6dade687036": {
+      "name": "Zinc Network",
+      "website": "https://zincnetwork.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/205562/logo"
+    },
+    "workable:cd060698-8035-42d2-bc7a-ad919f534b8a": {
+      "name": "Exergy3",
+      "website": "https://www.exergy3.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/725209/logo"
+    },
+    "workable:cd3c9aad-6b22-4c6b-af81-2c371b32e829": {
+      "name": "Interpath Advisory",
+      "website": "https://interpath.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/590633/logo"
+    },
+    "workable:ce8aa80e-7be8-4a46-a2ca-8e29f9585314": {
+      "name": "Pearl Abyss Europe",
+      "website": "http://www.pearlabyss.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/503949/logo"
+    },
+    "workable:cf0442b5-4c1a-4872-aac1-4f6e2af8d5d4": {
+      "name": "Side",
+      "website": "https://www.side.inc",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/302673/logo"
+    },
+    "workable:d0006850-57e6-4663-a12b-014446f68d57": {
+      "name": "Designer Group",
+      "website": "https://designergrp.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/731805/logo"
+    },
+    "workable:d0910f97-4eaf-4755-ac53-b23425408933": {
+      "name": "Resident Advisor",
+      "website": "https://ra.co/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/599363/logo"
+    },
+    "workable:d0a952d5-066f-4a37-979f-fc9bf5f981d6": {
+      "name": "Legacy People",
+      "website": "https://www.legacypeople.net/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/688424/logo"
+    },
+    "workable:d241890f-880f-40fd-befd-193d1368d8d3": {
+      "name": "Prop Firm Match Global – FZCO",
+      "website": "https://propfirmmatch.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/703471/logo"
+    },
+    "workable:d3f638d0-4a04-492f-85e6-f2e809bbf146": {
+      "name": "Destinus",
+      "website": "https://www.destinus.eu",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/667805/logo"
+    },
+    "workable:d413c7fa-7d0c-4d53-8f2c-02140b199bc2": {
+      "name": "BeamNG GmbH",
+      "website": "http://beamng.gmbh",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/560263/logo"
+    },
+    "workable:d43e3a4b-c6af-4ed8-bf45-5cd1f893ee7a": {
+      "name": "Square Enix",
+      "website": "http://www.square-enix-games.com/jobs",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/277416/logo"
+    },
+    "workable:d5d06a15-b7a7-4e8f-ab97-a0607c610cb6": {
+      "name": "Kayali",
+      "website": "https://kayali.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/704461/logo"
+    },
+    "workable:d5e9d9fb-31b0-4b2a-87e7-1ddd7ab979f9": {
+      "name": "Sézane",
+      "website": "http://www.sezane.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/350256/logo"
+    },
+    "workable:d67ee2cc-c36e-4b7e-9da7-a92a78e7a93f": {
+      "name": "Pack.com",
+      "website": "http://pack.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/736573/logo"
+    },
+    "workable:d6a3cb3e-a3f2-49f4-ad6d-fadba4032be4": {
+      "name": "ATC Computer Transport & Logistics",
+      "website": "https://www.atc-logistics.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/586122/logo"
+    },
+    "workable:d8243727-d971-4174-9b2b-9d3bb39449be": {
+      "name": "Elevate",
+      "website": "https://elevatedu.org/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/703557/logo"
+    },
+    "workable:d869e29c-8cab-437f-ac42-bb90dc4d164b": {
+      "name": "KittySpout",
+      "website": "https://kittyspout.com/",
+      "logo": ""
+    },
+    "workable:d8fea398-b0f9-4f6d-8be4-8b5711542945": {
+      "name": "epay, a Euronet Worldwide Company",
+      "website": "https://epayworldwide.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/591413/logo"
+    },
+    "workable:d92221e1-f2d0-4811-9a5a-839d9bbcc8c2": {
+      "name": "4Chain Consulting",
+      "website": "https://www.4chainconsulting.de",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/655620/logo"
+    },
+    "workable:d9f3a535-6b5d-4d3f-8b35-3c38650cb3e4": {
+      "name": "Koton",
+      "website": "https://www.koton-trading.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/738133/logo"
+    },
+    "workable:da0005c5-0da3-4fac-94cf-90f2aa0c4760": {
+      "name": "payabl.",
+      "website": "http://payabl.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/641826/logo"
+    },
+    "workable:daaa7c03-089f-4b69-8896-0ae37b37d415": {
+      "name": "Universal Quantum",
+      "website": "http://www.universalquantum.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/536700/logo"
+    },
+    "workable:db7c3363-c266-4fab-baf0-16e84a74b915": {
+      "name": "Homa",
+      "website": "https://www.homagames.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/542952/logo"
+    },
+    "workable:db904103-1b16-470b-9a8f-9b51b73df537": {
+      "name": "Lekos Group",
+      "website": "http://www.lekosgroup.com/",
+      "logo": ""
+    },
+    "workable:dbc946a2-12d6-4d12-95a6-f8c04d86f83e": {
+      "name": "Clipperton",
+      "website": "http://www.clipperton.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/50708/logo"
+    },
+    "workable:dc5197d7-551d-445d-acc3-bc2eb5326f7b": {
+      "name": "SalesCaptain",
+      "website": "https://salescaptain.io",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/701487/logo"
+    },
+    "workable:dd3fb046-d4f0-4715-93a1-2b7730d460ec": {
+      "name": "Parcelly",
+      "website": "https://parcelly.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/652032/logo"
+    },
+    "workable:dda1f3b7-b145-4763-ab41-daa16de4fb96": {
+      "name": "aietes ag",
+      "website": "http://aietes.ch",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/214057/Logo_Aietes_General_II_1.0__color__rgb_285x70.png"
+    },
+    "workable:ddb10440-d052-49c3-b522-4810f2361dbe": {
+      "name": "Vinmar International",
+      "website": "http://www.vinmar.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/661524/logo"
+    },
+    "workable:df06f8bb-4b1c-4b78-b31a-01fceda57b74": {
+      "name": "Triathlon Group GmbH",
+      "website": "https://www.the-sunlight-group.com/de/germany/karriere/jobs/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/659127/logo"
+    },
+    "workable:df3cf213-bc7b-4d48-849e-8c4bf94103cd": {
+      "name": "Flosum",
+      "website": "https://www.flosum.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/697984/logo"
+    },
+    "workable:df62bb42-affc-4e5d-ac2e-d223c8d9a8b8": {
+      "name": "Eram Talent",
+      "website": "http://eramtalent.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/600299/logo"
+    },
+    "workable:dfe63127-e620-4f9d-9fb8-d8bc6a339b38": {
+      "name": "Dentons",
+      "website": "https://www.dentons.com/en",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/374895/logo"
+    },
+    "workable:e0126ae2-1256-4990-afc1-224e6ad10b5a": {
+      "name": "D ONE",
+      "website": "https://d-one.ai/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/464339/logo"
+    },
+    "workable:e0bb44a6-a104-47e5-8163-65318e160ff3": {
+      "name": "The Collecting Group",
+      "website": "https://collecting.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/574086/logo"
+    },
+    "workable:e1a7f4f2-6357-421c-83d7-678f2e31a23e": {
+      "name": "Animore",
+      "website": "http://animore.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/724146/logo"
+    },
+    "workable:e3836d43-d2cc-44d0-866d-70a1af378804": {
+      "name": "Fluentbe.com",
+      "website": "https://www.fluentbe.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/36993/logo"
+    },
+    "workable:e3a81778-dd9e-44e1-8fb7-65d9a37e36a7": {
+      "name": "akeno",
+      "website": "https://akeno.ai",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/706439/logo"
+    },
+    "workable:e5c1c9fd-8809-4db4-a456-ae053e8811e5": {
+      "name": "Circonomit",
+      "website": "https://www.circonomit.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/706036/logo"
+    },
+    "workable:e6d8fe0b-e845-4717-8a9b-199e1fd0a583": {
+      "name": "Gunnebo Safe Storage",
+      "website": "http://www.gunnebo.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/687117/logo"
+    },
+    "workable:e7bfce95-0a45-44f8-b2e5-4395a1ed7d42": {
+      "name": "HERO Software GmbH",
+      "website": "https://hero-software.de/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/667787/logo"
+    },
+    "workable:e7c2c780-62f8-4983-b293-6c7399c24217": {
+      "name": "BETBY",
+      "website": "https://betby.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/742531/logo"
+    },
+    "workable:e7c78120-64b8-4b03-a8c7-a54992210f80": {
+      "name": "Xcelirate",
+      "website": "https://xcelirate.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/332464/logo"
+    },
+    "workable:ea2eb7c9-a6cb-409d-a888-77e52d42a5d6": {
+      "name": "United Imaging Healthcare",
+      "website": "https://www.united-imaging.com/en",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/742494/logo"
+    },
+    "workable:eb27c176-ddf3-435c-8e00-ba508a8bbe3d": {
+      "name": "3SS",
+      "website": "http://3ss.tv",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/461049/logo"
+    },
+    "workable:eb7621c3-9f2f-4fba-b1d0-759aa6101158": {
+      "name": "Jacobian",
+      "website": "https://www.jacobian.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/304534/logo"
+    },
+    "workable:edd8cbe1-f62d-4e17-b636-5ed3ddb4146f": {
+      "name": "Albatross",
+      "website": "https://usealbatross.ai/",
+      "logo": ""
+    },
+    "workable:efd5baaf-4961-4244-9788-829e291263d5": {
+      "name": "Volga Partners",
+      "website": "https://volgapartners.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/703960/logo"
+    },
+    "workable:f09bb579-dca8-4f5e-a1f8-0b5b6401c4ce": {
+      "name": "Intracom Telecom",
+      "website": "http://www.intracom-telecom.com/index.htm",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/186028/INTRACOM-TELECOM_logo.jpg"
+    },
+    "workable:f11ec6d9-8313-4460-a0c6-d467c18604e1": {
+      "name": "Spate",
+      "website": "http://spate.nyc",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/314422/logo"
+    },
+    "workable:f324b35f-b2ed-4a86-91bc-c3ce8bd9ec26": {
+      "name": "Immortals",
+      "website": "https://blueprint.bryanjohnson.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/686154/logo"
+    },
+    "workable:f4d44fdf-725b-4816-80ce-d14206c102b9": {
+      "name": "AI Acquisition",
+      "website": "https://www.aiacquisition.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/647128/logo"
+    },
+    "workable:f5959386-ba67-46a5-bbbb-6928b8f2b0b9": {
+      "name": "APM Monaco",
+      "website": "https://www.apm.mc/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/685128/logo"
+    },
+    "workable:f69bb65a-eb56-4f44-8994-21fe7995642f": {
+      "name": "Pitch",
+      "website": "https://pitch.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/675952/logo"
+    },
+    "workable:f6c9a6c2-b1f2-4c7f-a2fd-39f1b1e5a706": {
+      "name": "Sur",
+      "website": "http://surglobalservices.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/635848/logo"
+    },
+    "workable:f8c4d1dc-e990-4bc0-b1cc-0cdb926665dc": {
+      "name": "Next Job Abroad",
+      "website": "https://nextjobabroad.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/693250/logo"
+    },
+    "workable:fd82c8f9-2a33-4549-8339-b342b2fbf6e6": {
+      "name": "Sécheron Hasler Group",
+      "website": "https://www.secheron.com/",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/592252/logo"
+    },
+    "workable:fefdf0eb-aad7-4db5-8051-c8a95ec969ec": {
+      "name": "Soulhouse",
+      "website": "http://soulhouse.me",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/688467/logo"
+    },
+    "workable:ff254af7-a9da-4708-993d-1485aba65bad": {
+      "name": "Kangal AI",
+      "website": "http://www.kangal-ai.com",
+      "logo": "https://workablehr.s3.amazonaws.com/uploads/account/logo/740912/logo"
+    }
+  }
+}

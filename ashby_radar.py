@@ -399,6 +399,8 @@ def fetch_board(slug: str, cfg: dict | None = None) -> tuple[str, list[dict] | N
         return not title_rejection(title, cfg) and bool(match_location(job, cfg))
 
     try:
+        if sources.provider(slug) == "workable":
+            raise ValueError("Workable is collected through its Germany search, not per company")
         if sources.provider(slug) == "greenhouse":
             return slug, sources.fetch_greenhouse(slug, request, candidate if cfg else None), None
         data = json.loads(download(API.format(slug=urllib.parse.quote(slug)), timeout=30, tries=2))
@@ -407,6 +409,10 @@ def fetch_board(slug: str, cfg: dict | None = None) -> tuple[str, list[dict] | N
         return slug, None, f"HTTP {e.code}"
     except Exception as e:
         return slug, None, type(e).__name__
+
+
+def fetch_workable() -> dict[str, list[dict]]:
+    return sources.fetch_workable(request)
 
 
 # ---------------------------------------------------------------- filtering

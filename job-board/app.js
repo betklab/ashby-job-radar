@@ -2,7 +2,7 @@
 "use strict";
 const $ = id => document.getElementById(id);
 const state = { jobs: [], companies: {}, filtered: [], visible: 10, view: "company", query: "", locations: new Set(), styles: new Set(), sources: new Set(), company: "", days: "", salary: false, featured: false, descriptions: true, sort: "company" };
-const atsNames = { ashby: "Ashby", greenhouse: "Greenhouse" };
+const atsNames = { ashby: "Ashby", greenhouse: "Greenhouse", workable: "Workable" };
 const el = (tag, className, text) => {
   const node = document.createElement(tag);
   if (className) node.className = className;

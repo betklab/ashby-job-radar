@@ -13,12 +13,13 @@ from __future__ import annotations
 import html
 import json
 import re
+import time
 import urllib.error
 import urllib.request
 from html.parser import HTMLParser
-from urllib.parse import parse_qs, quote, unquote, urlsplit
+from urllib.parse import parse_qs, quote, unquote, urlsplit, urlencode
 
-SUPPORTED = ("ashby", "greenhouse")
+SUPPORTED = ("ashby", "greenhouse", "workable")
 GREENHOUSE_API = "https://boards-api.greenhouse.io/v1/boards/"
 GREENHOUSE_URL = re.compile(r"(?:job-boards(?:\.eu)?|boards)\.greenhouse\.io/([^\s#]*)", re.I)
 GREENHOUSE_TOKEN = re.compile(r"[a-z0-9_-]+")
@@ -39,6 +40,11 @@ def board_key(value: str) -> str:
     """A line from companies.txt as a board name. Ashby names and addresses are read as
     before; a Greenhouse address or greenhouse:<token> becomes greenhouse:<token>."""
     value = value.strip()
+    if value.lower().startswith("workable:"):
+        token = value.split(":", 1)[1].lower()
+        if not re.fullmatch(r"[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}", token):
+            raise ValueError("Workable uses company UUIDs, not apply.workable.com slugs")
+        return "workable:" + token
     m = re.search(r"jobs\.ashbyhq\.com/([^/?#\s]+)", value)
     if m:
         return unquote(m.group(1)).strip()
@@ -66,6 +72,8 @@ def enabled(cfg: dict, key: str = "sources") -> list[str]:
     values = cfg.get(key, cfg.get("sources", ["ashby"]))
     if not isinstance(values, list) or not values or any(v not in SUPPORTED for v in values):
         raise ValueError(f"config.json {key} must list one or more of: {', '.join(SUPPORTED)}")
+    if key == "sources" and "workable" in values:
+        raise ValueError("Workable is available on the catalog only; add it to board_sources, not email sources")
     return list(dict.fromkeys(values))
 
 
@@ -180,3 +188,63 @@ def fetch_greenhouse_profile(key: str, request) -> dict:
         raise ValueError("Greenhouse returned no company")
     return {"name": name.strip(), "logo": greenhouse_logo(token, request),
             "intro_html": board.get("content") or ""}
+
+
+# ---------------------------------------------------------------- Workable Germany search
+def workable_job(job: dict) -> tuple[str, dict]:
+    company = job.get("company") or {}
+    if not job.get("id") or not company.get("id") or not isinstance(job.get("title"), str):
+        raise ValueError("Workable job has no job ID, company ID or title")
+    location = job.get("location") or {}
+    content = "\n".join(job.get(k) or "" for k in ("description", "requirementsSection", "benefitsSection"))
+    label = ", ".join(filter(None, [location.get("city"), location.get("subregion"), location.get("countryName")]))
+    style = {"remote": "Remote", "hybrid": "Hybrid", "on_site": "OnSite"}.get(job.get("workplace"), "")
+    return "workable:" + company["id"], {
+        "id": "workable:" + str(job["id"]), "source": "workable", "title": job["title"],
+        "companyName": company.get("title") or "", "companyWebsite": company.get("website") or "",
+        "companyLogoUrl": company.get("image") or "", "companyIntroductionHtml": company.get("description") or "",
+        "location": label, "secondaryLocations": [{"location": v} for v in job.get("locations") or []
+                                                    if isinstance(v, str) and v not in ("TELECOMMUTE", label)],
+        "workplaceType": style, "isRemote": style == "Remote", "isListed": job.get("state") == "published",
+        "publishedAt": job.get("created") if isinstance(job.get("created"), str) else None,
+        "descriptionHtml": content,
+        "jobUrl": job.get("url") or "", "employmentType": job.get("employmentType") or "",
+        "department": job.get("department") or ""}
+
+
+def fetch_workable(request, *, delay: float = 2, max_pages: int = 500) -> dict[str, list[dict]]:
+    """Optional undocumented Germany search. A partial cursor walk never counts as success."""
+    boards, ids, tokens = {}, set(), set()
+    token, expected = None, None
+    for page in range(max_pages):
+        if page:
+            time.sleep(delay)
+        query = {"location": "Germany"}
+        if token:
+            query["pageToken"] = token
+        data = request("https://jobs.workable.com/api/v1/jobs?" + urlencode(query), parse=json.loads)
+        if not isinstance(data, dict) or not isinstance(data.get("jobs"), list):
+            raise ValueError("Workable search response has no jobs list")
+        total = data.get("totalSize")
+        if total is not None:
+            if type(total) is not int or total < 0:
+                raise ValueError("Workable search has an invalid total")
+            expected = total
+        for job in data["jobs"]:
+            if not isinstance(job, dict):
+                raise ValueError("Workable search contains an invalid job")
+            company, normalized = workable_job(job)
+            if normalized["id"] not in ids:
+                boards.setdefault(company, []).append(normalized)
+                ids.add(normalized["id"])
+        if (page + 1) % 10 == 0:
+            print(f"[workable] {page + 1} pages checked; {len(ids)} jobs collected", flush=True)
+        token = data.get("nextPageToken")
+        if not token:
+            if expected is not None and len(ids) < expected:
+                raise ValueError("Workable search ended before all advertised jobs were returned")
+            return boards
+        if not isinstance(token, str) or token in tokens or not data["jobs"]:
+            raise ValueError("Workable search has an empty page or repeated/invalid cursor")
+        tokens.add(token)
+    raise ValueError("Workable search exceeded the page limit; no partial result accepted")
