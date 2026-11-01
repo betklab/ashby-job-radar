@@ -158,6 +158,13 @@ class Pipeline(unittest.TestCase):
     def args(self):
         return ["--inputs", str(self.inputs), "--collections", str(self.collections), "--out", str(self.root/"output")]
 
+    def test_notion_warning_reaches_the_final_summary(self):
+        self.provenance["warnings"] = ["Notion unavailable; using public lists"]
+        write_json(self.inputs/"source.json", self.provenance)
+        self.collection("ashby")
+        self.assertEqual(combine.main(self.args()), 0)
+        self.assertIn("Notion unavailable", (self.root/"output/summary.md").read_text())
+
     def test_all_fail_withholds_site(self):
         self.assertEqual(combine.main(self.args()), 1)
         self.assertFalse((self.root/"output/site").exists())

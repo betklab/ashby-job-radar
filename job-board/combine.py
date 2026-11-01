@@ -133,7 +133,8 @@ def main(argv=None):
     write_json(args.out / "run.json", report)
     lines = [f"**{report['roles']} matching open roles**", "", "| Source | Status | Last collected |", "|---|---|---|"]
     lines += [f"| {p} | {s['state']} | {s['updatedAt'] or '—'} |" for p, s in statuses.items()]
-    lines += ["", "Digest preview uses fresh collections only; no email or sent-history writes."]
+    lines += ["", *provenance.get("warnings", []),
+              "Digest preview uses fresh collections only; no email or sent-history writes."]
     (args.out/"summary.md").write_text("\n".join(lines)+"\n", encoding="utf-8")
     if not reports:
         print("No provider refreshed; keeping the previous publication.", file=sys.stderr)

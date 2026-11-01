@@ -50,7 +50,8 @@ def main(argv=None):
         print(f"[notion] {message}", file=sys.stderr)
         warnings.append(message)
     keys = sources.select(sorted(k.lower() for k in known), active)
-    provenance = {"commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=build.ROOT, text=True).strip(), "run": os.environ.get("GITHUB_RUN_ID", "local"),
+    commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=build.ROOT, text=True).strip()
+    provenance = {"commit": commit, "run": os.environ.get("GITHUB_RUN_ID", "local"),
                   "attempt": os.environ.get("GITHUB_RUN_ATTEMPT", "1"),
                   "inputsHash": hashlib.sha256(json.dumps(keys).encode()).hexdigest(), "warnings": warnings}
     write_json(args.out / "config.json", cfg)
