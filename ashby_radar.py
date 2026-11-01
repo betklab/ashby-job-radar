@@ -396,8 +396,7 @@ def fetch_board(slug: str, cfg: dict | None = None) -> tuple[str, list[dict] | N
     descriptions are only downloaded when one of its jobs could match."""
     def candidate(job):
         title = job["title"]
-        return (bool(word_hit(title, cfg["title_include"])) and not word_hit(title, cfg["title_exclude"])
-                and bool(match_location(job, cfg)))
+        return not title_rejection(title, cfg) and bool(match_location(job, cfg))
 
     try:
         if sources.provider(slug) == "greenhouse":
@@ -474,6 +473,16 @@ def word_hit(text: str, words: list[str]) -> list[str]:
     t = norm(text)
     return [w for w in words if re.search(r"\b" + re.escape(norm(w)) + r"\b", t)]
 
+
+def title_rejection(title: str, cfg: dict) -> str | None:
+    """Match the role, optionally ignoring parenthetical former-role background."""
+    if cfg.get("ignore_background_qualifiers"):
+        title = re.sub(r"\(\s*(?:ex[- ]|former\b)[^)]*\)", "", title, flags=re.I)
+    if not word_hit(title, cfg["title_include"]):
+        return "title_not_included"
+    if word_hit(title, cfg["title_exclude"]):
+        return "title_excluded"
+    return None
 
 def parse_date(s: str | None) -> datetime | None:
     if not s:
