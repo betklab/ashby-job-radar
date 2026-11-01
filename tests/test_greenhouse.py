@@ -135,6 +135,20 @@ class FetchGreenhouse(unittest.TestCase):
             _, jobs, err = radar.fetch_board("greenhouse:acme", CFG)
         self.assertEqual((len(jobs), err, len(calls)), (2, None, 1))
 
+    def test_a_matching_job_without_its_description_fails_the_board(self):
+        # the email then neither sends it nor marks it seen; the board retries next run
+        for content in (None, 123):
+            detailed = [gh_job(1), gh_job(2, "Engineer", content="")]
+            if content is not None:
+                detailed[0]["content"] = content
+            request, _ = self.fake([gh_job(1), gh_job(2, "Engineer")], detailed)
+            with mock.patch.object(radar, "request", request):
+                self.assertEqual(radar.fetch_board("greenhouse:acme", CFG)[1:], (None, "ValueError"))
+        # a job that can't match may come without one
+        request, _ = self.fake([gh_job(1), gh_job(2, "Engineer")], [gh_job(1, content="<p>x</p>"), gh_job(2, "Engineer")])
+        with mock.patch.object(radar, "request", request):
+            self.assertIsNone(radar.fetch_board("greenhouse:acme", CFG)[2])
+
     def test_incomplete_list_and_errors_become_failures(self):
         def short(url, parse=json.loads, **kwargs):
             return parse(json.dumps({"jobs": [gh_job(1)], "meta": {"total": 2}}).encode())

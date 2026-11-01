@@ -103,7 +103,7 @@ def greenhouse_job(job: dict) -> dict:
             "workplaceType": "", "isListed": True,
             "publishedAt": first if isinstance(first, str) else None,
             # the job list sends the description's HTML escaped once more
-            "descriptionHtml": html.unescape(job.get("content") or ""),
+            "descriptionHtml": html.unescape(job["content"]) if isinstance(job.get("content"), str) else "",
             "jobUrl": job.get("absolute_url") or "",
             "department": " / ".join(d.get("name") or "" for d in job.get("departments") or [])}
 
@@ -115,7 +115,11 @@ def fetch_greenhouse(key: str, request, candidate=None) -> list[dict]:
     jobs = [greenhouse_job(j) for j in request(url, parse=jobs_list)]
     if not any(candidate(j) if candidate else True for j in jobs):
         return jobs
-    return [greenhouse_job(j) for j in request(url + "?content=true", parse=jobs_list)]
+    detailed = request(url + "?content=true", parse=jobs_list)
+    for job in detailed:          # a job that could match must come with its description
+        if (candidate is None or candidate(greenhouse_job(job))) and not isinstance(job.get("content"), str):
+            raise ValueError("Greenhouse sent a job without its description")
+    return [greenhouse_job(j) for j in detailed]
 
 
 # ---------------------------------------------------------------- Greenhouse company profile
