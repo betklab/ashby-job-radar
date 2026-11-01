@@ -76,6 +76,25 @@
       <noscript><p class="noscript">Enable JavaScript to search and browse this job collection.</p></noscript>
     </main>
 
+    <!--newsletter-->
+    <section class="newsletter" id="newsletter" aria-labelledby="newsletter-title">
+      <div class="newsletter-copy">
+        <p class="hero-kicker">Every Monday</p>
+        <h2 id="newsletter-title">The week&rsquo;s new roles, in your inbox.</h2>
+        <p>One email a week with the new openings in Berlin, Munich and remote Germany. No spam.</p>
+      </div>
+      <form class="newsletter-form" action="https://buttondown.com/api/emails/embed-subscribe/{{NEWSLETTER}}" method="post" target="_blank">
+        <label class="sr-only" for="newsletter-email">Email address</label>
+        <div class="newsletter-row">
+          <input id="newsletter-email" type="email" name="email" required placeholder="you@example.com" autocomplete="email">
+          <input type="hidden" name="embed" value="1">
+          <button class="primary-button" type="submit">Subscribe</button>
+        </div>
+        <p class="newsletter-note">You&rsquo;ll get a confirmation email first. Your address is only used for this weekly list, sent through Buttondown. Every email has a one-click unsubscribe link.</p>
+      </form>
+    </section>
+    <!--/newsletter-->
+
     <footer id="about"><div class="footer-bottom"><a class="brand" href="./">bet’s board.</a><p>An independent collection of matching Ashby roles.<br>Refreshed daily. Availability and details live with each company.</p><a href="https://github.com/{{REPO}}" target="_blank" rel="noopener noreferrer">Made to explore <span aria-hidden="true">↗</span></a></div></footer>
   </div>
 

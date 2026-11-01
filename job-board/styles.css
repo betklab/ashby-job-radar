@@ -1432,3 +1432,39 @@ dialog::backdrop {
     transition:none!important;
   }
 }
+
+/* weekly newsletter signup */
+.newsletter {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
+  gap:32px;
+  align-items:center;
+  margin:56px 0 8px;
+  padding:32px;
+  background:var(--pale);
+  border:1px solid var(--line);
+  border-radius:12px;
+}
+.newsletter h2 {
+  margin:4px 0 8px;
+  font:400 30px/1.15 var(--serif);
+  color:var(--ink);
+}
+.newsletter-copy p:not(.hero-kicker) { margin:0; color:var(--muted); }
+.newsletter-row { display:flex; gap:8px; flex-wrap:wrap; }
+.newsletter-row input[type=email] {
+  flex:1 1 220px;
+  min-width:0;
+  font:inherit;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--card);
+  color:var(--ink);
+}
+.newsletter-row input[type=email]:focus { outline:2px solid var(--accent); outline-offset:1px; }
+.newsletter-note { margin:10px 0 0; font-size:12px; color:var(--muted); }
+@media (max-width:760px) {
+  .newsletter { grid-template-columns:1fr; gap:16px; padding:24px 20px; margin-top:40px; }
+  .newsletter h2 { font-size:26px; }
+}
