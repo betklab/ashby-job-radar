@@ -89,18 +89,6 @@ Everything lives in `config.json`:
 - **Broken company IDs:** IDs from your own list that don't work are listed at the bottom of the email, so you can fix or delete them.
 - **Where things are stored:** `seen.json` remembers what you've already been sent, and `boards.json` is the crawled company list. The workflow saves both back to the repo automatically.
 
-## Run it on your laptop
-
-```bash
-python3 ashby_radar.py --no-email    # print today's list, don't send anything
-python3 ashby_radar.py --dry-run     # same, and save nothing (only output/)
-python3 ashby_radar.py --discover-only   # only look for new companies (needs SERPER_API_KEY)
-python3 job-board/build.py --out site    # build the job board page into site/
-python3 -m unittest discover -s tests    # check the Greenhouse and board-name handling
-```
-
-Only needs Python 3.9+. No packages to install.
-
 ### Workable (optional catalog source)
 
 Add `"workable"` to `board_sources` in `config.json` to include Workable's
@@ -123,3 +111,15 @@ The existing daily SMTP delivery and sent-history logic stay as they are.
 The weekly newsletter reads the board and will include Workable roles once
 you enable it there. Run offline checks with
 `python -B -m unittest discover -s tests`.
+
+## Run it on your laptop
+
+```bash
+python3 ashby_radar.py --no-email    # print today's list, don't send anything
+python3 ashby_radar.py --dry-run     # same, and save nothing (only output/)
+python3 ashby_radar.py --discover-only   # only look for new companies (needs SERPER_API_KEY)
+python3 job-board/build.py --out site    # build the job board page into site/
+python3 -m unittest discover -s tests    # check the Greenhouse and board-name handling
+```
+
+Only needs Python 3.9+. No packages to install.
