@@ -484,6 +484,7 @@ def title_rejection(title: str, cfg: dict) -> str | None:
         return "title_excluded"
     return None
 
+
 def parse_date(s: str | None) -> datetime | None:
     if not s:
         return None
