@@ -198,6 +198,12 @@ def write_site(out: Path, roles: list[dict], profiles: dict, featured: set[str],
         (out / hashed).write_bytes(content)
         names[name.upper().replace(".", "_")] = hashed
     page = (HERE / "index.html").read_text(encoding="utf-8")
+    # weekly newsletter signup: shown only once a Buttondown username is set (repo variable)
+    newsletter = os.environ.get("BUTTONDOWN_USERNAME", "").strip()
+    if re.fullmatch(r"[A-Za-z0-9_-]+", newsletter):
+        names["NEWSLETTER"] = newsletter
+    else:
+        page = re.sub(r"\s*<!--newsletter-->.*?<!--/newsletter-->", "", page, flags=re.S)
     for key, value in names.items():
         page = page.replace("{{" + key + "}}", value)
     (out / "index.html").write_text(page, encoding="utf-8")
