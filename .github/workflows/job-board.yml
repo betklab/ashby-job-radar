@@ -11,7 +11,10 @@ on:
     paths:
       - "config.json"
       - "companies.txt"
+      - "boards.json"
       - "embedded-boards/boards.txt"
+      - "ashby_radar.py"
+      - "sources.py"
       - "job-board/**"
       - ".github/workflows/job-board.yml"
   workflow_dispatch: {}
@@ -25,15 +28,18 @@ concurrency:
   queue: max
 
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
-    cache-mode: write     # lets runs started by workflow_run save the logo cache
+    timeout-minutes: 10
     outputs:
       pages: ${{ steps.pages.outputs.on }}
+      previous: ${{ steps.pages.outputs.url }}
+      sources: ${{ steps.snapshot.outputs.sources }}
+      commit: ${{ steps.snapshot.outputs.commit }}
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: main
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
@@ -44,36 +50,127 @@ jobs:
         run: |
           if [ "$(gh api repos/${{ github.repository }}/pages --jq .build_type 2>/dev/null)" = workflow ]; then
             echo on=true >> "$GITHUB_OUTPUT"
+            echo "url=$(gh api repos/${{ github.repository }}/pages --jq .html_url)" >> "$GITHUB_OUTPUT"
           else
             echo '::notice::To publish the job board, go to Settings → Pages and set Source to GitHub Actions.'
           fi
-      - name: Restore company logos from earlier runs
+      - name: Snapshot current preferences and company inputs
         if: ${{ steps.pages.outputs.on == 'true' }}
+        id: snapshot
+        run: python -B job-board/prepare.py --out "$RUNNER_TEMP/catalog-inputs"
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+      - if: ${{ steps.pages.outputs.on == 'true' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: catalog-inputs
+          path: ${{ runner.temp }}/catalog-inputs/
+          retention-days: 30
+          overwrite: true
+
+  collect:
+    needs: prepare
+    if: ${{ needs.prepare.outputs.pages == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        source: ${{ fromJSON(needs.prepare.outputs.sources) }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.prepare.outputs.commit }}
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v8
+        with:
+          name: catalog-inputs
+          path: ${{ runner.temp }}/catalog-inputs
+      - name: Collect provider matches
+        env:
+          CATALOG_SOURCE: ${{ matrix.source }}
+        run: |
+          python -B job-board/collect.py --source "$CATALOG_SOURCE" \
+            --inputs "$RUNNER_TEMP/catalog-inputs" --out "$RUNNER_TEMP/source-output"
+      - name: Save collection and diagnostics
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: catalog-source-${{ matrix.source }}
+          path: ${{ runner.temp }}/source-output/
+          retention-days: 30
+          overwrite: true
+          if-no-files-found: warn
+
+  combine:
+    needs: [prepare, collect]
+    if: ${{ !cancelled() && needs.prepare.result == 'success' && needs.prepare.outputs.pages == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    cache-mode: write     # lets runs started by workflow_run save the logo cache
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.prepare.outputs.commit }}
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v8
+        with:
+          name: catalog-inputs
+          path: ${{ runner.temp }}/catalog-inputs
+      - name: Download available collections
+        continue-on-error: true
+        uses: actions/download-artifact@v8
+        with:
+          pattern: catalog-source-*
+          path: ${{ runner.temp }}/collections
+      - name: Restore company logos from earlier runs
         uses: actions/cache/restore@v6
         with:
           path: profiles.json
           key: profiles-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: profiles-
-      - name: Build the board
-        if: ${{ steps.pages.outputs.on == 'true' }}
-        run: python job-board/build.py --profiles profiles.json --out site
+      - name: Combine catalog and digest preview
         env:
-          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          PREVIOUS_BOARD: ${{ needs.prepare.outputs.previous }}
+          BUTTONDOWN_USERNAME: ${{ vars.BUTTONDOWN_USERNAME }}
+        run: |
+          python -B job-board/combine.py --inputs "$RUNNER_TEMP/catalog-inputs" \
+            --collections "$RUNNER_TEMP/collections" --previous-url "$PREVIOUS_BOARD" \
+            --profiles profiles.json --out "$RUNNER_TEMP/catalog-output"
       - name: Remember company logos
-        if: ${{ !cancelled() && steps.pages.outputs.on == 'true' && hashFiles('profiles.json') != '' }}
+        if: ${{ !cancelled() && hashFiles('profiles.json') != '' }}
         uses: actions/cache/save@v6
         with:
           path: profiles.json
           key: profiles-${{ github.run_id }}-${{ github.run_attempt }}
-      - if: ${{ steps.pages.outputs.on == 'true' }}
-        uses: actions/upload-pages-artifact@v5
+      - name: Show collection summary
+        if: ${{ !cancelled() }}
+        run: |
+          if [ -f "$RUNNER_TEMP/catalog-output/summary.md" ]; then
+            cat "$RUNNER_TEMP/catalog-output/summary.md" >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Save build report and catch-up preview
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
         with:
-          path: site
+          name: catalog-report-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/catalog-output/
+          retention-days: 30
+          overwrite: true
+          if-no-files-found: warn
+      - uses: actions/upload-pages-artifact@v5
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          path: ${{ runner.temp }}/catalog-output/site
 
   deploy:
-    needs: build
-    if: ${{ needs.build.outputs.pages == 'true' }}
+    needs: [prepare, combine]
+    if: ${{ !cancelled() && needs.combine.result == 'success' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     permissions:
       pages: write

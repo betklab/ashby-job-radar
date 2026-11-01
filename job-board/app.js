@@ -379,7 +379,10 @@ async function init() {
     $("hero-companies").textContent = new Set(state.jobs.map(job => job.company)).size.toLocaleString();
     const refreshed = new Date(data.generatedAt);
     $("updated").textContent = "Refreshed " + dateFormat.format(refreshed);
-    $("updated").title = refreshed.toLocaleString();
+    const sourceNotes = Object.entries(data.sourceStatus || {}).filter(([, info]) => ["stale", "unavailable"].includes(info.state))
+      .map(([source, info]) => info.state === "stale" ? `${atsNames[source] || source}: results from ${dateFormat.format(new Date(info.updatedAt))}` : `${atsNames[source] || source}: unavailable`);
+    $("updated").textContent += sourceNotes.length ? " · " + sourceNotes.join("; ") : "";
+    $("updated").title = refreshed.toLocaleString() + (data.partial ? " · Some sources or companies could not be checked." : "");
     const selected = new URLSearchParams(location.search).get("job");
     setUpFilters();
     restoreState();
