@@ -38,7 +38,7 @@ python3 -m http.server --directory site    # then open http://localhost:8000
 ## Included Greenhouse companies
 
 `boards.json` already includes 4,639 verified Greenhouse board names. You do not
-need Athena, API keys or an import step. The normal build fetches their current
+need API keys or an import step. The normal build fetches their current
 jobs, and daily email still checks Ashby unless you change `sources`. Greenhouse
 roles on the board also reach the weekly newsletter, which reads the board JSON.
 
