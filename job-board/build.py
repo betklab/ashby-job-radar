@@ -24,7 +24,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta, timezone
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urlsplit
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -131,6 +131,8 @@ def card(job: dict) -> dict:
 def fetch_profile(slug: str) -> dict:
     """Name, website, logo and intro, from the API behind the company's Ashby page
     (or from Greenhouse's, which has no website)."""
+    if sources.provider(slug) == "workable":
+        raise ValueError("Workable company profiles are included in its job search")
     if sources.provider(slug) == "greenhouse":
         p = sources.fetch_greenhouse_profile(slug, radar.request)
         return {"name": p["name"], "website": "", "logo": web_link(p["logo"]),
@@ -162,7 +164,7 @@ def update_profiles(slugs: list[str], profiles: dict, today: date, max_age: int 
         except (KeyError, TypeError, ValueError):
             return False
 
-    due = [s for s in slugs if not fresh(profiles.get(s))]
+    due = [s for s in slugs if sources.provider(s) != "workable" and not fresh(profiles.get(s))]
     fetched = failed = 0
     stopped = set()
     for i, slug in enumerate(due):
@@ -195,8 +197,9 @@ def write_site(out: Path, roles: list[dict], profiles: dict, featured: set[str],
         if slug not in companies:
             p = profiles.get(slug, {})
             companies[slug] = {"name": p.get("name") or job.get("companyName") or radar.company_name(slug),
-                               "website": web_link(p.get("website")), "logoUrl": web_link(p.get("logo")),
-                               "introduction": p.get("intro", ""), "featured": slug in featured,
+                               "website": web_link(p.get("website") or job.get("companyWebsite")),
+                               "logoUrl": web_link(p.get("logo") or job.get("companyLogoUrl")),
+                               "introduction": p.get("intro") or plain_text(job.get("companyIntroductionHtml")), "featured": slug in featured,
                                "roles": 0}
         companies[slug]["roles"] += 1
     jobs = [{**card(j), "companyName": companies[j["_slug"]]["name"]} for j in roles]
@@ -242,9 +245,12 @@ def main(argv=None) -> int:
     now = datetime.now(timezone.utc)
     providers = sources.enabled(cfg, "board_sources")
     boards, failed, gone = {}, {}, 0
+    scan_ok, scan_failed = False, False
     if args.fixtures:
         for p in sorted(args.fixtures.glob("*.json")):
-            boards[p.stem] = json.loads(p.read_text())["jobs"]
+            key = unquote(p.stem)
+            if sources.provider(key) in providers:
+                boards[key] = json.loads(p.read_text())["jobs"]
         slugs = sorted(boards)
     else:
         # The same companies the radar knows: your list, Notion, embedded boards and the crawl
@@ -254,7 +260,7 @@ def main(argv=None) -> int:
             slugs |= {s.lower() for s in radar.load_slugs_notion(cfg) or []}
         except Exception as e:
             print(f"[notion] could not read database: {e}", file=sys.stderr)
-        slugs = sources.select(sorted(slugs), providers)
+        slugs = sources.select(sorted(slugs), [p for p in providers if p != "workable"])
         with ThreadPoolExecutor(max_workers=cfg.get("workers", 16)) as pool:
             for slug, jobs, err in pool.map(lambda s: radar.fetch_board(s, cfg), slugs):
                 if jobs is not None:
@@ -264,13 +270,21 @@ def main(argv=None) -> int:
                 else:
                     failed[slug] = err
 
+        if "workable" in providers:
+            try:
+                boards.update(radar.fetch_workable())
+                scan_ok = True
+            except Exception as e:
+                scan_failed = True
+                failed["workable search"] = f"{type(e).__name__}: {e}"
+
     report = [f"Job board: {len(boards)} of {len(slugs)} companies checked, "
               f"{gone} boards gone, {len(failed)} failed"
               + (f" ({', '.join(sorted(failed)[:20])}{', …' if len(failed) > 20 else ''})" if failed else "")]
     # a few hiccups are fine; an outage at Ashby or Greenhouse isn't
-    ok = bool(boards) and all(
+    ok = (bool(boards) or scan_ok) and not scan_failed and all(
         sum(sources.provider(s) == p for s in failed) <= sum(sources.provider(s) == p for s in slugs) // 20
-        for p in providers)
+        for p in providers if p != "workable")
     if ok:
         roles = open_roles(boards, cfg)
         on_board = sorted({j["_slug"] for j in roles})

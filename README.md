@@ -100,3 +100,26 @@ python3 -m unittest discover -s tests    # check the Greenhouse and board-name h
 ```
 
 Only needs Python 3.9+. No packages to install.
+
+### Workable (optional catalog source)
+
+Add `"workable"` to `board_sources` in `config.json` to include Workable's
+Germany search. No API key or company seeding is needed. The
+273 company IDs and names found in our verified scan are included in
+`boards.json` and `discovery/workable-companies.json`; this dated reference
+inventory is for lookup, and every build still fetches current jobs.
+
+This is an undocumented public search endpoint. Pages are read one at a time,
+two seconds apart, with bounded retries and cursor/total checks. A failed or
+partial walk is a failure, never an empty successful result. The verified walk
+read 2,892 jobs across 145 requests (about six minutes). The feed includes
+Germany-labelled roles, not all jobs globally at those companies. Workable may
+list the same role once per city; we keep each native ID rather than merge
+different postings. Descriptions include requirements and benefits, and the
+feed supplies company names, websites and logos. Salary is not exposed here.
+
+Workable is currently catalog-only: leave it out of email `sources`.
+The existing daily SMTP delivery and sent-history logic stay as they are.
+The weekly newsletter reads the board and will include Workable roles once
+you enable it there. Run offline checks with
+`python -B -m unittest discover -s tests`.
