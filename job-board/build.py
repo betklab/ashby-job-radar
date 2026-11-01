@@ -188,7 +188,8 @@ def update_profiles(slugs: list[str], profiles: dict, today: date, max_age: int 
 
 
 # ---------------------------------------------------------------- page
-def write_site(out: Path, roles: list[dict], profiles: dict, featured: set[str], now: datetime):
+def write_site(out: Path, roles: list[dict], profiles: dict, featured: set[str], now: datetime,
+               *, retained=(), previous_companies=None, status=None):
     """index.html plus one data file; names include a hash, so browsers never mix old and new."""
     out.mkdir(parents=True, exist_ok=True)
     companies = {}
@@ -203,7 +204,14 @@ def write_site(out: Path, roles: list[dict], profiles: dict, featured: set[str],
                                "roles": 0}
         companies[slug]["roles"] += 1
     jobs = [{**card(j), "companyName": companies[j["_slug"]]["name"]} for j in roles]
-    data = json.dumps({"generatedAt": now.isoformat(), "jobs": jobs, "companies": companies},
+    for job in retained:
+        slug = job["company"]
+        if slug not in companies:
+            companies[slug] = {**(previous_companies or {}).get(slug, {}),
+                               "featured": slug in featured, "roles": 0}
+        companies[slug]["roles"] += 1
+    jobs += list(retained)
+    data = json.dumps({"generatedAt": now.isoformat(), **(status or {}), "jobs": jobs, "companies": companies},
                       ensure_ascii=False, separators=(",", ":")).encode()
     names = {"DATA_FILE": f"jobs-{hashlib.sha256(data).hexdigest()[:12]}.json",
              "ROLE_COUNT": f"{len(jobs):,}", "COMPANY_COUNT": str(len(companies)),

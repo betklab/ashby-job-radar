@@ -10,7 +10,7 @@ One web page with **every open role that fits `config.json`**, from the same com
 - when you change `config.json`, `companies.txt`, `embedded-boards/boards.txt` or anything in this folder
 - whenever you click *Actions → Publish job board → Run workflow*
 
-It never sends email or changes `seen.json`. If a few companies fail to load, the page is published without them for the day; if many fail (an Ashby or Greenhouse outage), yesterday's page stays up and the run turns red.
+It never sends email or changes `seen.json`. Each provider is collected in its own parallel step. A provider failure uses its previous matching results for at most 48 hours, with their original collection time shown. Healthy providers still update. If every provider fails, the published page stays as it was.
 
 ## Turn it on
 
@@ -54,3 +54,11 @@ Greenhouse rarely states remote/hybrid explicitly and has no standard work-style
 field here. “Not stated” is expected; we infer a style only from an explicit
 location label. We keep first-published dates when supplied, without treating
 a refresh date as a new posting.
+
+## Independent collection and catch-up preview
+
+Each provider runs in parallel using one snapshot of your settings and company lists, including Notion. If Notion cannot be read, the run reports it and continues with the public lists.
+If a provider fails, healthy providers still update; its old results stay for at most 48 hours when the filters haven't changed, with the original collection time shown. Without compatible older results it is labelled unavailable. If all fail, the published page stays up.
+The final Actions artifact includes a catch-up preview grouped by company (HTML, Markdown, CSV and JSON): fresh matching jobs absent from `seen.json`, without a date cutoff or result cap. Saved history has finite retention, so some older roles may have been sent before.
+This preview sends nothing and never changes sent history. Daily email and the weekly newsletter keep their own workflows; company enrichment keeps the existing Actions cache.
+Add `"workable"` to `board_sources` to include its Germany search. Run the offline pipeline checks with `python -B -m unittest discover -s job-board -p 'test_*.py'`.
