@@ -112,7 +112,7 @@ inventory is for lookup, and every build still fetches current jobs.
 This is an undocumented public search endpoint. Pages are read one at a time,
 two seconds apart, with bounded retries and cursor/total checks. A failed or
 partial walk is a failure, never an empty successful result. The verified walk
-read 2,892 jobs across 145 requests (about six minutes). The feed includes
+read 2,893 jobs across 145 requests (344 seconds, no failed requests). The feed includes
 Germany-labelled roles, not all jobs globally at those companies. Workable may
 list the same role once per city; we keep each native ID rather than merge
 different postings. Descriptions include requirements and benefits, and the

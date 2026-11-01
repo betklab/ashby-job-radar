@@ -1,8 +1,8 @@
 {
-  "observed_at": "2026-11-01T09:35:27+00:00",
+  "observed_at": "2026-11-01T16:04:08.087047+00:00",
   "source": "https://jobs.workable.com/api/v1/jobs?location=Germany",
   "complete_scan": true,
-  "jobs_observed": 2892,
+  "jobs_observed": 2893,
   "companies": {
     "workable:00913606-ddb9-4635-b990-def5e3626ef9": {
       "name": "7thSENSE GmbH",
