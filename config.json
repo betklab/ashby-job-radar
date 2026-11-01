@@ -17,6 +17,8 @@
   "overlap_hours": 3,
   "focus_cities": ["Berlin", "Munich"],
   "include_remote_germany": true,
+  "include_remote_global": false,
+  "ignore_background_qualifiers": false,
   "workers": 16,
   "title_include": [
     "growth",

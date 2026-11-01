@@ -310,6 +310,7 @@ function openJob(job) {
   if (website) container.append(website);
   if (job.salary) container.append(el("p", "detail-salary", job.salary));
   if (job.locations.length) container.append(el("p", "detail-locations", "Listed locations: " + job.locations.join(" · ")));
+  if (job.locationNote) container.append(el("p", "detail-locations", job.locationNote));
   container.append(actions, el("h3", "detail-heading", "About the role"), el("div", "detail-description", job.description || "This company hasn’t provided a description here. Open the original posting for details."));
   if (companyInfo(job).introduction) container.append(el("h3", "detail-heading", "From " + job.companyName), el("div", "company-introduction", companyInfo(job).introduction));
   if (job._date) container.append(el("p", "detail-date", "Published " + dateFormat.format(job._date)));
