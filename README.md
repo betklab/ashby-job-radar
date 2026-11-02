@@ -22,7 +22,7 @@ You only ever see a job **once**, and never anything older than the previous ema
 
 ## The job board
 
-The same roles also go on one web page, with search and filters: every open role that fits, including ones you were already sent. It updates after each morning's email. The page also lists matching roles from companies that use **Greenhouse** instead of Ashby; the email stays Ashby-only unless you change `sources` (see Tweaking it). To turn it on: *Settings → Pages → Source: GitHub Actions*. More in [`job-board/`](job-board/README.md).
+The same roles also go on one web page, with search and filters: every open role that fits, including ones you were already sent. It updates after each morning's email. It also covers companies on Greenhouse and Workable; the email stays Ashby-only unless you change `sources`. To turn it on: *Settings → Pages → Source: GitHub Actions*. More in [`job-board/`](job-board/README.md).
 
 ## Which jobs count
 
@@ -38,11 +38,9 @@ There are three sources, and they all feed the same daily check:
 
 1. **The crawl (automatic).** Once a week the radar pulls every `jobs.ashbyhq.com/...` page from [Common Crawl](https://commoncrawl.org)'s free public index. That's thousands of companies, no API key needed. Each company gets checked once. The ones with jobs in Germany are saved in `boards.json` and checked **every day**. The rest are re-checked weekly in case they open a German role.
 2. **Your Notion database (optional).** It needs a column called `Ashby ID` with values like `n8n` or `lovable`. Add a row and the company is checked from the next morning.
-3. **`companies.txt` (optional).** The same idea as Notion, as a plain list. Paste an ID or a full Ashby link, one per line. A Greenhouse link (`job-boards.greenhouse.io/acme`) or `greenhouse:acme` works too.
+3. **`companies.txt` (optional).** The same idea as Notion, as a plain list. Paste an ID or a full Ashby link, one per line. Greenhouse links work too.
 
-`boards.json` also holds about 4,600 companies with a **Greenhouse** job board (written `greenhouse:<name>`), found in Common Crawl's public index. They're for the job board, and for the email only if you turn Greenhouse on there.
-
-Jobs always come straight from **Ashby's and Greenhouse's official public job APIs**. No page scraping.
+Jobs come straight from each job site's public job listings (Ashby, Greenhouse, Workable). No page scraping.
 
 ## Setup (≈10 min, free)
 
@@ -91,29 +89,6 @@ Everything lives in `config.json`:
 - **Broken company IDs:** IDs from your own list that don't work are listed at the bottom of the email, so you can fix or delete them.
 - **Where things are stored:** `seen.json` remembers what you've already been sent, and `boards.json` is the crawled company list. The workflow saves both back to the repo automatically.
 
-### Workable (optional catalog source)
-
-Add `"workable"` to `board_sources` in `config.json` to include Workable's
-Germany search. No API key or company seeding is needed. The
-273 company IDs and names found in our verified scan are included in
-`boards.json` and `discovery/workable-companies.json`; this dated reference
-inventory is for lookup, and every build still fetches current jobs.
-
-This is an undocumented public search endpoint. Pages are read one at a time,
-two seconds apart, with bounded retries and cursor/total checks. A failed or
-partial walk is a failure, never an empty successful result. The verified walk
-read 2,893 jobs across 145 requests (344 seconds, no failed requests). The feed includes
-Germany-labelled roles, not all jobs globally at those companies. Workable may
-list the same role once per city; we keep each native ID rather than merge
-different postings. Descriptions include requirements and benefits, and the
-feed supplies company names, websites and logos. Salary is not exposed here.
-
-Workable is currently catalog-only: leave it out of email `sources`.
-The existing daily SMTP delivery and sent-history logic stay as they are.
-The weekly newsletter reads the board and will include Workable roles once
-you enable it there. Run offline checks with
-`python -B -m unittest discover -s tests`.
-
 ## Run it on your laptop
 
 ```bash
@@ -121,7 +96,7 @@ python3 ashby_radar.py --no-email    # print today's list, don't send anything
 python3 ashby_radar.py --dry-run     # same, and save nothing (only output/)
 python3 ashby_radar.py --discover-only   # only look for new companies (needs SERPER_API_KEY)
 python3 job-board/build.py --out site    # build the job board page into site/
-python3 -m unittest discover -s tests    # check the Greenhouse and board-name handling
+python3 -m unittest discover -s tests    # run the offline checks
 ```
 
 Only needs Python 3.9+. No packages to install.

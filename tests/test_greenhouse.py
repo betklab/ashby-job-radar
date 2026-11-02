@@ -87,8 +87,8 @@ class Providers(unittest.TestCase):
         self.assertEqual(sources.enabled({}, "board_sources"), ["ashby"])
         self.assertEqual(sources.enabled({"sources": ["ashby", "greenhouse"]}, "board_sources"),
                          ["ashby", "greenhouse"])
-        self.assertEqual(sources.enabled(CFG), ["ashby"])
-        self.assertEqual(sources.enabled(CFG, "board_sources"), ["ashby", "greenhouse"])
+        # the board's choice never changes the email's
+        self.assertEqual(sources.enabled({"board_sources": ["ashby", "greenhouse"]}), ["ashby"])
 
     def test_bad_provider_settings_stop_the_run(self):
         for value in ([], ["lever"], "ashby"):
@@ -195,7 +195,8 @@ class JobBoard(unittest.TestCase):
     def run_build(self, fetch, cfg_extra=None):
         with tempfile.TemporaryDirectory() as tmp:
             tmp = Path(tmp)
-            cfg = {**CFG, **(cfg_extra or {})}
+            # these checks are about Ashby and Greenhouse, whatever config.json switches on
+            cfg = {**CFG, "board_sources": ["ashby", "greenhouse"], **(cfg_extra or {})}
             (tmp / "config.json").write_text(json.dumps(cfg), encoding="utf-8")
             (tmp / "companies.txt").write_text("", encoding="utf-8")
             (tmp / "featured.txt").write_text("greenhouse:acme\n", encoding="utf-8")

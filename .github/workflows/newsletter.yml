@@ -1,12 +1,31 @@
-{
-"name": "Weekly newsletter",
-"on": {"schedule": [{"cron": "7 6 * * 1"}], "workflow_dispatch": {"inputs": {"mode": {"description": "draft = save in Buttondown for review, send = email all subscribers", "type": "choice", "options": ["draft", "send"], "default": "draft"}}}},
-"permissions": {"contents": "read"},
-"jobs": {"newsletter": {"runs-on": "ubuntu-latest", "timeout-minutes": 10, "steps": [
-{"uses": "actions/checkout@v7"},
-{"uses": "actions/setup-python@v7", "with": {"python-version": "3.12"}},
-{"name": "Send this week's roles", "run": "python newsletter/weekly.py --mode \"${{ inputs.mode || vars.NEWSLETTER_MODE || 'draft' }}\"", "env": {
-"BUTTONDOWN_API_KEY": "${{ secrets.BUTTONDOWN_API_KEY }}",
-"BOARD_URL": "${{ vars.BOARD_URL || 'https://betklab.github.io/ashby-job-radar/' }}"}}
-]}}
-}
+name: Weekly newsletter
+
+on:
+  schedule:
+    - cron: "7 6 * * 1"      # every Monday morning (GitHub often starts it a little late)
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: draft = save in Buttondown for review, send = email all subscribers
+        type: choice
+        options: [draft, send]
+        default: draft
+
+permissions:
+  contents: read
+
+jobs:
+  newsletter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      # A scheduled run saves a draft unless the NEWSLETTER_MODE variable is set to "send"
+      - name: Send this week's roles
+        run: python newsletter/weekly.py --mode "${{ inputs.mode || vars.NEWSLETTER_MODE || 'draft' }}"
+        env:
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+          BOARD_URL: ${{ vars.BOARD_URL || 'https://betklab.github.io/ashby-job-radar/' }}
