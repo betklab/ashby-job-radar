@@ -1,27 +1,37 @@
-# Ashby Job Radar — Mon 02 Nov 2026
+# Ashby Job Radar — Tue 03 Nov 2026
 
-6 roles posted since the last email · newest first · 754 companies checked
+9 roles posted since the last email · newest first · 775 companies checked
 
-### [Senior Influencer Marketing Manager | US Market (m/f/d)](https://jobs.ashbyhq.com/yepoda/28978713-a96c-4d71-b2f0-6176d196ad28) — Yepoda
-📍 Berlin · Not stated · 💶 Salary not listed · posted 02 Nov
+### [Strategic GTM Lead - Insurance DACH](https://jobs.ashbyhq.com/taktile/61bc3c17-8144-4820-8d6a-80a224ed7f1b) — Taktile
+📍 Berlin · Hybrid · 💶 Salary not listed · posted 03 Nov
+🇩🇪 German required
 
-### [Finance Operations Associate](https://jobs.ashbyhq.com/lyceum/fe9d02a3-4886-4921-baa0-fe68cd62e952) — Lyceum
+### [Senior Product Manager - AI Gateway](https://jobs.ashbyhq.com/n8n/473bcbae-ad3e-4611-8ca3-3499040e5f22) — N8N
+📍 Berlin · Remote · 💶 €89.7K – €152.3K • Offers Equity • Multiple Ranges · posted 03 Nov
+
+### [Business Development / BDR (m/w/d)](https://jobs.ashbyhq.com/carwow/a4dbafdb-ef7c-46ec-9211-68e209d41f53) — Carwow
+📍 Munich · Not stated · 💶 Salary not listed · posted 03 Nov
+🇩🇪 German required (ad is in German)
+
+### [Sales and Partnerships](https://jobs.ashbyhq.com/openai/45a0886d-a60d-4d5a-9afa-785a75042044) — Openai
+📍 Berlin / Munich · Hybrid · 💶 Salary not listed · posted 02 Nov
+
+### [Performance Marketing Manager](https://jobs.ashbyhq.com/clera/75aaca37-40a1-40f6-a9bf-31b4d66e13c0) — Clera
 📍 Berlin · Office · 💶 Salary not listed · posted 02 Nov
 
-### [Website Growth & CRO Manager (German-Speaking)](https://jobs.ashbyhq.com/the-global-talent-co/6fa8dcdf-d8dd-4a4d-bbfa-dc8285c3d010) — The Global Talent Co
+### [Growth Consultant](https://jobs.ashbyhq.com/clera/0a497929-c234-42b3-a628-5e7943630e3e) — Clera
 📍 Berlin · Office · 💶 Salary not listed · posted 02 Nov
 🇩🇪 German required
 
-### [Product & CRO Manager (German-Speaking)](https://jobs.ashbyhq.com/the-global-talent-co/dfd5bfac-5fd9-4e96-a223-e961c19e9113) — The Global Talent Co
-📍 Berlin · Office · 💶 Salary not listed · posted 02 Nov
+### [Product Specialist](https://jobs.ashbyhq.com/cosuno/d8d27188-c966-41bd-be13-86dd26a33fdf) — Cosuno
+📍 Berlin · Remote · 💶 €55K – €65K · posted 02 Nov
 🇩🇪 German required
 
-### [AI-Native Founding Chief of Staff](https://jobs.ashbyhq.com/clera/9a76f335-b95d-49b4-b90d-9e7e522530fc) — Clera
-📍 Munich · Office · 💶 Salary not listed · posted 01 Nov
-🇩🇪 German required
+### [Marketing Manager (m/f/d)](https://jobs.ashbyhq.com/voyfai/55b776fa-d920-4aea-8e73-5f5f1576301c) — Voyfai
+📍 Berlin · Hybrid · 💶 Salary not listed · posted 02 Nov
 
-### [AI-Native Founding GTM Lead](https://jobs.ashbyhq.com/clera/a248a997-d0f7-49ab-9ba0-785dca95d90b) — Clera
-📍 Munich · Office · 💶 Salary not listed · posted 01 Nov
+### [Workplace and Company Operations Manager (m/f/d)](https://jobs.ashbyhq.com/robco/34b6da04-08fd-432d-9b17-1ba6dd76ed1e) — Robco
+📍 Munich · Office · 💶 Salary not listed · posted 02 Nov
 🇩🇪 German required
 
 ---
