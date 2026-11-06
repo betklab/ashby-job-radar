@@ -1,35 +1,19 @@
-# Ashby Job Radar — Thu 05 Nov 2026
+# Ashby Job Radar — Fri 06 Nov 2026
 
-9 roles posted since the last email · newest first · 750 companies checked
+4 roles posted since the last email · newest first · 765 companies checked
 
-### [Director of Customer Lifecycle (CRM)](https://jobs.ashbyhq.com/almedia/3fae038c-d129-4e1a-9766-2dfda9cdf161) — Almedia
-📍 Berlin · Office · 💶 €120K – €180K • Total Comp: 220k · posted 05 Nov
-
-### [Head of Product - Growth *EU/UK remote*(m/f/d)](https://jobs.ashbyhq.com/pliant/9186d121-28f8-4487-aa98-af6f3a47a480) — Pliant
-📍 Germany · Remote · 💶 Salary not listed · posted 05 Nov
-
-### [AI Operations Manager (all genders)](https://jobs.ashbyhq.com/avelios-medical/a0bfd7c6-1a70-4dbc-8697-b7085fecba23) — Avelios Medical
-📍 Munich · Office · 💶 Salary not listed · posted 05 Nov
+### [Junior Operations Coordinator (German-Speaking)](https://jobs.ashbyhq.com/the-global-talent-co/c71f52d0-92ad-4237-9e12-adbcad850224) — The Global Talent Co
+📍 Berlin · Remote · 💶 Salary not listed · posted 06 Nov
 🇩🇪 German required
 
-### [Customer Success - Access Operations Specialist](https://jobs.ashbyhq.com/amboss/d219c9e3-4f00-48b8-801a-551f90778aa4) — Amboss
-📍 Berlin · Hybrid · 💶 Salary not listed · posted 05 Nov
+### [Product Lead - Adtech](https://jobs.ashbyhq.com/almedia/8dbdf346-da77-4fd6-bf05-b3094bf62f2c) — Almedia
+📍 Berlin · Office · 💶 €120K – €160K · posted 05 Nov
 
-### [Strategy & Operations Director](https://jobs.ashbyhq.com/bjakcareer/b6f55f78-83d6-41c0-a866-84d08c0f9bbb) — Bjakcareer
-📍 Germany · Remote · 💶 Salary not listed · posted 05 Nov
+### [Content Marketing Manager (Dutch)](https://jobs.ashbyhq.com/fonio/3a6142d0-c210-4314-a2de-5fe649ea6821) — Fonio
+📍 Munich · Hybrid · 💶 €65K – €100K • Offers Equity · posted 05 Nov
 
-### [Head of Product – SAP (m/f/d)](https://jobs.ashbyhq.com/qorelo/9eb81747-4463-44ab-bbba-de680956a00d) — Qorelo
-📍 Berlin · Office · 💶 Salary not listed · posted 04 Nov
-
-### [GTM Lead, Europe](https://jobs.ashbyhq.com/higgsfieldai/e2fe5188-3189-46db-b59b-38c913926a66) — Higgsfieldai
-📍 Berlin · Remote · 💶 Salary not listed · posted 04 Nov
-
-### [Founders Associate, Growth (Munich Office)](https://jobs.ashbyhq.com/dataleap/2803ed6a-3d95-4837-827a-eb7b207e794c) — Dataleap
-📍 Munich · Not stated · 💶 €50K – €80K • 0.1% – 0.25% · posted 04 Nov
-🇩🇪 German required
-
-### [Business Development Representative ](https://jobs.ashbyhq.com/dandy/bcaf9fb9-9cdd-41d4-9f65-27e3a53c90e6) — Dandy
-📍 Berlin · Office · 💶 Salary not listed · posted 04 Nov
+### [Social Content Manager](https://jobs.ashbyhq.com/jellyfishcareers/642082e5-45cc-43d2-b84e-eb394d7d6dee) — Jellyfishcareers
+📍 Berlin · Hybrid · 💶 €45K – €50K · posted 30 Oct
 🇩🇪 German required
 
 ---
