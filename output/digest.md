@@ -1,31 +1,40 @@
-# Ashby Job Radar — Mon 09 Nov 2026
+# Ashby Job Radar — Tue 10 Nov 2026
 
-7 roles posted since the last email · newest first · 753 companies checked
+10 roles posted since the last email · newest first · 775 companies checked
 
-### [Accountant Banking Operations (w/m/d)](https://jobs.ashbyhq.com/enpal/ebd75242-1de4-4338-94da-0d980325820e) — Enpal
-📍 Berlin · Not stated · 💶 Salary not listed · posted 09 Nov
-🇩🇪 German required (ad is in German)
+### [GTM Talent Acquisition Partner (f/m/x)](https://jobs.ashbyhq.com/blp-digital/1716b336-07df-415c-822d-bc9765e5452f) — Blp Digital
+📍 Munich / Cologne · Hybrid · 💶 Salary not listed · posted 10 Nov
+🇩🇪 German required
 
-### [Director Customer Growth (all gender) ](https://jobs.ashbyhq.com/nelly/11e51972-9af6-4f4c-9782-43c330d404c8) — Nelly
+### [(Senior) Consultant – Healthcare Data & Strategy (m/f/d)](https://jobs.ashbyhq.com/statista/a6f748b3-00f2-4a7a-b2fd-a20d5fcfdc52) — Statista
+📍 Berlin / Hamburg · Hybrid · 💶 Salary not listed · posted 10 Nov
+
+### [Strategy & Operations, Germany](https://jobs.ashbyhq.com/openai/c46d8648-b921-4b71-bb9a-f7d5c8e989f4) — Openai
+📍 Munich · Hybrid · 💶 Salary not listed · posted 09 Nov
+
+### [Senior Manager, Partnerships EMEA](https://jobs.ashbyhq.com/temporal/fce51aaa-d5c9-4101-bc28-60bad04567fb) — Temporal
+📍 Germany · Remote · 💶 £246,750 – £283,500 • split 70/30. Offers Equity · posted 09 Nov
+
+### [Performance Marketing Manager](https://jobs.ashbyhq.com/Clera/17d5c277-2999-4f6a-b092-a22b544440fa) — Clera
+📍 Berlin · Office · 💶 Salary not listed · posted 09 Nov
+🇩🇪 German required
+
+### [Growth Consultant](https://jobs.ashbyhq.com/Clera/ca7b809b-8f1e-485d-ad29-02380c3d35ab) — Clera
+📍 Berlin · Office · 💶 Salary not listed · posted 09 Nov
+🇩🇪 German required
+
+### [AI-Native Founding Chief of Staff](https://jobs.ashbyhq.com/Clera/74ab45f3-f0bc-4a21-8d48-277d294dd261) — Clera
+📍 Munich · Office · 💶 Salary not listed · posted 09 Nov
+🇩🇪 German required
+
+### [(Associate) Product Manager - Customer Lifecycle (f/m/x)](https://jobs.ashbyhq.com/lemon-markets/e5c0dadd-700f-408a-a69f-588f13809b5b) — Lemon Markets
 📍 Berlin · Hybrid · 💶 Salary not listed · posted 09 Nov
-🇩🇪 German required
 
-### [Founder's Associate (f/m/x)  ](https://jobs.ashbyhq.com/lemon-markets/1fb78fd5-3f78-4eaa-9e0a-65335e562740) — Lemon Markets
+### [Junior Influencer Marketing (m/f/d) | UK Market](https://jobs.ashbyhq.com/yepoda/35c79fdc-316e-436a-b229-d45643171c26) — Yepoda
 📍 Berlin · Not stated · 💶 Salary not listed · posted 09 Nov
 
-### [Senior Product Manager (E-Commerce)](https://jobs.ashbyhq.com/choco/786b79ee-9327-4abf-8f69-c61ddc0b1fb2) — Choco
-📍 Berlin · Hybrid · 💶 Salary not listed · posted 09 Nov
-
-### [Head of Operations (m/f/d)](https://jobs.ashbyhq.com/qorelo/08d6791d-42cc-4c68-9bf1-f0e96cf9b062) — Qorelo
-📍 Berlin · Not stated · 💶 Salary not listed · posted 08 Nov
-🇩🇪 German required
-
-### [AI-Native Founding GTM Lead](https://jobs.ashbyhq.com/Clera/fe5250dd-c4c4-470f-a7bc-b2d8310019cd) — Clera
-📍 Munich · Office · 💶 Salary not listed · posted 08 Nov
-🇩🇪 German required
-
-### [Senior Legal Counsel, Product](https://jobs.ashbyhq.com/n8n/cc7a3cf6-44ea-4a49-9a0b-f929dea2a0d7) — N8N
-📍 Berlin · Remote · 💶 Salary not listed · posted 08 Nov
+### [Marketing Manager - Benelux](https://jobs.ashbyhq.com/light-inc/2dcf9ade-f49d-46b9-b7a4-a865f206f645) — Light Inc
+📍 Munich · Hybrid · 💶 Salary not listed · posted 09 Nov
 
 ---
 Boards that failed (fix or remove the Ashby ID): `pitch` (HTTP 404), `getmoss` (HTTP 404), `superchat` (HTTP 404), `taxfix` (HTTP 404), `raisin` (HTTP 404), `sennder` (HTTP 404), `1komma5grad` (HTTP 404), `candis` (HTTP 404), `circula` (HTTP 404), `zeitgold` (HTTP 404), `trade-republic` (HTTP 404), `quantum-systems` (HTTP 404), `scalable-capital` (HTTP 404), `getivy` (HTTP 404), `helsing` (HTTP 404), `isar-aerospace` (HTTP 404), `cognigy` (HTTP 404), `ottonova` (HTTP 404), `avimedical` (HTTP 404), `make` (HTTP 404)
