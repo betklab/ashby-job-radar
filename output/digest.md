@@ -1,41 +1,39 @@
-# Ashby Job Radar — Thu 12 Nov 2026
+# Ashby Job Radar — Fri 13 Nov 2026
 
-10 roles posted since the last email · newest first · 754 companies checked
+10 roles posted since the last email · newest first · 769 companies checked
 
-### [Data Analyst Marketing  ](https://jobs.ashbyhq.com/yazio/7c1724ec-ebba-4fa7-afc3-da0203dd88b2) — Yazio
-📍 Berlin · Remote · 💶 Salary not listed · posted 12 Nov
+### [ Brand Manager (crafts)| DTC E-commerce | 100% Remote EU](https://jobs.ashbyhq.com/foxelligroup/7aa4aaeb-2344-403d-8fc0-582223a7206b) — Foxelligroup
+📍 Berlin · Remote · 💶 Salary not listed · posted 13 Nov
 
-### [Head of Product ](https://jobs.ashbyhq.com/blp-digital/dfb13b8b-6d56-419d-9096-3c67c14e69af) — Blp Digital
-📍 Munich / Cologne · Hybrid · 💶 Salary not listed · posted 12 Nov
+### [Quilting Assistant Brand Manager ](https://jobs.ashbyhq.com/foxelligroup/a31c0148-4090-4d05-8327-5c668b4a0fa2) — Foxelligroup
+📍 Berlin · Remote · 💶 Salary not listed · posted 13 Nov
 
-### [Business Development Representative, German speaking ](https://jobs.ashbyhq.com/checkout.com/8cc405cb-9456-4193-bb64-3a02ae02afbb) — Checkout.Com
+### [Business Development Manager (m/f/d)](https://jobs.ashbyhq.com/8returns/4d5c9fcc-ce76-4e8f-814c-bfc606c5cec8) — 8Returns
+📍 Berlin · Remote · 💶 Salary not listed · posted 13 Nov
+🇩🇪 German required
+
+### [Field Marketing Manager (m/f/d)](https://jobs.ashbyhq.com/voize/53da2c7c-9621-40e4-8c73-a5bf122bf16b) — Voize
+📍 Berlin · Hybrid · 💶 Salary not listed · posted 13 Nov
+🇩🇪 German required
+
+### [Accounting Product Specialist (m/w/d) - Germany 🇩🇪](https://jobs.ashbyhq.com/pennylane/1cc72829-e292-49f6-a708-70780d70e017) — Pennylane
+📍 Germany · Remote · 💶 Salary not listed · posted 13 Nov
+🇩🇪 German required
+
+### [Partnerships Director, BCG EMEA](https://jobs.ashbyhq.com/openai/4197587e-c0d0-46e4-b86a-25a87d22b056) — Openai
+📍 Munich · Hybrid · 💶 Salary not listed · posted 12 Nov
+
+### [People Operations Manager](https://jobs.ashbyhq.com/almetra/07104107-bb4b-4714-8948-fcee6fecc430) — Almetra
+📍 Berlin · Hybrid · 💶 $50K – $65K • Offers Equity · posted 12 Nov
+
+### [Technical Product Manager - Core Workout Experience (m/f/d)](https://jobs.ashbyhq.com/egym/707ebeab-7de7-4d74-81c2-3cbcac689d5f) — Egym
+📍 Berlin / Munich · Hybrid · 💶 €55K – €65K · posted 12 Nov
+
+### [Marketing Manager UK (AI x Greentech) (m/f/d)](https://jobs.ashbyhq.com/reonic/419da50a-82a0-4cd6-9e86-8fca7bf27cee) — Reonic
 📍 Berlin · Office · 💶 Salary not listed · posted 12 Nov
-🇩🇪 German required
 
-### [Junior Marketing Manager - DACH](https://jobs.ashbyhq.com/amboss/81f69f1c-aeda-418a-aeff-d755ae2b40a7) — Amboss
-📍 Berlin · Hybrid · 💶 Salary not listed · posted 12 Nov
-🇩🇪 German required (ad is in German)
-
-### [Growth Manager (Website & Product Configurator) (m/f/d)](https://jobs.ashbyhq.com/the-global-talent-co/35ca1c5d-3580-477d-b9e5-5741950dca3f) — The Global Talent Co
-📍 Berlin · Hybrid · 💶 Salary not listed · posted 12 Nov
-🇩🇪 German required
-
-### [Senior CRM & Lifecycle Manager](https://jobs.ashbyhq.com/cosuno/51dfebec-aed7-4776-8720-44747d086ddc) — Cosuno
-📍 Berlin · Remote · 💶 €65K – €85K · posted 12 Nov
-
-### [Tax & Accounting Operations Assistant (f/m/d)](https://jobs.ashbyhq.com/bunch/f9f56d11-76fd-4b99-8ab3-e72ae0074bb6) — Bunch
-📍 Berlin · Not stated · 💶 Salary not listed · posted 11 Nov
-🇩🇪 German required
-
-### [GTM Associate](https://jobs.ashbyhq.com/comstruct/f410c125-4173-4b2c-ba0d-a284677f3bf5) — Comstruct
-📍 Munich · Not stated · 💶 Salary not listed · posted 11 Nov
-🇩🇪 German required
-
-### [Head of Enterprise Product](https://jobs.ashbyhq.com/n8n/cc5ce6e0-5d50-4cfd-a522-4304dc09d29b) — N8N
-📍 Berlin · Remote · 💶 Salary not listed · posted 11 Nov
-
-### [Associate New Venture Strategy  (w/m/d) ](https://jobs.ashbyhq.com/enpal/ca730b9f-871c-4b68-95a0-bcf9ef737fbe) — Enpal
-📍 Berlin · Not stated · 💶 Salary not listed · posted 11 Nov
+### [Chief of Staff Operations (all genders)](https://jobs.ashbyhq.com/wemolo/4aed6d24-524f-4858-8692-1da5d3532d41) — Wemolo
+📍 Munich · Hybrid · 💶 Salary not listed · posted 12 Nov
 🇩🇪 German required (ad is in German)
 
 ---
