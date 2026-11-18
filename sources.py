@@ -212,8 +212,30 @@ def workable_job(job: dict) -> tuple[str, dict]:
         "department": job.get("department") or ""}
 
 
-def fetch_workable(request, *, delay: float = 2, max_pages: int = 500) -> dict[str, list[dict]]:
+def _workable_page(request, url: str, page: int, tries: int, wait: float) -> dict:
+    """One search page. A long walk (~150 pages) must not fail on one short hiccup, so each page
+    gets several attempts with growing pauses before the whole scan is given up."""
+    for attempt in range(tries):
+        try:
+            data = request(url, parse=json.loads)
+            if not isinstance(data, dict) or not isinstance(data.get("jobs"), list):
+                raise ValueError("Workable search response has no jobs list")
+            return data
+        except Exception as e:
+            if attempt == tries - 1:
+                msg = f"page {page + 1}, after {tries} attempts: {type(e).__name__}: {e}"
+                raise (ValueError if isinstance(e, ValueError) else RuntimeError)(msg) from e
+            pause = wait * (attempt + 1)
+            print(f"[workable] page {page + 1} failed ({type(e).__name__}: {e}); "
+                  f"retrying in {pause:.0f}s", flush=True)
+            time.sleep(pause)
+    raise RuntimeError("unreachable")
+
+
+def fetch_workable(request, *, delay: float = 2, max_pages: int = 500, page_tries: int = 4,
+                   retry_wait: float | None = None) -> dict[str, list[dict]]:
     """Optional undocumented Germany search. A partial cursor walk never counts as success."""
+    wait = delay * 10 if retry_wait is None else retry_wait     # 20s, 40s, 60s by default
     boards, ids, tokens = {}, set(), set()
     token, expected = None, None
     for page in range(max_pages):
@@ -222,9 +244,8 @@ def fetch_workable(request, *, delay: float = 2, max_pages: int = 500) -> dict[s
         query = {"location": "Germany"}
         if token:
             query["pageToken"] = token
-        data = request("https://jobs.workable.com/api/v1/jobs?" + urlencode(query), parse=json.loads)
-        if not isinstance(data, dict) or not isinstance(data.get("jobs"), list):
-            raise ValueError("Workable search response has no jobs list")
+        data = _workable_page(request, "https://jobs.workable.com/api/v1/jobs?" + urlencode(query),
+                              page, page_tries, wait)
         total = data.get("totalSize")
         if total is not None:
             if type(total) is not int or total < 0:
