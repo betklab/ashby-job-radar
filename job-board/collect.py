@@ -66,6 +66,8 @@ def main(argv=None):
     write_json(args.out / "run.json", report)
     if not ok:
         print(f"[{args.source}] Incomplete collection: {len(failures)} failures", file=sys.stderr)
+        for key, error in list(failures.items())[:10]:
+            print(f"[{args.source}]   {key}: {error}", file=sys.stderr)
         return 1
     selected = {}
     for role in roles:
