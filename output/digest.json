@@ -1,62 +1,32 @@
 [
   {
-    "title": "Founder Associate",
+    "title": "Video Content Editor",
+    "company": "the-flex",
+    "location": "Berlin",
+    "published": "2026-11-21T17:23:19.804000+00:00",
+    "url": "https://jobs.ashbyhq.com/The-Flex/777b0688-6f8b-43d0-b201-90870415e6e7",
+    "work_style": "Remote",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "AI-Native Founding GTM Lead",
     "company": "clera",
     "location": "Munich",
-    "published": "2026-11-21T05:14:57.724000+00:00",
-    "url": "https://jobs.ashbyhq.com/Clera/389062db-e8b9-4669-b7b1-dbb797bee0d1",
+    "published": "2026-11-21T17:20:38.466000+00:00",
+    "url": "https://jobs.ashbyhq.com/Clera/a1bd4c23-73cc-4d61-b42e-f1adcfebc063",
     "work_style": "Office",
-    "german_required": null,
-    "compensation": ""
+    "german_required": "German required",
+    "compensation": "€95K – €105K"
   },
   {
-    "title": "Growth Associate - MUC - FT - Lisa",
-    "company": "lio",
-    "location": "Munich",
-    "published": "2026-11-20T18:46:50.645000+00:00",
-    "url": "https://jobs.ashbyhq.com/lio/f81f64c2-9c94-407d-8c45-c1b81f14f399",
-    "work_style": "Not stated",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Guest Operations Associate",
+    "title": "Sales Development Representative / Business Development Representative",
     "company": "clera",
     "location": "Berlin",
-    "published": "2026-11-20T17:14:11.599000+00:00",
-    "url": "https://jobs.ashbyhq.com/Clera/cd551448-534a-43f0-b388-20d7990a9b90",
+    "published": "2026-11-21T17:15:48.453000+00:00",
+    "url": "https://jobs.ashbyhq.com/Clera/b8084b5b-9f6d-4440-a0de-46e8fb8974c0",
     "work_style": "Office",
     "german_required": "German required",
-    "compensation": "€40K – €45K"
-  },
-  {
-    "title": "People Operations Specialist (f/m/d)",
-    "company": "moss",
-    "location": "Berlin",
-    "published": "2026-11-20T16:52:27.442000+00:00",
-    "url": "https://jobs.ashbyhq.com/moss/6903e731-b1a5-4dca-ac51-000fbeb125ff",
-    "work_style": "Office",
-    "german_required": "German required",
-    "compensation": ""
-  },
-  {
-    "title": "Social Content Manager",
-    "company": "jellyfishcareers",
-    "location": "Berlin",
-    "published": "2026-11-20T16:39:23.455000+00:00",
-    "url": "https://jobs.ashbyhq.com/jellyfishcareers/7839487b-7408-4461-ad5a-65a78870a362",
-    "work_style": "Hybrid",
-    "german_required": "German required (ad is in German)",
-    "compensation": "€45K – €50K"
-  },
-  {
-    "title": "Senior Product Manager - APIs",
-    "company": "krakentech",
-    "location": "Berlin",
-    "published": "2026-11-20T15:54:58.619000+00:00",
-    "url": "https://jobs.ashbyhq.com/krakentech/dd1fd4bf-c4e1-429f-ac1c-37762fab0462",
-    "work_style": "Hybrid",
-    "german_required": null,
-    "compensation": ""
+    "compensation": "€75K – €85K"
   }
 ]
