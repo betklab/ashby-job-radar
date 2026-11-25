@@ -1,72 +1,132 @@
 [
   {
-    "title": "Product Operations Specialist (w/m/d)",
-    "company": "flinn",
-    "location": "Berlin",
-    "published": "2026-11-24T15:18:49.115000+00:00",
-    "url": "https://jobs.ashbyhq.com/flinn/6a4482fa-92a4-430d-9033-9865fa62472e",
+    "title": "Product Sales, Billing ",
+    "company": "airwallex",
+    "location": "Berlin / Munich",
+    "published": "2026-11-25T15:27:59.876000+00:00",
+    "url": "https://jobs.ashbyhq.com/airwallex/daba7413-d52f-497b-8607-07894eb6d44c",
+    "work_style": "Not stated",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Team Lead Revenue Operations (m/f/d)",
+    "company": "egym",
+    "location": "Munich",
+    "published": "2026-11-25T10:51:11.212000+00:00",
+    "url": "https://jobs.ashbyhq.com/egym/ea5725c2-30d4-4906-8b53-e4c9af9a1aee",
     "work_style": "Hybrid",
     "german_required": null,
     "compensation": ""
   },
   {
-    "title": "Business Operations & Growth Manager (m/w/d)",
-    "company": "enpal",
+    "title": "Senior Product Manager - Shipment ",
+    "company": "forto",
     "location": "Berlin",
-    "published": "2026-11-24T14:17:06.478000+00:00",
-    "url": "https://jobs.ashbyhq.com/enpal/f744989a-e9a5-4484-ae53-faf6d343d757",
+    "published": "2026-11-25T09:45:08.690000+00:00",
+    "url": "https://jobs.ashbyhq.com/forto/81ac909b-38cd-4bae-b629-a88a7005f3a7",
     "work_style": "Not stated",
+    "german_required": null,
+    "compensation": ""
+  },
+  {
+    "title": "Accounting Operations Manager (m/f/d)",
+    "company": "buena",
+    "location": "Berlin",
+    "published": "2026-11-25T09:06:43.797000+00:00",
+    "url": "https://jobs.ashbyhq.com/buena/3380e440-56ca-4828-b644-ad09b08b2923",
+    "work_style": "Office",
     "german_required": "German required (ad is in German)",
     "compensation": ""
   },
   {
-    "title": "Team Lead Operations (w/m/d)",
-    "company": "enpal",
-    "location": "Berlin",
-    "published": "2026-11-24T11:28:43.487000+00:00",
-    "url": "https://jobs.ashbyhq.com/enpal/5f60a75a-4698-4a16-ad89-cb2673b173cd",
-    "work_style": "Not stated",
-    "german_required": "German required (ad is in German)",
-    "compensation": ""
-  },
-  {
-    "title": "Content Production Manager",
-    "company": "se3",
+    "title": "Business Development Representative (m/w/d)",
+    "company": "carwow",
     "location": "Munich",
-    "published": "2026-11-24T09:29:01.489000+00:00",
-    "url": "https://jobs.ashbyhq.com/se3/493009aa-8082-4d69-aa4c-b0b8a3d2eefb",
+    "published": "2026-11-25T08:20:57.152000+00:00",
+    "url": "https://jobs.ashbyhq.com/carwow/affba1d8-c5ef-4913-98d2-8cbee015a872",
+    "work_style": "Hybrid",
+    "german_required": "German required (ad is in German)",
+    "compensation": ""
+  },
+  {
+    "title": "Regional Ops Manager (m/f/d)",
+    "company": "buena",
+    "location": "Berlin",
+    "published": "2026-11-24T18:53:02.535000+00:00",
+    "url": "https://jobs.ashbyhq.com/buena/49e4126d-8b3b-420e-b50e-358b6d48ff56",
+    "work_style": "Office",
+    "german_required": "German required (ad is in German)",
+    "compensation": ""
+  },
+  {
+    "title": "Business Development Representative",
+    "company": "clera",
+    "location": "Munich",
+    "published": "2026-11-24T18:08:02.661000+00:00",
+    "url": "https://jobs.ashbyhq.com/Clera/34714bdf-b0e3-46da-98b8-8723165c96b1",
+    "work_style": "Office",
+    "german_required": "German required",
+    "compensation": "€40K – €50K"
+  },
+  {
+    "title": "Chief of Staff",
+    "company": "clera",
+    "location": "Berlin",
+    "published": "2026-11-24T17:08:01.621000+00:00",
+    "url": "https://jobs.ashbyhq.com/Clera/c73393bd-24e9-4b45-bff8-34e68bd702a0",
+    "work_style": "Office",
+    "german_required": "German required",
+    "compensation": ""
+  },
+  {
+    "title": "GTM Lead",
+    "company": "clera",
+    "location": "Berlin",
+    "published": "2026-11-24T17:07:07.793000+00:00",
+    "url": "https://jobs.ashbyhq.com/Clera/0ef71cab-d2ac-4a72-98f3-f6aa0119baf0",
+    "work_style": "Office",
+    "german_required": "German required",
+    "compensation": ""
+  },
+  {
+    "title": "Commercial Operations Associate",
+    "company": "clera",
+    "location": "Berlin",
+    "published": "2026-11-24T17:02:56.094000+00:00",
+    "url": "https://jobs.ashbyhq.com/Clera/b3b5740c-c409-4e3b-81f6-7d6b1783cd7b",
+    "work_style": "Office",
+    "german_required": "German required",
+    "compensation": "€75K – €100K"
+  },
+  {
+    "title": "Growth",
+    "company": "augustus",
+    "location": "Berlin",
+    "published": "2026-11-24T16:42:39.739000+00:00",
+    "url": "https://jobs.ashbyhq.com/Augustus/9e669d09-657f-4722-9ee9-d9cd8af1dbf5",
     "work_style": "Office",
     "german_required": null,
-    "compensation": ""
+    "compensation": "€60K – €80K • Offers Equity"
   },
   {
-    "title": "Product Manager - Storage",
-    "company": "mistral.ai",
-    "location": "Berlin / Munich",
-    "published": "2026-11-24T09:29:00.424000+00:00",
-    "url": "https://jobs.ashbyhq.com/mistral.ai/e2e589b9-2e66-420a-b091-2582759bf48c",
-    "work_style": "Remote",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Talent Acquisition Operations Specialist",
-    "company": "cuspai",
+    "title": "Senior CRM & Lifecycle Manager",
+    "company": "cosuno",
     "location": "Berlin",
-    "published": "2026-11-24T09:06:27.558000+00:00",
-    "url": "https://jobs.ashbyhq.com/cuspai/543c8d46-fec0-4d1e-803c-c2c5b42eeaf3",
-    "work_style": "Hybrid",
-    "german_required": null,
-    "compensation": ""
-  },
-  {
-    "title": "Business Development Representative (EMEA)",
-    "company": "docker",
-    "location": "Germany",
-    "published": "2026-11-24T02:33:27.080000+00:00",
-    "url": "https://jobs.ashbyhq.com/docker/221dff90-2b30-4977-958a-8838f43c6d38",
+    "published": "2026-11-24T16:38:06.482000+00:00",
+    "url": "https://jobs.ashbyhq.com/cosuno/5a2b4a65-6be5-408c-90a1-e441b70eb24c",
     "work_style": "Remote",
     "german_required": null,
-    "compensation": ""
+    "compensation": "€65K – €85K"
+  },
+  {
+    "title": "Organic Growth Manager (SEO & AI Search)",
+    "company": "cosuno",
+    "location": "Berlin",
+    "published": "2026-11-24T16:33:59.731000+00:00",
+    "url": "https://jobs.ashbyhq.com/cosuno/f8a6a8d8-30a7-4450-b55b-70f98bbef552",
+    "work_style": "Remote",
+    "german_required": "German required",
+    "compensation": "€60K – €75K"
   }
 ]

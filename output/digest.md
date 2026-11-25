@@ -1,29 +1,53 @@
-# Ashby Job Radar — Tue 24 Nov 2026
+# Ashby Job Radar — Wed 25 Nov 2026
 
-7 roles posted since the last email · newest first · 770 companies checked
+13 roles posted since the last email · newest first · 754 companies checked
 
-### [Product Operations Specialist (w/m/d)](https://jobs.ashbyhq.com/flinn/6a4482fa-92a4-430d-9033-9865fa62472e) — Flinn
-📍 Berlin · Hybrid · 💶 Salary not listed · posted 24 Nov
+### [Product Sales, Billing ](https://jobs.ashbyhq.com/airwallex/daba7413-d52f-497b-8607-07894eb6d44c) — Airwallex
+📍 Berlin / Munich · Not stated · 💶 Salary not listed · posted 25 Nov
 
-### [Business Operations & Growth Manager (m/w/d)](https://jobs.ashbyhq.com/enpal/f744989a-e9a5-4484-ae53-faf6d343d757) — Enpal
-📍 Berlin · Not stated · 💶 Salary not listed · posted 24 Nov
+### [Team Lead Revenue Operations (m/f/d)](https://jobs.ashbyhq.com/egym/ea5725c2-30d4-4906-8b53-e4c9af9a1aee) — Egym
+📍 Munich · Hybrid · 💶 Salary not listed · posted 25 Nov
+
+### [Senior Product Manager - Shipment ](https://jobs.ashbyhq.com/forto/81ac909b-38cd-4bae-b629-a88a7005f3a7) — Forto
+📍 Berlin · Not stated · 💶 Salary not listed · posted 25 Nov
+
+### [Accounting Operations Manager (m/f/d)](https://jobs.ashbyhq.com/buena/3380e440-56ca-4828-b644-ad09b08b2923) — Buena
+📍 Berlin · Office · 💶 Salary not listed · posted 25 Nov
 🇩🇪 German required (ad is in German)
 
-### [Team Lead Operations (w/m/d)](https://jobs.ashbyhq.com/enpal/5f60a75a-4698-4a16-ad89-cb2673b173cd) — Enpal
-📍 Berlin · Not stated · 💶 Salary not listed · posted 24 Nov
+### [Business Development Representative (m/w/d)](https://jobs.ashbyhq.com/carwow/affba1d8-c5ef-4913-98d2-8cbee015a872) — Carwow
+📍 Munich · Hybrid · 💶 Salary not listed · posted 25 Nov
 🇩🇪 German required (ad is in German)
 
-### [Content Production Manager](https://jobs.ashbyhq.com/se3/493009aa-8082-4d69-aa4c-b0b8a3d2eefb) — Se3
-📍 Munich · Office · 💶 Salary not listed · posted 24 Nov
+### [Regional Ops Manager (m/f/d)](https://jobs.ashbyhq.com/buena/49e4126d-8b3b-420e-b50e-358b6d48ff56) — Buena
+📍 Berlin · Office · 💶 Salary not listed · posted 24 Nov
+🇩🇪 German required (ad is in German)
 
-### [Product Manager - Storage](https://jobs.ashbyhq.com/mistral.ai/e2e589b9-2e66-420a-b091-2582759bf48c) — Mistral.Ai
-📍 Berlin / Munich · Remote · 💶 Salary not listed · posted 24 Nov
+### [Business Development Representative](https://jobs.ashbyhq.com/Clera/34714bdf-b0e3-46da-98b8-8723165c96b1) — Clera
+📍 Munich · Office · 💶 €40K – €50K · posted 24 Nov
+🇩🇪 German required
 
-### [Talent Acquisition Operations Specialist](https://jobs.ashbyhq.com/cuspai/543c8d46-fec0-4d1e-803c-c2c5b42eeaf3) — Cuspai
-📍 Berlin · Hybrid · 💶 Salary not listed · posted 24 Nov
+### [Chief of Staff](https://jobs.ashbyhq.com/Clera/c73393bd-24e9-4b45-bff8-34e68bd702a0) — Clera
+📍 Berlin · Office · 💶 Salary not listed · posted 24 Nov
+🇩🇪 German required
 
-### [Business Development Representative (EMEA)](https://jobs.ashbyhq.com/docker/221dff90-2b30-4977-958a-8838f43c6d38) — Docker
-📍 Germany · Remote · 💶 Salary not listed · posted 24 Nov
+### [GTM Lead](https://jobs.ashbyhq.com/Clera/0ef71cab-d2ac-4a72-98f3-f6aa0119baf0) — Clera
+📍 Berlin · Office · 💶 Salary not listed · posted 24 Nov
+🇩🇪 German required
+
+### [Commercial Operations Associate](https://jobs.ashbyhq.com/Clera/b3b5740c-c409-4e3b-81f6-7d6b1783cd7b) — Clera
+📍 Berlin · Office · 💶 €75K – €100K · posted 24 Nov
+🇩🇪 German required
+
+### [Growth](https://jobs.ashbyhq.com/Augustus/9e669d09-657f-4722-9ee9-d9cd8af1dbf5) — Augustus
+📍 Berlin · Office · 💶 €60K – €80K • Offers Equity · posted 24 Nov
+
+### [Senior CRM & Lifecycle Manager](https://jobs.ashbyhq.com/cosuno/5a2b4a65-6be5-408c-90a1-e441b70eb24c) — Cosuno
+📍 Berlin · Remote · 💶 €65K – €85K · posted 24 Nov
+
+### [Organic Growth Manager (SEO & AI Search)](https://jobs.ashbyhq.com/cosuno/f8a6a8d8-30a7-4450-b55b-70f98bbef552) — Cosuno
+📍 Berlin · Remote · 💶 €60K – €75K · posted 24 Nov
+🇩🇪 German required
 
 ---
 Boards that failed (fix or remove the Ashby ID): `pitch` (HTTP 404), `getmoss` (HTTP 404), `superchat` (HTTP 404), `taxfix` (HTTP 404), `raisin` (HTTP 404), `sennder` (HTTP 404), `1komma5grad` (HTTP 404), `candis` (HTTP 404), `circula` (HTTP 404), `zeitgold` (HTTP 404), `trade-republic` (HTTP 404), `quantum-systems` (HTTP 404), `scalable-capital` (HTTP 404), `getivy` (HTTP 404), `helsing` (HTTP 404), `isar-aerospace` (HTTP 404), `cognigy` (HTTP 404), `ottonova` (HTTP 404), `avimedical` (HTTP 404), `make` (HTTP 404)
